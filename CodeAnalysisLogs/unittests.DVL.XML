@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Data version="1.1.0.0"> 
+<AssessmentScore ScoreName="unittests.x64.SDV.NORUN" ScoreValue="0" ScoreUnit="" />
+
+<AssessmentScore ScoreName="unittests.x64.CodeAnalysis.NORUN" ScoreValue="0" ScoreUnit="" />
+
+<AssessmentScore ScoreName="unittests.x64.Semmle.Summary" ScoreValue="5" ScoreUnit="Types of defects seen and/or rules not run" />
+<AssessmentScore ScoreName="unittests.x64.Semmle.Defect.cpp/drivers/multithreaded-av-condition" ScoreValue="3" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="unittests.x64.Semmle.Defect.cpp/drivers/examined-value" ScoreValue="1" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="unittests.x64.Semmle.Defect.cpp/conditionally-uninitialized-variable" ScoreValue="4" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="unittests.x64.Semmle.Defect.cpp/integer-multiplication-cast-to-long" ScoreValue="2" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="unittests.x64.Semmle.Defect.cpp/paddingbyteinformationdisclosure" ScoreValue="5" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+
+<AssessmentScore ScoreName="unittests.x64.General.Checksum" ScoreValue="Wo7zCFQsavGlMQRd+/6qa+9uPhxpl2vTM3tKiumYGRIBWNvxkJTYZVsoqg+qfhX/Kcwa/4SQ4pWsUExytLktMw==" ScoreUnit="DVL Checksum Value" />
+</Data>

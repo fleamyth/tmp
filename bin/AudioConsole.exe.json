@@ -1,0 +1,370 @@
+{
+  "ModuleName": "Audio",
+  "Description": "Set of APIs to test audio playback and recording functionality",
+  "DbModeArgument": "-jsonmode true",
+  "APIs": [
+    {
+      "ApiName": "SetVolume",
+      "Description": "Sets the volume on a specified device",
+      "HttpType": "Post",
+      "Format": "setvolume",
+      "InputArguments": [
+        {
+          "Name": "Endpoint",
+          "Format": "-endpoint {0}",
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name",
+          "Type": "string",
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "Type of volume query.",
+          "Name": "Type",
+          "Type": "string",
+          "Format": "-type {0}",
+          "PossibleValues": [ "db", "scalar" ],
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "Volume level. In dB for type=db, or scalar in range [0,1] for type=scalar.",
+          "Name": "VolumeLevel",
+          "Type": "double",
+          "Format": "-volume {0}",
+          "ArgumentRequired": true
+        }
+      ],
+      "Result": []
+    },
+    {
+      "ApiName": "GetVolume",
+      "Description": "Gets the volume on a specified device",
+      "HttpType": "Post",
+      "Format": "getvolume",
+      "InputArguments": [
+        {
+          "Name": "Endpoint",
+          "Format": "-endpoint {0}",
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name",
+          "Type": "string",
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "Type of volume query.",
+          "Name": "Type",
+          "Type": "string",
+          "Format": "-type {0}",
+          "PossibleValues": [ "db", "scalar" ],
+          "ArgumentRequired":  true
+        }
+      ],
+      "Result": [
+        {
+          "Description": "Volume level. In dB for type=db, or scalar in range [0,1] for type=scalar.",
+          "Name": "volume",
+          "Type": "double"
+        },
+        {
+          "Description": "The mute state.",
+          "Name": "mute_state",
+          "Type": "string"
+        }
+      ]
+    },
+    {
+      "ApiName": "PlayTone",
+      "Description": " Play a sine wave tone.",
+      "HttpType": "Post",
+      "Format": "playtone",
+      "InputArguments": [
+        {
+          "Name": "Frequency",
+          "Format": "-frequency {0}",
+          "Description": "Frequency of tone playback, in hertz.",
+          "Type": "double",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "Endpoint",
+          "Format": "-endpoint {0}",
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name",
+          "Type": "string",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "SampleRate",
+          "Format": "-samplerate {0}",
+          "Description": "Sample rate in hertz. If not provided, the default sample rate will be used.",
+          "Type": "int"
+        },
+        {
+          "Name": "Amplitude",
+          "Format": "-amplitude {0}",
+          "Description": "Amplitude of sine wave, between 0 and 1",
+          "Type": "double",
+          "Default": 1.000000
+        },
+        {
+          "Name": "BitsPerSample",
+          "Format": "-bitspersample {0}",
+          "Description": "valid bits in each sample",
+          "Type": "int",
+          "Default": 32
+        },
+        {
+          "Name": "BitSampleContainer",
+          "Format": "-bitspersamplecontainer {0}",
+          "Description": "container size in bits of each sample (eg. 16, 24, 32)",
+          "Type": "int"
+        },
+        {
+          "Name": "DurationTme",
+          "Format": "-duration {0}",
+          "Description": "Time of tone in seconds. A time of 0 will start a non-stopping tone and return",
+          "Type": "double",
+          "Default": 1.000000
+        },
+        {
+          "Name": "ToneType",
+          "Format": "-type {0}",
+          "Description": "Type of tone",
+          "PossibleValues": [ "sawtooth", "sine", "square", "triangle", "chirp" ],
+          "Type": "string",
+          "Default": "sine"
+        },
+        {
+          "Name": "Channel",
+          "Format": "-channelconfig {0}",
+          "Description": "Playback channel(s)",
+          "Type": "string",
+          "PossibleValues": [ "left", "right", "stereo" ],
+          "Default": "stereo"
+        },
+        {
+          "Name": "Exclusive",
+          "Format": "-exclusive {0}",
+          "Description": "false for SHARED, true for EXCLUSIVE",
+          "Type": "bool",
+          "Default": false
+        },
+        {
+          "Name": "RawMode",
+          "Format": "-raw_mode {0}",
+          "Description": "Open audio stream in RAW mode (AUDCLNT_STREAMOPTIONS_RAW). Raw mode will bypass some audio processing effects like Dolby and echo cancellation",
+          "Type": "bool",
+          "Default": false
+        },
+        {
+          "Name": "StreamCategory",
+          "Format": "-stream_category {0}",
+          "Description": "Stream Category",
+          "Type": "string",
+          "PossibleValues": [ "other", "communications", "media" ],
+          "Default": "other"
+        }
+
+      ],
+      "Result": []
+    },
+
+    {
+      "ApiName": "PlayWave",
+      "Description": "Play a wave file.",
+      "HttpType": "Post",
+      "Format": "playwave",
+      "InputArguments": [
+        {
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name.",
+          "Name": "EndpointName",
+          "Type": "string",
+          "Format": "-endpoint {0}",
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "The file path",
+          "Name": "FilePath",
+          "Type": "string",
+          "Format": "-file {0}",
+          "ArgumentRequired":  true
+        },
+        {
+          "Description": "Use blocking playback. If true, playback will block until complete.",
+          "Name": "UseBlocking",
+          "Type": "bool",
+          "Format": "-blocking {0}"
+        }
+      ],
+      "Result": []
+    },
+
+    {
+      "ApiName": "RecordWave",
+      "Description": "Record a wave file to disk.",
+      "HttpType": "Post",
+      "Format": "recordwave",
+      "InputArguments": [
+        {
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name.",
+          "Name": "EndpointName",
+          "Type": "string",
+          "Format": "-endpoint {0}",
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "Path to save wave file.",
+          "Name": "FilePath",
+          "Type": "string",
+          "Format": "-file {0}",
+          "ArgumentRequired": true
+        },
+        {
+          "Description": "The duration time in seconds.",
+          "Name": "Duration",
+          "Type": "double",
+          "Format": "-duration {0}",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "RawMode",
+          "Format": "-raw_mode {0}",
+          "Description": "Open audio stream in RAW mode (AUDCLNT_STREAMOPTIONS_RAW). Raw mode will bypass some audio processing effects like Dolby and echo cancellation",
+          "Type": "bool",
+          "Default": false
+        },
+        {
+          "Name": "StreamCategory",
+          "Format": "-stream_category {0}",
+          "Description": "Stream Category",
+          "Type": "string",
+          "PossibleValues": [ "other", "communications", "media" ],
+          "Default": "other"
+        },
+        {
+          "Name": "SampleRate",
+          "Format": "-samplerate {0}",
+          "Description": "Sample rate in hertz. If not provided, the default sample rate will be used.",
+          "Type": "int"
+        },
+        {
+          "Description": "Number of channels to record from endpoint.",
+          "Name": "ChannelCount",
+          "Type": "int",
+          "Format": "-channelcount {0}"
+        },
+        {
+          "Description": "Additional recording time to throw out in front of duration, in seconds.",
+          "Name": "DurationTrim",
+          "Type": "double",
+          "Format": "-durationtrim {0}"
+        }
+      ],
+      "Result": []
+    },
+
+    {
+      "ApiName": "PlayChirp",
+      "Description": "Play a logarithmic chirp.",
+      "HttpType": "Post",
+      "Format": "playchirp",
+      "InputArguments": [
+        {
+          "Name":  "Endpoint",
+          "Format": "-endpoint {0}",
+          "Description": "Friendly name of endpoint. Case sensitive, but can be partial name",
+          "Type": "string",
+          "ArgumentRequired":  true,
+        },
+        {
+          "Name": "SampleRate",
+          "Format": "-samplerate {0}",
+          "Description": "Sample rate in hertz. If not provided, the default sample rate will be used.",
+          "Type": "int"
+        },
+        {
+          "Name": "FrequencyStart",
+          "Format": "-freqstart {0}",
+          "Description": "Frequency to start chirp, in hertz",
+          "Type": "int",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "FrequencyEnd",
+          "Format": "-freqend {0}",
+          "Description": "Frequency to end chirp, in hertz",
+          "Type": "int",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "DurationTme",
+          "Format": "-duration {0}",
+          "Description": "Total duration of chirp, in seconds",
+          "Type": "double",
+          "ArgumentRequired": true
+        },
+        {
+          "Name": "DurationSilenceBefore",
+          "Format": "-durationsilencebefore {0}",
+          "Description": "Total silence duration before chirp, in seconds",
+          "Type": "double",
+          "Default": 0.000000
+        },
+        {
+          "Name": "DurationSilenceAfter",
+          "Format": "-durationsilenceafter {0}",
+          "Description": "Total silence duration after chirp, in seconds",
+          "Type": "double",
+          "Default": 0.000000
+        },
+        {
+          "Name": "Amplitude",
+          "Format": "-amplitude {0}",
+          "Description": "Amplitude of chirp, between 0 and 1",
+          "Type": "double",
+          "Default": 1.000000
+        },
+        {
+          "Name": "BitsPerSample",
+          "Format": "-bitspersample {0}",
+          "Description": "valid bits in each sample",
+          "Type": "int",
+          "Default": 32
+        },
+        {
+          "Name": "BitSampleContainer",
+          "Format": "-bitspersamplecontainer {0}",
+          "Description": "container size in bits of each sample (eg. 16, 24, 32)",
+          "Type": "int"
+        },
+        {
+          "Name": "Channel",
+          "Format": "-channel {0}",
+          "Description": "Playback channel(s)",
+          "Type": "string",
+          "PossibleValues": [ "left", "right", "stereo" ],
+          "Default": "stereo"
+        },
+        {
+          "Name": "Exclusive",
+          "Format": "-exclusive {0}",
+          "Description": "false for SHARED, true for EXCLUSIVE",
+          "Type": "bool",
+          "Default": false
+        },
+        {
+          "Name": "RawMode",
+          "Format": "-raw_mode {0}",
+          "Description": "Open audio stream in RAW mode (AUDCLNT_STREAMOPTIONS_RAW). Raw mode will bypass some audio processing effects like Dolby and echo cancellation",
+          "Type": "bool",
+          "Default": false
+        },
+        {
+          "Name": "StreamCategory",
+          "Format": "-stream_category {0}",
+          "Description": "Stream Category",
+          "Type": "string",
+          "PossibleValues": [ "other", "communications", "media" ],
+          "Default": "other"
+        }
+      ],
+      "Result": []
+    }
+  ]
+}

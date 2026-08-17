@@ -1,0 +1,28 @@
+{
+    "ComputerName":  "b298295fc000001",
+    "PoolName":  null,
+    "RepoUrl":  "https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/Audio/_git/AudioTestFramework",
+    "RepoName":  "AudioTestFramework",
+    "Worktree":  "C:\\a\\_work\\1\\s",
+    "CommitId":  "941851ef4f626d5adc618ef86eacc7a3eef55572",
+    "SourceBranch":  "refs/heads/personal/sanmahajan/rtk1321support",
+    "ProjectName":  "Audio",
+    "BuildId":  12307276,
+    "BuildParameters":  {
+
+                        },
+    "DefinitionId":  10315,
+    "DefinitionName":  "PR_AudioTestFramework",
+    "DefinitionVariables":  {
+
+                            },
+    "Packages":  {
+                     "Id":  "Microsoft.Windows.ImplementationLibrary",
+                     "Version":  "1.0.240122.1"
+                 },
+    "EWDKPackage":  {
+                        "Id":  "Microsoft.EWDK.GE_RELEASE",
+                        "Version":  "26100.6584.0",
+                        "ReleaseType":  "release"
+                    }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Data version="1.1.0.0"> 
+<AssessmentScore ScoreName="audioconsole.x64.SDV.NORUN" ScoreValue="0" ScoreUnit="" />
+
+<AssessmentScore ScoreName="audioconsole.x64.CodeAnalysis.NORUN" ScoreValue="0" ScoreUnit="" />
+
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Summary" ScoreValue="5" ScoreUnit="Types of defects seen and/or rules not run" />
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Defect.cpp/drivers/multithreaded-av-condition" ScoreValue="3" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Defect.cpp/drivers/examined-value" ScoreValue="1" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Defect.cpp/conditionally-uninitialized-variable" ScoreValue="4" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Defect.cpp/integer-multiplication-cast-to-long" ScoreValue="2" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+<AssessmentScore ScoreName="audioconsole.x64.Semmle.Defect.cpp/paddingbyteinformationdisclosure" ScoreValue="5" ScoreUnit="SEMMLE_RECOMMENDED_FAILED" />
+
+<AssessmentScore ScoreName="audioconsole.x64.General.Checksum" ScoreValue="4RTxTzVEkhBC7gFEeM/cj2DTGrtXA8zFS6SmlmcwOFymyZB2flDC9ulGfwlGfOJDAiYSCv5hnIW9fl7Tg422aA==" ScoreUnit="DVL Checksum Value" />
+</Data>
