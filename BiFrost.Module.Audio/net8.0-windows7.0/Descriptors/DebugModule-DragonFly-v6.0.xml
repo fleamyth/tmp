@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE DebugModule [
+    <!ENTITY DF_DebugModes SYSTEM "DragonFly-v6_DebugModes.xml">
+    <!ENTITY DF_Config SYSTEM "DragonFly-v6_Configurations.xml">
+    <!ENTITY DF_Properties SYSTEM "DragonFly-v6_Properties.xml">
+    <!ENTITY PM_OEMGR SYSTEM "PowerMeters/PM_55.xml">
+    <!ENTITY PM_OEMEL SYSTEM "PowerMeters/PM_88.xml">
+    <!ENTITY PM_766_MIS SYSTEM "PowerMeters/PM_766_MIS.xml">
+    <!ENTITY PM_885_MIS SYSTEM "PowerMeters/PM_885_MIS.xml">
+    <!ENTITY PM_807_MAC SYSTEM "PowerMeters/PM_807_MAC.xml">
+    <!ENTITY PM_900_MAA SYSTEM "PowerMeters/PM_900_MAA.xml">
+    <!ENTITY PM_931_WON SYSTEM "PowerMeters/PM_931_WON.xml">
+    <!ENTITY PM_952_TIA SYSTEM "PowerMeters/PM_952_TIA.xml">
+    <!ENTITY PM_3467_PUE SYSTEM "PowerMeters/PM_3467_PUE.xml">
+]>
+<DebugModule Name="DragonFly-v6.0" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.StandardDebugModule" xmlns="DebugModuleSchemaNs">
+    &DF_DebugModes;
+    &DF_Config;
+    &DF_Properties;
+</DebugModule>

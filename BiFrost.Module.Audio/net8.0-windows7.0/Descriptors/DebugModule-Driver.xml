@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!---
+     This DebugModule Descriptor is used when SDF accesses the SurfaceSerialHubDriver.sys through
+     its DeviceInterface.  We can send IOCTL's to the driver which will then communicate with SAM
+     to send McuCommands/SshMessages.
+-->
+<DebugModule Name="SurfaceSerialHubDriver.sys" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.SshDriverDebugModule"
+  xmlns="DebugModuleSchemaNs">
+  <DebugModes>
+
+    <DebugModeTypes Name="DebugModeTypes" Description="List of acceptable Debug Mode types. Case Sensitive.">
+      <Type Name="Default"/>
+    </DebugModeTypes>
+
+    <DebugMode Name="Default" Type="Default" ProductId="65535" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate to MCU through SSH">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.DriverProtocol" Description="IOProtocol to communicate to MCU through SSH"/>
+        <Field Name="PayloadFormat" Default="SurfaceSerialHubDriver" Description="This tells command filter the kind of format we need to send to SAM"/>
+      </Filter>
+    </DebugMode>
+
+  </DebugModes>
+
+</DebugModule>

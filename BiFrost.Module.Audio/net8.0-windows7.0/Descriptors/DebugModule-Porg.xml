@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DebugModule Name="PORG" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.StandardDebugModule"
+  xmlns="DebugModuleSchemaNs">
+  <DebugModes>
+
+    <DebugModeTypes Name="DebugModeTypes" Description="List of acceptable Debug Mode types. Case Sensitive.">
+      <Type Name="Default"/>
+    </DebugModeTypes>
+
+    <DebugMode Name="Default" Type="Default" ProductId="65535" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to use.">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.UartProtocol" Description="IOProtocol to communicate.">
+          <Field Name="FTDI.Uart" Default="" Description="UART Channel for MCU commands"/>
+          <Field Name="Baudrate" Default="4000000" Description="Connection Baud Rate."/>
+        </Protocol>
+        <RoutingInfo Name="SshRoutingInformation" Description="Device specific routing information">
+          <Target Default="0x02" Description="Sets the default SSH Target Id to KIP"/>
+          <Source Default="0x01" Description="Sets the default SSH Source ID to SAM"/>
+        </RoutingInfo>
+      </Filter>
+    </DebugMode>
+
+  </DebugModes>
+
+</DebugModule>

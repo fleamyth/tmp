@@ -1,0 +1,2137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE DebugModule [
+  <!ENTITY PM_OEMGR SYSTEM "PowerMeters/PM_55.xml">
+  <!ENTITY PM_OEMEL SYSTEM "PowerMeters/PM_88.xml">
+  <!ENTITY PM_766_MIS SYSTEM "PowerMeters/PM_766_MIS.xml">
+  <!ENTITY PM_885_MIS SYSTEM "PowerMeters/PM_885_MIS.xml">
+]>
+<DebugModule Name="DragonFly" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.StandardDebugModule"
+  xmlns="DebugModuleSchemaNs">
+  <DebugModes>
+
+    <DebugModeTypes Name="DebugModeTypes" Description="List of acceptable Debug Mode types. Case Sensitive.">
+      <Type Name="Default"/>
+      <Type Name="None"/>
+      <Type Name="UefiLog"/>
+      <Type Name="UefiFlash"/>
+      <Type Name="SamFlash"/>
+      <Type Name="PowerMonitor"/>
+    </DebugModeTypes>
+
+    <DebugMode Name="Default" Type="Default" ProductId="65535" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate MCU">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.UartProtocol" Description="IOProtocol to communicate MCU">
+          <Field Name="FTDI.Uart" Default="D" Description="Port for MCU commands"/>
+          <Field Name="Baudrate" Default="3000000" Description="Connection Baud Rate."/>
+        </Protocol>
+        <Field Name="PayloadFormat" Default="UspPacket" Description="This tells command filter the kind of format we need to send to SAM"/>
+      </Filter>
+      <Crossbar Config="XBar_HID"/>
+      <IOExpander Config="Expander1_ConfigurationPortRegister_Init"/>
+      <IOExpander Config="Expander0_ConfigurationPortRegister_Init"/>
+      <IOExpander Config="Expander0_PullupEnableRegister_Init"/>
+      <IOExpander Config="Expander0_PullupSelectionRegister_Init"/>
+      <IOExpander Config="Expander0_InterruptMaskRegister_Init"/>
+      <IOExpander Config="Expander1_InterruptMaskRegister_Init"/>
+      <IOExpander Config="Expander0_HID"/>
+      <IOExpander Config="Expander1_HID"/>
+    </DebugMode>
+
+    <DebugMode Name="SamFlash.RT600FlexSpi" Type="SamFlash" ProductId="65535" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="Filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.RT600FlexSpi" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="Port" Default="A" Description="UART Port for data transport"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+
+    <DebugMode Name="UefiFlash.SpiOverSwd" Type="UefiFlash" ProductId="65535" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="Filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+
+    <!-- UefiLog for all DUTs on Port C with baud 3000000-->
+    <DebugMode Name="UefiLog" Type="UefiLog" ProductId="65535" McuCommands="">
+      <Filter Name="AsciiLogFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.AsciiLogFilter">
+        <Protocol Name="UefiLogProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.UartProtocol" Description="IOProtocol to listen to UEFI output">
+          <Field Name="FTDI.Uart" Default="C" Description="Port for UEFI debug output"/>
+          <Field Name="Baudrate" Default="3000000" Description="Connection Baud Rate."/>
+          <Field Name="ReadOperation" Default="ReadLine" Description="Data is expected to be in ASCII format with newlines so use the ReadLine method of System.IO.Ports.SerialPort instead of the binary Read() method."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+
+    <!--OEMJL configurations-->
+    <!--End OEMJL configurations-->
+
+    <!--OEMBE configurations-->
+    <DebugMode Name="OEMGR.PowerMonitor" Type="PowerMonitor" ProductId="55" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        &PM_OEMGR;
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMBE configurations-->
+
+    <!--OEMZE configurations-->
+    <DebugMode Name="OEMZE.PowerMonitor" Type="PowerMonitor" ProductId="60" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P8V_TS" Friendlyname="TS"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_PANEL" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3VSB_TOP" Friendlyname="3VSB_TOP"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VSYS_TOP" Friendlyname="VSYS_TOP"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="8" ID="PM_BATT" Friendlyname="BATTERY"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="200" ID="PM_18V_SAM" Friendlyname="1P8V_SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB" Friendlyname="3P3VSB"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P8VSB" Friendlyname="1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSUS_ORG" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P2V_DDR_VDD2" Friendlyname="1P1V_DDR_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="SSD"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_NVVD" Friendlyname="NVVD"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_TGP" Friendlyname="TGP_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_VCCIN_AUX" Friendlyname="VCCIN_AUX"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCIN" Friendlyname="VCCIN"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMZE configurations-->
+
+    <!--OEMBY configurations-->
+    <DebugMode Name="OEMBY.PowerMonitor" Type="PowerMonitor" ProductId="58" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCIN_AUX_IN_R6701" Friendlyname="VCCIN_AUX"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VSYS_R6330" Friendlyname="VSYS"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_WWAN_R6514" Friendlyname="3P3V_WWAN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCIN_IN_R6701" Friendlyname="VCCIN"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5VSB_IN_R5910" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN_R5914" Friendlyname="3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD_R6511" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VBUS_USBC_IN_R7957" Friendlyname="VBUS_USBC"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_1P8VSB_IN_R6203" Friendlyname="PM_1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P1V_DDR_VDD2_IN_R6016" Friendlyname="PM_1P1V_DDR_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_PANEL_IN_R6508" Friendlyname="PM_3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_BKLT_IN_R7217" Friendlyname="PM_BKLT"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_1P8V_SAM_IN_R3411" Friendlyname="PM_1P8V_SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_5V_TS_IN_R6417" Friendlyname="PM_5V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_USBPD_VIN_IN_R7905" Friendlyname="PM_USBPD_VIN"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN_R2624" Friendlyname="PM_1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3VSUS_ORG_IN_R2612" Friendlyname="PM_3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_1P8V_TS_IN_R6205" Friendlyname="PM_1P8V_TS"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMBY configurations-->
+
+    <!--OEMQN configurations-->
+    <DebugMode Name="OEMQN.PowerMonitor" Type="PowerMonitor" ProductId="57" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!-- BASED ON EV2 SCHEMATIC -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VCCIN_AUX_IN_R6701" Friendlyname="PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="200" ID="PM_1P8V_SAM" Friendlyname="SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WWAN" Friendlyname="WIFI_BLUETOOTH"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCIN_IN" Friendlyname="VCCIN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P1V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="BACKLIGHT"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMQN configurations-->
+
+    <!--OEMWY configurations-->
+    <DebugMode Name="OEMWY.PowerMonitor" Type="PowerMonitor" ProductId="61" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VCCIN_AUX_IN" Friendlyname="PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="PM_1P8V_SAM" Friendlyname="SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WWAN" Friendlyname="WIFI"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCIN_IN" Friendlyname="CPU_CORES"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P1V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="BACKLIGHT"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMWY configurations-->
+
+    <!--OEMCT configurations-->
+    <DebugMode Name="OEMCT.PowerMonitor" Type="PowerMonitor" ProductId="66" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIN_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="PM_5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="PM_3P3VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_TYPEC"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="PM_1P8VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P1V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="200" ID="PM_1P8V_SAM_IN" Friendlyname="SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_5V_TS_IN" Friendlyname="DISPLAY_TOUCH_5V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_BLADE_IN" Friendlyname="KEYBOARD"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_3P3V_LTE" Friendlyname="MODEM_LTE"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="PM_1P8VSUS_ORG_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="PM_3VSUS_ORG_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="50" ID="PM_1P8V_TS_IN" Friendlyname="DISPLAY_TOUCH_1P8V"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+
+    <!--OEMHB, OEMSR, OEMHV configurations share the same ProductId and motherboard-->
+    <DebugMode Name="OEMHB.PowerMonitor" Type="PowerMonitor" ProductId="45" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_CTRL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_1P8VSB_IN" Friendlyname="CPU0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VPH_IN" Friendlyname="SYSTEM"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_PMC1000A_S1_IN" Friendlyname="DDR_VDDQ_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_PMC1000A_S2_IN" Friendlyname="DDR_DD2"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_PMC1000A_S3_IN" Friendlyname="APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_PMC1000A_S6_IN" Friendlyname="VDD_GFX"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_PMC1000E_S1_IN" Friendlyname="VDD_CX"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_BATT" Friendlyname="BATTERY_CHARGER"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_PMC1000E_S6_IN" Friendlyname="VDD_APC1"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_PMC1000C_S1_IN" Friendlyname="VDD_CX_MM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="50" ID="PM_PMC1000C_S2_IN" Friendlyname="VDD_MODEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_PMC1000C_S3_IN" Friendlyname="VDD_MX"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMHB/Cambria configurations-->
+
+    <!--OEMVL configurations-->
+    <DebugMode Name="OEMVL.PowerMonitor" Type="PowerMonitor" ProductId="71" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_PX_VDD2" Friendlyname="VDD_PX_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID=" PM_VDD_IO_EBI_VDDQ" Friendlyname="VDD_IO_EBI_VDDQ"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="50" ID="PM_VDD_A_EBI" Friendlyname="VDD_A_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID=" PM_VDD_APC1" Friendlyname="VDD_APC1"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_+3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_APC0" Friendlyname="APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD_CX_EBI" Friendlyname="VDD_CX_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VDD_MX_C" Friendlyname="VDD_MX_C"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VDD_MX_A" Friendlyname="VDD_MX_A"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_MM" Friendlyname="VDD_MM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VREG_S10B_1P8" Friendlyname="VREG_S10B_1P8"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_BATT" Friendlyname="BATT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_VDD_NSP" Friendlyname="VDD_NSP"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VDD_GFX" Friendlyname="VDD_GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_SC_VPH_PWR" Friendlyname="SC_VPH_PWR"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMVL configurations-->
+
+    <!--OEMBC configurations-->
+    <DebugMode Name="OEMBC.PowerMonitor" Type="PowerMonitor" ProductId="107" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_PX_VDD2" Friendlyname="VDD_PX_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID=" PM_VDD_IO_EBI_VDDQ" Friendlyname="VDD_IO_EBI_VDDQ"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="50" ID="PM_VDD_A_EBI" Friendlyname="VDD_A_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID=" PM_VDD_APC1" Friendlyname="VDD_APC1"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_+3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_APC0" Friendlyname="APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD_CX_EBI" Friendlyname="VDD_CX_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VDD_MX_C" Friendlyname="VDD_MX_C"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VDD_MX_A" Friendlyname="VDD_MX_A"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_MM" Friendlyname="VDD_MM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VREG_S10B_1P8" Friendlyname="VREG_S10B_1P8"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_BATT" Friendlyname="BATT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_VDD_NSP" Friendlyname="VDD_NSP"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VDD_GFX" Friendlyname="VDD_GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_SC_VPH_PWR" Friendlyname="SC_VPH_PWR"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMBC configurations-->
+
+    <!--OEMBR configurations-->
+    <DebugMode Name="OEMBR.PowerMonitor" Type="PowerMonitor" ProductId="108" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_PX_VDD2" Friendlyname="VDD_PX_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID=" PM_VDD_IO_EBI_VDDQ" Friendlyname="VDD_IO_EBI_VDDQ"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="50" ID="PM_VDD_A_EBI" Friendlyname="VDD_A_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID=" PM_VDD_APC1" Friendlyname="VDD_APC1"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_+3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_APC0" Friendlyname="APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD_CX_EBI" Friendlyname="VDD_CX_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VDD_MX_C" Friendlyname="VDD_MX_C"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VDD_MX_A" Friendlyname="VDD_MX_A"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_MM" Friendlyname="VDD_MM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VREG_S10B_1P8" Friendlyname="VREG_S10B_1P8"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_BATT" Friendlyname="BATT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_VDD_NSP" Friendlyname="VDD_NSP"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VDD_GFX" Friendlyname="VDD_GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_SC_VPH_PWR" Friendlyname="SC_VPH_PWR"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMBR configurations-->
+
+    <!--OEMMN configurations-->
+    <DebugMode Name="OEMMN.PowerMonitor" Type="PowerMonitor" ProductId="117" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_MX_APC0" Friendlyname="MX_APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_GFX" Friendlyname="GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_MX_APC2" Friendlyname="MX_APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VSYS_1B" Friendlyname="VSYS_1B"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_USB" Friendlyname="USB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_APC1" Friendlyname="APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_APC2" Friendlyname="APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_MX_APC1" Friendlyname="MX_APC1"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="BKLT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="VSYS_ISNS" Friendlyname="VSYS_ISNS"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VSYS_1A" Friendlyname="VSYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_MM" Friendlyname="MM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_S1C_SC2" Friendlyname="S1C_SC2"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VDD2H" Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD2L" Friendlyname="VDD2L"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WCN_PWR" Friendlyname="3P86V_WCN_PWR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_APC0" Friendlyname="APC0"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMMN configurations-->
+
+    <!--OEMAT configurations-->
+    <!--End OEMAT configurations-->
+
+    <!--OEMVS configurations-->
+    <DebugMode Name="OEMVS.PowerMonitor" Type="PowerMonitor" ProductId="79" McuCommands="">
+      <!-- OEMVS schematic <codename redacted>_MB_UP3_20210721.pdf -->
+      <!-- p40 shows the 4 MAX34417 power meters -->
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_+V1P05_BYP" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_+VNN_BYP_IN" Friendlyname="PM_+VNN_BYP_IN"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="PM_+1P8V_SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_TOUCH_AUDO_TPM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WWAN" Friendlyname="WIFI_BLUETOOTH"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USBPD_VIN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P1V_DDR_VDD2" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_PANEL" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VCCIN_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_TYPEC"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMVS configurations-->
+
+    <!--OEMLT configurations-->
+    <DebugMode Name="OEMLT.PowerMonitor" Type="PowerMonitor" ProductId="81" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of LATONA_V1P0_16JUNE2021.pdf-->
+          <!--U2813 Part A-->
+          <Component Name="PowerMeterA" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VDDCRSR_IN" Friendlyname="VDDCRSR"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_VDDCORE_IN" Friendlyname="VDDCORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_VSYS" Friendlyname="VSYS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WLAN" Friendlyname="3P3V_WLAN"/>
+          </Component>
+          <!--U2802 Part B-->
+          <Component Name="PowerMeterB" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_0P5V_DDR_VDDQ" Friendlyname="0P5V_DDR_VDDQ"/>
+          </Component>
+          <!--U2803 Part C-->
+          <Component Name="PowerMeterC" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="BKLT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8V_TS_IN" Friendlyname="1P8V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="1P05V_DDR_VDD2"/>
+          </Component>
+          <!--U2804 Part D-->
+          <Component Name="PowerMeterD" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VDD_MISC_IN" Friendlyname="VDD_MISC"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_5V_TS_IN" Friendlyname="5V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_VDD_1P1V_IN" Friendlyname="VDD_1P1V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_SDXC_IN" Friendlyname="3P3V_SDXC"/>
+          </Component>
+          <!--U2805 Part E-->
+          <Component Name="PowerMeterE" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VDD_MEM_0.78V_IN" Friendlyname="VDD_MEM_0.78V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB"/>
+          </Component>
+          <!--U2806 Part F-->
+          <Component Name="PowerMeterF" Class="MaximPowerMeter" ChipType="34417" Address="1a">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_USBPD_VIN_IN" Friendlyname="USBPD_VIN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8V_RT0_IN" Friendlyname="1P8V_RT0"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8V_DDR_VDD1" Friendlyname="1P8V_DDR_VDD1"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VDDSOC_IN" Friendlyname="VDDSOC"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMLT configurations-->
+
+    <!--OEMEL configurations-->
+    <DebugMode Name="OEMEL.PowerMonitor" Type="PowerMonitor" ProductId="88" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        &PM_OEMEL;
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMEL configurations-->
+
+    <!--OEMLO configurations-->
+    <DebugMode Name="OEMLO.PowerMonitor" Type="PowerMonitor" ProductId="93" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of louise_mb_wifi_ev1_20210903.pdf-->
+          <!--U2813 Part A-->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!--U2802 Part B-->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="PM_5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_3P3VSB_IN" Friendlyname="PM_3P3VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="PM_+1P8V_SAM"/>
+          </Component>
+          <!--U2803 Part C-->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8V_TS_IN" Friendlyname="PM_1P8V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+          </Component>
+          <!--U2805 Part E-->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="PM_1P8VSUS_ORG_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="PM_3VSUS_ORG_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="PM_1P8VSB_IN"/>
+          </Component>
+          <!--U2806 Part F-->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="PM_3P3V_TBT0_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_TYPEC"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="PM_VCCGT_IN"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMLO configurations-->
+
+    <!--OEMMK configurations-->
+    <DebugMode Name="OEMMK.PowerMonitor" Type="PowerMonitor" ProductId="97" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p67 of Valo Fab E.pdf-->
+          <!-- U6705 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_PX_VDD2" Friendlyname="VDD_PX_VDD2"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID=" PM_VDD_IO_EBI_VDDQ" Friendlyname="VDD_IO_EBI_VDDQ"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="50" ID="PM_VDD_A_EBI" Friendlyname="VDD_A_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID=" PM_VDD_APC1" Friendlyname="VDD_APC1"/>
+          </Component>
+          <!-- U6704 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_+3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+          <!-- U6703 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_APC0" Friendlyname="APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD_CX_EBI" Friendlyname="VDD_CX_EBI"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VDD_MX_C" Friendlyname="VDD_MX_C"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VDD_MX_A" Friendlyname="VDD_MX_A"/>
+          </Component>
+          <!-- U6702 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="50" ID="PM_VDD_MM" Friendlyname="VDD_MM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VREG_S10B_1P8" Friendlyname="VREG_S10B_1P8"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_BATT" Friendlyname="BATT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+          </Component>
+          <!-- U6701 Part E -->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_VDD_NSP" Friendlyname="VDD_NSP"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VDD_GFX" Friendlyname="VDD_GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_SC_VPH_PWR" Friendlyname="SC_VPH_PWR"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMMK configurations-->
+
+    <!--OEMIN configurations-->
+    <DebugMode Name="OEMIN.PowerMonitor" Type="PowerMonitor" ProductId="96" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p9 and p48 of INASA_0909_EE_X00.pdf-->
+          <!--U4806-->
+          <Component Name="U4806" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="0" ID="PM_12VSB_IN_R" Friendlyname="12VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="0" ID="PM_5V_LCD_IN_R" Friendlyname="5V_LCD_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="0" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="0" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!--U4803-->
+          <Component Name="U4803" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="0" ID="PM_5VSB_IN_R" Friendlyname="5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="0" ID="33V_VREF_R" Friendlyname="3P3V_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="0" ID="PM_+1P8V_SAM_R" Friendlyname="1P8V_SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="0" ID="PM_3P3VSB_IN_R" Friendlyname="3P3VSB"/>
+          </Component>
+          <!--U4804-->
+          <Component Name="U4804" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P8VSB_IN_R" Friendlyname="1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSUS_ORG_IN_R" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P1V_DDR_VDD2_IN_R" Friendlyname="1P1V_DDR_VDD2_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_MSATA_R" Friendlyname="3P3V_MSATA"/>
+          </Component>
+          <!--U4805-->
+          <Component Name="U4805" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_FBVDDQ_IN_R" Friendlyname="NVVDD"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_TGP_IN_R" Friendlyname="TGP_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_VCCIN_AUX_IN_R" Friendlyname="VCCIN_AUX_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VCCIN_IN_R" Friendlyname="VCCIN_IN"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMIN configurations-->
+
+    <!--OEMID configurations-->
+    <DebugMode Name="OEMID.PowerMonitor" Type="PowerMonitor" ProductId="99" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of INDI_EVT_202111181700_GERBER.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2802 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+          </Component>
+          <!-- U2805 Part F -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMID configurations-->
+
+    <!--OEMSA configurations-->
+    <DebugMode Name="OEMSA.PowerMonitor" Type="PowerMonitor" ProductId="105" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p24 of z95_mb_verb_ev1_20220329_1900.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VIN" Friendlyname="VIN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_BATT" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_3VLCD_CON" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VIN_BLIGHT" Friendlyname="DISPLAY_BACKLIGHT"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2805 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1.05V_MEM" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_1P8VSAM" Friendlyname="1P8V_SAM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_3P3VSAM" Friendlyname="3P3V_SAM"/>
+          </Component>
+          <!-- U2802 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCIN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+          </Component>
+          <!-- U2802 Part E -->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_UFS_VCC" Friendlyname="VCC_UFS_STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_UFS_VCCQ" Friendlyname="VCCQ_UFS_STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_UFS_VCCQ2" Friendlyname="VCCQ2_UFS_STORAGE"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMSA configurations-->
+
+    <!--OEMYU configurations-->
+    <DebugMode Name="OEMYU.PowerMonitor" Type="PowerMonitor" ProductId="110" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p40 of YUSHAN_MB_ABL_U_20220513.pdf-->
+          <!-- U19 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VCCIN_AUX_IN" Friendlyname="CPU_AUX"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_V1P05_BYP_IN" Friendlyname="CPU_BYP_VP105"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VNN_BYP_IN" Friendlyname="CPU_BYP_VNN"/>
+          </Component>
+          <!-- U24 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_1P8V_SAM" Friendlyname="MCU_1P8V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="SYSTEM_1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_WWAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U27 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_PD_CTRL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P05V_MEM" Friendlyname="MAINMEM_1P05V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_CTLR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+          </Component>
+          <!-- U93 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="SYSTEM_5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="SYSTEM_3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VCCIN_IN" Friendlyname="CPU_CORES"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VCCGT" Friendlyname="CPU_GFX"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMYU configurations-->
+
+    <!--OEMML configurations-->
+    <DebugMode Name="OEMML.PowerMonitor" Type="PowerMonitor" ProductId="120" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of MALWA_EV_12071900_GERBER.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMML configurations-->
+
+    <!--OEMCX configurations-->
+    <DebugMode Name="OEMCX.SamFlash" Type="SamFlash" ProductId="113" McuCommands="STM32Flash">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.STM32Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+
+    <!--OEMHT configurations-->
+    <DebugMode Name="OEMHT.PowerMonitor" Type="PowerMonitor" ProductId="112" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of HUNTINGTON_MB_15W_PRE%20EV_Final.pdf-->
+          <!--U2813 Part A-->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VCCIO_IN" Friendlyname="CPU_VCCIO"/>
+          </Component>
+          <!--U2802 Part B-->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="SYSTEM_5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_3P3VSB_IN" Friendlyname="SYSTEM_3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="MCU_1P8V"/>
+          </Component>
+          <!--U2803 Part C-->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5V_BLADE_IN" Friendlyname="KEYBOARD"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8V_TS_IN" Friendlyname="TOUCH_1P8V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+          </Component>
+          <!--U2807 Part D-->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="3P3V_NFC1_VBAT_IN" Friendlyname="NFC_VBAT"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="1P8V_NFC1_VDDPAD_IN" Friendlyname="NFC_VDDPAD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="SYSTEM_1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="25" ID="PM_VNNAON_IN" Friendlyname="CPU_VNNAON"/>
+          </Component>
+          <!--U2805 Part E-->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCSA_IN" Friendlyname="CPU_VCCSA"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="CPU_1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="CPU_3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="CPU_VCCIA"/>
+          </Component>
+          <!--U2806 Part F-->
+          <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="TBT_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_TYPEC"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="CPU_VCCGT"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMHT configurations-->
+
+    <!--OEMHP configurations-->
+    <DebugMode Name="OEMHP.PowerMonitor" Type="PowerMonitor" ProductId="112" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of HARPER SCHEMATIC .pdf-->
+          <!--U2813 Part A-->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VCCIO_IN" Friendlyname="CPU_VCCIO"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="TBT0_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_TBT1_IN" Friendlyname="TBT1_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_TYPEC"/>
+          </Component>
+          <!--U2802 Part B-->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="SYSTEM_5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+          </Component>
+          <!--U2803 Part C-->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8V_TS_IN" Friendlyname="TOUCH_1P8V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_5P0V_TS_IN" Friendlyname="TOUCH_5P0V"/>
+          </Component>
+          <!--U2807 Part D-->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="2" ID="PM_PMIC1_IN" Friendlyname="PMIC1"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="2" ID="PM_PMIC2_IN" Friendlyname="PMIC2"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="2" ID="PM_PMIC3_IN" Friendlyname="PMIC3"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="2" ID="PM_PMIC4_IN" Friendlyname="PMIC4"/>
+          </Component>
+          <!--U2805 Part E-->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="2" ID="PM_SCVR_IN" Friendlyname="SCVR"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="CPU_1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End OEMHP configurations-->
+
+    <!--POI configurations-->
+    <DebugMode Name="POI.PowerMonitor" Type="PowerMonitor" ProductId="131" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of schematic-->
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="VSYS_DSW_R_CSN_A"   Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_VCORE_S0_IN"     Friendlyname="CPU_VCORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_5V_S5_IN"        Friendlyname="SYSTEM_5V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_3P3V_WLAN_S5_IN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="PM_1P8V_DSW_IN"     Friendlyname="SYSTEM_1P8V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_3P3V_DSW_IN"     Friendlyname="SYSTEM_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_VCCANA_IN"       Friendlyname="CPU_VCCANA"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_VCCIN_AUX_S5_IN" Friendlyname="CPU_VCCIN_AUX"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End POI configurations-->
+
+    <!--831-WID configurations-->
+    <DebugMode Name="WID.PowerMonitor" Type="PowerMonitor" ProductId="129" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of MALWA_EV_12071900_GERBER.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 831-WID configurations-->
+
+    <!--830-QUN configurations-->
+    <DebugMode Name="QUN.PowerMonitor" Type="PowerMonitor" ProductId="128" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of MALWA_EV_12071900_GERBER.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 830-QUN configurations-->
+
+    <!--912-QUL configurations-->
+    <DebugMode Name="QUL.PowerMonitor" Type="PowerMonitor" ProductId="134" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!--p28 of MALWA_EV_12071900_GERBER.pdf-->
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WLAN" Friendlyname="WIFI"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="PROCESSOR_PCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="PROCESSOR_CORE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MEMORY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_POWER_DELIVERY"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 912-QUL configurations-->
+
+    <!--874-GOA configurations-->
+    <DebugMode Name="GOA.PowerMonitor" Type="PowerMonitor" ProductId="132" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_CTRL"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_WIFI_PMU_PWR_IN" Friendlyname="WIFI_PMU_PWR_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VCCIO_IN" Friendlyname="CPU_VCCIO"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="SYSTEM_5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_3P3VSB_IN" Friendlyname="SYSTEM_3P3VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="STORAGE_SSD_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_+1P8V_SAM" Friendlyname="MCU_1P8V"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_5V_BLADE_IN" Friendlyname="BLADE"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="MAINMEM_1P05V"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_SDX_VPH_IN" Friendlyname="PM_SDX_VPH_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="SYSTEM_1P8VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="25" ID="PM_VNNAON_IN" Friendlyname="CPU_VNNAON"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="25" ID="PM_VCCSA_IN" Friendlyname="CPU_VCCSA"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="CPU_1P8VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="CPU_3VSUS_ORG"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="CPU_CORES"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_USBPD_VIN_IN" Friendlyname="USB_PD_CONTROLLER"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_TBT0_IN" Friendlyname="TBT_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_VBUS_USBC_IN" Friendlyname="USB_C_VBUS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="CPU_GFX"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 874-GOA configurations-->
+
+    <!--774-LAN configurations-->
+    <DebugMode Name="LAN.UefiFlash" Type="UefiFlash" ProductId="124" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+    <DebugMode Name="LAN.SamFlash" Type="SamFlash" ProductId="124" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+    <DebugMode Name="LAN.PowerMonitor" Type="PowerMonitor" ProductId="124" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_MX_APC0" Friendlyname="MX_APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_GFX" Friendlyname="GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_MX_APC2" Friendlyname="MX_APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VSYS_1B" Friendlyname="VSYS_1B"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_USB" Friendlyname="USB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_APC1" Friendlyname="APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5" ID="PM_APC2" Friendlyname="APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_MX_APC1" Friendlyname="MX_APC1"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN" Friendlyname="BKLT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_SDX_VPH" Friendlyname="SDX_VPH"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="VSYS_ISNS" Friendlyname="VSYS_ISNS"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VSYS_1A" Friendlyname="VSYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_MM" Friendlyname="MM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN" Friendlyname="5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_S1C_SC2" Friendlyname="S1C_SC2"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VDD2H" Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD2L" Friendlyname="VDD2L"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WCN_PWR" Friendlyname="3P86V_WCN_PWR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_APC0" Friendlyname="APC0"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 774-LAN configurations-->
+
+    <!--768-VEA configurations-->
+    <DebugMode Name="VEA.UefiFlash" Type="UefiFlash" ProductId="125" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+    <DebugMode Name="VEA.SamFlash" Type="SamFlash" ProductId="125" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+    <DebugMode Name="VEA.PowerMonitor" Type="PowerMonitor" ProductId="125" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PMI_CAMF_1P8V"       Friendlyname="CAMF_1P8V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PMI_TOUCH_3P3V"      Friendlyname="TOUCH_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PMI_NSP"             Friendlyname="NSP"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="WIFI_0P95V"          Friendlyname="WIFI_0P95V"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="WIFI_3P86V_1P95V"    Friendlyname="WIFI_3P86V_1P95V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="UFS_2P5V"            Friendlyname="UFS_2P5V"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PMI_CPU_APC1"        Friendlyname="CPU_APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PMI_CPU_APC0"        Friendlyname="CPU_APC0"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"   ID="SYS_1A"              Friendlyname="SYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"   ID="SYS_1B"              Friendlyname="SYS_1B"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="SYS_ROP_LEFT"        Friendlyname="SYS_ROP_LEFT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="SYS_ROP_RIGHT"       Friendlyname="SYS_ROP_RIGHT"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="DISPLAY_PANEL_3P3V"  Friendlyname="DISPLAY_PANEL_3P3V"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="DISPLAY_PANEL_SYS"   Friendlyname="DISPLAY_PANEL_SYS"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="UFS_1P2V"            Friendlyname="UFS_1P2V"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PMI_GPU"             Friendlyname="GPU"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PMI_PEN_5VSB"        Friendlyname="PEN_5VSB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PMI_BLADE"           Friendlyname="BLADE"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PMI_WSA_LEFT"        Friendlyname="WSA_LEFT"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="MAINMEM_VDD2H"       Friendlyname="MAINMEM_VDD2H"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 768-VEA configurations-->
+
+    <!--Need to update PowerRail data as supported by ALE device-->
+    <!--971_ALE configurations-->
+    <DebugMode Name="ALE.UefiFlash" Type="UefiFlash" ProductId="136" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+    <DebugMode Name="ALE.SamFlash" Type="SamFlash" ProductId="136" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+    <DebugMode Name="ALE.PowerMonitor" Type="PowerMonitor" ProductId="136" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_MX_APC0" Friendlyname="MX_APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_GFX"     Friendlyname="GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_MX_APC2" Friendlyname="MX_APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_VSYS_1B" Friendlyname="VSYS_1B"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_USB"     Friendlyname="USB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_APC1"    Friendlyname="APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_APC2"    Friendlyname="APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_MX_APC1" Friendlyname="MX_APC1"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN"       Friendlyname="BKLT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_SDX_VPH"       Friendlyname="SDX_VPH"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="VSYS_ISNS"        Friendlyname="VSYS_ISNS"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VSYS_1A"       Friendlyname="VSYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_MM"            Friendlyname="MM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN"       Friendlyname="5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_S1C_SC2"       Friendlyname="S1C_SC2"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VDD2H"         Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD2L"         Friendlyname="VDD2L"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WCN_PWR" Friendlyname="3P86V_WCN_PWR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_APC0"          Friendlyname="APC0"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 971_ALE configurations-->
+
+    <!--Need to update PowerRail data as supported by ROT device-->
+    <!--883_ROT configurations-->
+    <DebugMode Name="ROT.UefiFlash" Type="UefiFlash" ProductId="137" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+    <DebugMode Name="ROT.SamFlash" Type="SamFlash" ProductId="137" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+    <DebugMode Name="ROT.PowerMonitor" Type="PowerMonitor" ProductId="137" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_MX_APC0" Friendlyname="MX_APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_GFX"     Friendlyname="GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_MX_APC2" Friendlyname="MX_APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_VSYS_1B" Friendlyname="VSYS_1B"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_USB"     Friendlyname="USB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_APC1"    Friendlyname="APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_APC2"    Friendlyname="APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_MX_APC1" Friendlyname="MX_APC1"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN"       Friendlyname="BKLT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_SDX_VPH"       Friendlyname="SDX_VPH"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="VSYS_ISNS"        Friendlyname="VSYS_ISNS"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VSYS_1A"       Friendlyname="VSYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_MM"            Friendlyname="MM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN"       Friendlyname="5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_S1C_SC2"       Friendlyname="S1C_SC2"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VDD2H"         Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD2L"         Friendlyname="VDD2L"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WCN_PWR" Friendlyname="3P86V_WCN_PWR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_APC0"          Friendlyname="APC0"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 883_ROT configurations-->
+
+    <!--Need to update PowerRail data as supported by SAE device-->
+    <!--867_SAE configurations-->
+    <DebugMode Name="SAE.UefiFlash" Type="UefiFlash" ProductId="138" McuCommands="EnableUefiFlashProgrammingMode 1">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashUefiProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash UEFI">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6SpiOverSwd" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SPI frequency"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UEFI_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_P03_MUX_SET"/>
+    </DebugMode>
+    <DebugMode Name="SAE.SamFlash" Type="SamFlash" ProductId="138" McuCommands="">
+      <Filter Name="FlashFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.FlashFilter" Description="A filter for flashing devices">
+        <Protocol Name="FlashSamProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.FlashProtocol" Description="IOProtocol to flash SAM">
+          <Field Name="TransportType" Default="Microsoft.Devices.SurfaceDebugFramework.Flash.Cy8c6Flash" Description="Transport type for flashing"/>
+          <Field Name="Frequency" Default="10000000" Description="SAM SWD frequency"/>
+          <Field Name="SensorConfigOffset" Default="0x14b000" Description="Sensor config flash address offset used by SkipSensorConfig flash mode"/>
+          <Field Name="SensorConfigSize" Default="4096" Description="Sensor config flash partition size used by SkipSensorConfig flash mode"/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_SAM_SwdFlash"/>
+      <IOExpander Config="Expander0"/>
+      <IOExpander Config="Expander1_SWD"/>
+    </DebugMode>
+    <DebugMode Name="SAE.PowerMonitor" Type="PowerMonitor" ProductId="138" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_MX_APC0" Friendlyname="MX_APC0"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_GFX"     Friendlyname="GFX"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_MX_APC2" Friendlyname="MX_APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_VSYS_1B" Friendlyname="VSYS_1B"/>
+          </Component>
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_USB"     Friendlyname="USB"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_APC1"    Friendlyname="APC1"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_APC2"    Friendlyname="APC2"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_MX_APC1" Friendlyname="MX_APC1"/>
+          </Component>
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN"       Friendlyname="BKLT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_SDX_VPH"       Friendlyname="SDX_VPH"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="VSYS_ISNS"        Friendlyname="VSYS_ISNS"/>
+          </Component>
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VSYS_1A"       Friendlyname="VSYS_1A"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_MM"            Friendlyname="MM"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_5VSB_IN"       Friendlyname="5VSB_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_S1C_SC2"       Friendlyname="S1C_SC2"/>
+          </Component>
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VDD2H"         Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_VDD2L"         Friendlyname="VDD2L"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WCN_PWR" Friendlyname="3P86V_WCN_PWR"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"  ID="PM_APC0"          Friendlyname="APC0"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 867_SAE configurations-->
+
+    <!--807-MCA configurations-->
+    <DebugMode Name="MCA.PowerMonitor" Type="PowerMonitor" ProductId="135" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_3P3V_TS_IN"      Friendlyname="3P3V_TOUCH"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_VNNAON_IN"       Friendlyname="VNNAON"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"    ID="PM_VCC_LP_ECORE_IN" Friendlyname="ECORE"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"    ID="PM_VCCCORE_IN"      Friendlyname="VCCCORE"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_3P3V_WLAN"      Friendlyname="3P3V_WLAN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"   ID="PM_AUDIO_CODEC_IN"  Friendlyname="AUDIO_CODEC"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TBT0_IN"    Friendlyname="3P3V_TBT0"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"   ID="PM_VBUS_USBC_IN"    Friendlyname="VBUS_USBC"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"    ID="PM_VSYS"            Friendlyname="VSYS"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_BKLT_IN"         Friendlyname="BACKLIGHT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"   ID="M_1P8V_CAM_F_IN"    Friendlyname="1P8V_CAM_F"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_3P3V_PANEL_IN"   Friendlyname="DISPLAY_PANEL"/>
+          </Component>
+          <!-- U2804 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_VCCIO_IN"        Friendlyname="VCCIO"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"    ID="PM_VCCGT_IN"        Friendlyname="VCCGT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"    ID="PM_VCCSA_IN"        Friendlyname="VCCSA"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="PM_AUDIO_SPEAKER_IN" Friendlyname="AUDIO_SPEAKER"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_3P3V_SSD"         Friendlyname="3P3V_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_3P86V_WWAN"       Friendlyname="3P86V_WWAN_5G"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_1P8VSUS_ORG_IN"   Friendlyname="1P8VSUS_ORG"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_VDD2H_IN"         Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_5V_TP_IN"         Friendlyname="5V_TP"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_BAT_IN"           Friendlyname="BATTERY_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"  ID="PM_5V_FAN_IN"        Friendlyname="5V_FAN"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 807-MCA configurations-->
+
+    <!--885_MIS configurations-->
+    <DebugMode Name="885_MIS.PowerMonitor" Type="PowerMonitor" ProductId="141" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        &PM_885_MIS;
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol for I2C R/W.">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 885_MIS configurations-->
+
+    <!--766_MIS configurations-->
+    <DebugMode Name="766_MIS.PowerMonitor" Type="PowerMonitor" ProductId="142" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        &PM_766_MIS;
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol for I2C R/W.">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--End 766_MIS configurations-->
+
+    <!--931-WON configurations-->
+    <DebugMode Name="WON.PowerMonitor" Type="PowerMonitor" ProductId="143" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"   ID="PM_VCCCORE_IN"      Friendlyname="VCCCore_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_VNNAON_IN"       Friendlyname="VNNAON"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PM_VCC_LP_ECORE_IN" Friendlyname="VCC_LP_ECORE_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"  ID="PM_VCCIO_IN"        Friendlyname="VCCIO"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_VDD2H_IN"      Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_3P3V_SSD"      Friendlyname="3P3_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TBT0_IN"  Friendlyname="3P3V_Retimer(TBT0)"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"   ID="PM_VBUS_USBC_IN"  Friendlyname="VBUS_USBC(SOURCE)"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_3P3V_PANEL_IN"  Friendlyname="3P3V_Panel"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_BAT_IN"         Friendlyname="IBATT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"  ID="PM_1P8V_TS_IN"     Friendlyname="1P8V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PM_VSYS"           Friendlyname="VSYS"/>
+          </Component>
+          <!-- U2804 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"   ID="PM_VCCSA_IN"        Friendlyname="VCCSA_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"   ID="PM_VCCGT_IN"        Friendlyname="VCCGT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_1P05V_CAM_IN"    Friendlyname="1P05V_CAM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_+1P8V_CAM_F_IN"  Friendlyname="1P8V_CAM_F"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="PM_AUDIO_SPEAKER_IN"  Friendlyname="AUDIO_SPEAKER"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_3P3V_WLAN"         Friendlyname="3P3V_WLAN(Intel)"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_1P8VSUS_ORG_IN"    Friendlyname="1P8V_VSUS"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100"  ID="PM_+2P8V_CAM_F_IN"  Friendlyname="2P8V_CAM_F"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_5V_FAN_IN"       Friendlyname="5V_FAN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TS_IN"      Friendlyname="3P3V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_BKLT_IN"         Friendlyname="DisplayBacklight"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--931-WON configurations-->
+
+    <!--900-MAA configurations-->
+    <DebugMode Name="MAA.PowerMonitor" Type="PowerMonitor" ProductId="144" McuCommands="">
+      <Filter Name="PowerMeterFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.PowerMeterFilter" Description="Filter to read PowerMeters via I2C">
+        <Components>
+          <!-- U2813 Part A -->
+          <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"   ID="PM_VCCCORE_IN"      Friendlyname="VCCCore_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_VNNAON_IN"       Friendlyname="VNNAON"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PM_VCC_LP_ECORE_IN" Friendlyname="VCC_LP_ECORE_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"  ID="PM_VCCIO_IN"        Friendlyname="VCCIO"/>
+          </Component>
+          <!-- U2802 Part B -->
+          <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_VDD2H_IN"      Friendlyname="VDD2H"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_3P3V_SSD"      Friendlyname="3P3_SSD"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TBT0_IN"  Friendlyname="3P3V_Retimer(TBT0)"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"   ID="PM_VBUS_USBC_IN"  Friendlyname="VBUS_USBC(SOURCE)"/>
+          </Component>
+          <!-- U2803 Part C -->
+          <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_3P3V_PANEL_IN"  Friendlyname="3P3V_Panel"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_BAT_IN"         Friendlyname="IBATT"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"  ID="PM_1P8V_TS_IN"     Friendlyname="1P8V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PM_VSYS"           Friendlyname="VSYS"/>
+          </Component>
+          <!-- U2804 Part D -->
+          <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"   ID="PM_VCCSA_IN"        Friendlyname="VCCSA_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"   ID="PM_VCCGT_IN"        Friendlyname="VCCGT_IN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_1P05V_CAM_IN"    Friendlyname="1P05V_CAM"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_+1P8V_CAM_F_IN"  Friendlyname="1P8V_CAM_F"/>
+          </Component>
+          <!-- U2805 Part E -->
+          <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="PM_AUDIO_SPEAKER_IN"  Friendlyname="AUDIO_SPEAKER"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_3P3V_WLAN"         Friendlyname="3P3V_WLAN(Intel)"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_1P8VSUS_ORG_IN"    Friendlyname="1P8V_VSUS"/>
+          </Component>
+          <!-- U2806 Part F -->
+          <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+            <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100"  ID="PM_+2P8V_CAM_F_IN"  Friendlyname="2P8V_CAM_F"/>
+            <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_5V_FAN_IN"       Friendlyname="5V_FAN"/>
+            <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TS_IN"      Friendlyname="3P3V_TS"/>
+            <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_BKLT_IN"         Friendlyname="DisplayBacklight"/>
+          </Component>
+        </Components>
+        <Protocol Name="PowerMeterProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.I2cProtocol" Description="IOProtocol to perform I2C reads and writes">
+          <Field Name="PortName" Default="A" Description="Port for Power Meter Chip"/>
+          <Field Name="Baudrate" Default="400000" Description="Connection baudrate."/>
+        </Protocol>
+      </Filter>
+      <Crossbar Config="XBar_UefiLog_PowerMonitor"/>
+      <IOExpander Config="Expander0_PMI"/>
+      <IOExpander Config="Expander1_PMI"/>
+    </DebugMode>
+    <!--900-MAA configurations-->
+
+  </DebugModes>
+
+  <Configurations>
+    <!--
+      IOExpander Configurations
+    -->
+
+    <!-- DipSwitch_InputPortRegister used to read the DIP switch Value. -->
+    <IOExpanderConfig Name="DipSwitch_InputPortRegister" Target="IOExpander_U302" Register="InputPortRegister" IsRead="true" Reverse="true" Description="DipSwitch Mask registers to read.">
+      <Mask Name="E0_P10_SWITCH_4"/>
+      <Mask Name="E0_P11_SWITCH_3"/>
+      <Mask Name="E0_P12_SWITCH_2"/>
+      <Mask Name="E0_P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="DefaultInterruptMaskRegister" Target="IOExpander_U301" Register="InterruptMaskRegister" Invert="true" Description="Contains bit mask of interrupts to enable on the IO Expander.">
+      <Mask Name="E1_P15_3P3VA_STAT"/>
+    </IOExpanderConfig>
+
+    <!--
+        Initialization configurations
+    -->
+
+    <IOExpanderConfig Name="Expander1_ConfigurationPortRegister_Init" Target="IOExpander_U301" Register="ConfigurationPortRegister" Invert="true">
+      <!-- ConfigurationPortRegister should have Invert="true" -->
+      <!-- Pin Mask = 15-->
+      <Mask Name="E1_P00_MUX_SEL2"/>
+      <Mask Name="E1_P01_MUX_SEL1"/>
+      <Mask Name="E1_P02_MUX_SEL0"/>
+      <Mask Name="E1_P03_MUX_SET_EN1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_ConfigurationPortRegister_Init" Target="IOExpander_U302" Register="ConfigurationPortRegister" Invert="true">
+      <!-- ConfigurationPortRegister should have Invert="true" -->
+      <!-- Pin Mask = 128 -->
+      <Mask Name="E0_P07_SAM_RESET"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_PullupEnableRegister_Init" Target="IOExpander_U302" Register="PullupEnableRegister">
+      <!-- Pin Mask = 3840-->
+      <Mask Name="E0_P10_SWITCH_4"/>
+      <Mask Name="E0_P11_SWITCH_3"/>
+      <Mask Name="E0_P12_SWITCH_2"/>
+      <Mask Name="E0_P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_PullupSelectionRegister_Init" Target="IOExpander_U302" Register="PullupSelectionRegister">
+      <!-- Pin Mask = 3840-->
+      <Mask Name="E0_P10_SWITCH_4"/>
+      <Mask Name="E0_P11_SWITCH_3"/>
+      <Mask Name="E0_P12_SWITCH_2"/>
+      <Mask Name="E0_P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander1_InterruptMaskRegister_Init" Target="IOExpander_U301" Register="InterruptMaskRegister" Invert="true">
+      <!-- InterruptMaskRegister should have Invert="true" -->
+      <!-- Pin Mask = 16704 -->
+      <Mask Name="E1_P06_SLP_S3"/>
+      <Mask Name="E1_P10_3P3VSB_STAT"/>
+      <Mask Name="E1_P16_SLP_S4_N"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_InterruptMaskRegister_Init" Target="IOExpander_U302" Register="InterruptMaskRegister" Invert="true">
+      <!-- InterruptMaskRegister should have Invert="true" -->
+      <!-- Pin Mask = 8272 -->
+      <Mask Name="E0_P04_H_PROCHOT_1P8V"/>
+      <Mask Name="E0_P06_PLT_RST_BUF"/>
+      <Mask Name="E0_P15_CATERR_1V8"/>
+    </IOExpanderConfig>
+
+    <!-- OutputPortRegister Configurations -->
+
+    <IOExpanderConfig Name="Expander0" Target="IOExpander_U302" Register="OutputPortRegister">
+      <!-- Pin Mask = 128 -->
+      <Mask Name="E0_P07_SAM_RESET"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_HID" Target="IOExpander_U302" Register="OutputPortRegister">
+      <!-- Pin Mask = 128 -->
+      <Mask Name="E0_P07_SAM_RESET"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander0_PMI" Target="IOExpander_U302" Register="OutputPortRegister">
+      <!-- Pin Mask = 128 -->
+      <Mask Name="E0_P07_SAM_RESET"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander1_SWD" Target="IOExpander_U301" Register="OutputPortRegister">
+      <!-- Pin Mask = 0 -->
+      <Mask Name="E1_AllZeroUndefined"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander1_P03_MUX_SET" Bytes="1" Target="IOExpander_U301" Register="OutputPortRegister">
+      <!-- Pin Mask = 8 -->
+      <Mask Name="E1_P03_MUX_SET_EN1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander1_HID" Target="IOExpander_U301" Register="OutputPortRegister">
+      <!-- Pin Mask = 7 -->
+      <Mask Name="E1_P00_MUX_SEL2"/>
+      <Mask Name="E1_P01_MUX_SEL1"/>
+      <Mask Name="E1_P02_MUX_SEL0"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="Expander1_PMI" Target="IOExpander_U301" Register="OutputPortRegister" Description="Mux config for Power Measurements">
+      <!-- Pin Mask = 6 -->
+      <Mask Name="E1_P01_MUX_SEL1"/>
+      <Mask Name="E1_P02_MUX_SEL0"/>
+    </IOExpanderConfig>
+
+    <!--
+        Crossbar Configurations
+    -->
+
+    <!-- SurfDbg uefiLogHidMatrixConnection-->
+    <CrossbarConfig Name="XBar_HID" Type="Crossbar" Description="UEFI Logging">
+      <PinMap Input="X5_PCH_DBG_TX" Output="Y2_FTDIC_DO_RX"/>
+      <PinMap Input="X11_MUXED_SCL_RX" Output="Y7_FTDIA_SK_TX"/>
+      <PinMap Input="X10_MUXED_SDA_TX" Output="Y6_FTDIA_DO_RX"/>
+    </CrossbarConfig>
+
+    <!-- SurfDbg uefiLogPMMatrixConnection-->
+    <CrossbarConfig Name="XBar_UefiLog_PowerMonitor" Type="Crossbar" Description="UEFI Logging and Power Monitor">
+      <PinMap Input="X5_PCH_DBG_TX" Output="Y2_FTDIC_DO_RX"/>
+      <PinMap Input="X11_MUXED_SCL_RX" Output="Y7_FTDIA_SK_TX"/>
+      <PinMap Input="X10_MUXED_SDA_TX" Output="Y6_FTDIA_DO_RX"/>
+      <PinMap Input="X10_MUXED_SDA_TX" Output="Y5_FTDIA_DI_RTS"/>
+    </CrossbarConfig>
+
+    <!-- SurfDbg swdFlashMatrixConnection -->
+    <CrossbarConfig Name="XBar_UEFI_SwdFlash" Type="Crossbar" Description="UEFI Flash">
+      <PinMap Input="X1_SWD_CLK_3V3" Output="Y7_FTDIA_SK_TX"/>
+      <PinMap Input="X0_SWD_DIO_3V3" Output="Y6_FTDIA_DO_RX"/>
+      <PinMap Input="X0_SWD_DIO_3V3" Output="Y5_FTDIA_DI_RTS"/>
+    </CrossbarConfig>
+
+    <!-- SurfDbg swdFlashMatrixConnection2 -->
+    <CrossbarConfig Name="XBar_SAM_SwdFlash" Type="Crossbar" Description="SAM Flash">
+      <PinMap Input="X11_MUXED_SCL_RX" Output="Y7_FTDIA_SK_TX"/>
+      <PinMap Input="X10_MUXED_SDA_TX" Output="Y6_FTDIA_DO_RX"/>
+      <PinMap Input="X10_MUXED_SDA_TX" Output="Y5_FTDIA_DI_RTS"/>
+    </CrossbarConfig>
+
+  </Configurations>
+
+  <Properties>
+    <!-- Dragonfly schematic DRAGONFLY_REV-3_073119.pdf -->
+    <!-- see ADG2128.pdf -->
+    <!-- p20 "Table 7. Address Decode Truth Table" for the "write to" address -->
+    <!--   {AX3 AX2 AX1 AX0} - note values 0x6 and 0x7 are reserved so X6 is address 0x8 -->
+    <Crossbar Name="Crossbar" Description="Information about controller debug mux">
+      <Field Name="Address" Default="0x70" Description="Device Address of crossbar"/>
+      <Field Name="Baudrate" Default="400000" Description="i2c baudrate of crossbar"/>
+      <Field Name="FTDI.I2C" Default="B" Description="Port for crossbar"/>
+      <Pins Name="InputPins">
+        <!--Matrix X Pins-->
+        <Pin Name="X0_SWD_DIO_3V3" Value="0"/>
+        <Pin Name="X1_SWD_CLK_3V3" Value="1"/>
+        <Pin Name="X2_SAM_PCH_RX_3V3" Value="2"/>
+        <Pin Name="X3_SAM_PCH_TX_3V3" Value="3"/>
+        <Pin Name="X4_SWD_SWO_3V3" Value="4"/>
+        <Pin Name="X5_PCH_DBG_TX" Value="5"/>
+        <Pin Name="X6_SPI1_CS_DBG_3V3" Value="8"/>
+        <Pin Name="X7_SPI1_SO_DBG_3V3" Value="9"/>
+        <Pin Name="X8_SPI1_SI_DBG_3V3" Value="10"/>
+        <Pin Name="X9_SPI1_CLK_DBG_3V3" Value="11"/>
+        <Pin Name="X10_MUXED_SDA_TX" Value="12"/>
+        <Pin Name="X11_MUXED_SCL_RX" Value="13"/>
+      </Pins>
+      <Pins Name="OutputPins">
+        <!--Matrix Y Pins-->
+        <Pin Name="Y0_TP406" Value="0"/>
+        <Pin Name="Y1_TP405" Value="1"/>
+        <Pin Name="Y2_FTDIC_DO_RX" Value="2"/>
+        <Pin Name="Y3_FTDIC_CS_CTS" Value="3"/>
+        <Pin Name="Y4_FTDIA_CS_CTS" Value="4"/>
+        <Pin Name="Y5_FTDIA_DI_RTS" Value="5"/>
+        <Pin Name="Y6_FTDIA_DO_RX" Value="6"/>
+        <Pin Name="Y7_FTDIA_SK_TX" Value="7"/>
+      </Pins>
+    </Crossbar>
+
+    <!-- U302 bottom of p3 of 8 in schematic-->
+    <IOExpander Name="IOExpander_U302" Description="Configuration information for IO Expander U302">
+      <Field Name="Address" Default="0x20" Description="Device Address of io expander"/>
+      <Field Name="Baudrate" Default="400000" Description="i2c baudrate of io expander"/>
+      <Field Name="FTDI.I2C" Default="B" Description="Port for io expander"/>
+      <Register Name="InputPortRegister" Value="0x00"/>
+      <Register Name="OutputPortRegister" Value="0x02"/>
+      <Register Name="ConfigurationPortRegister" Value="0x06"/>
+      <Register Name="PullupEnableRegister" Value="0x46"/>
+      <Register Name="PullupSelectionRegister" Value="0x48"/>
+      <Register Name="InterruptMaskRegister" Value="0x4A"/>
+      <Register Name="InterruptStatusRegister" Value="0x4C"/>
+      <PinMask Name="E0_AllZeroUndefined" Value="0x000"/>
+      <PinMask Name="E0_P00_SAM_LED1" Value="0x0001"/>
+      <PinMask Name="E0_P01_SAM_LED0" Value="0x0002"/>
+      <PinMask Name="E0_P02_PCH_DEBUG_GPP_H23" Value="0x0004"/>
+      <PinMask Name="E0_P03_CPU_C10_GATE" Value="0x0008"/>
+      <PinMask Name="E0_P04_H_PROCHOT_1P8V" Value="0x0010"/>
+      <PinMask Name="E0_P05_SLP_S0" Value="0x0020"/>
+      <PinMask Name="E0_P06_PLT_RST_BUF" Value="0x0040"/>
+      <PinMask Name="E0_P07_SAM_RESET" Value="0x0080"/>
+      <PinMask Name="E0_P10_SWITCH_4" Value="0x0100"/>
+      <PinMask Name="E0_P11_SWITCH_3" Value="0x0200"/>
+      <PinMask Name="E0_P12_SWITCH_2" Value="0x0400"/>
+      <PinMask Name="E0_P13_SWITCH_1" Value="0x0800"/>
+      <PinMask Name="E0_P14_TP301" Value="0x1000"/>
+      <PinMask Name="E0_P15_CATERR_1V8" Value="0x2000"/>
+      <PinMask Name="E0_P16_CNV_RF_RESET" Value="0x4000"/>
+      <PinMask Name="E0_P17_RTCRST_CTRL" Value="0x8000"/>
+    </IOExpander>
+
+    <!-- U301 top of p3 of 8 in schematic -->
+    <IOExpander Name="IOExpander_U301" Description="Configuration information for IO Expander U301">
+      <Field Name="Address" Default="0x21" Description="Device Address of io expander"/>
+      <Field Name="Baudrate" Default="400000" Description="i2c baudrate of io expander"/>
+      <Field Name="FTDI.I2C" Default="B" Description="Port for io expander"/>
+      <Register Name="InputPortRegister" Value="0x00"/>
+      <Register Name="OutputPortRegister" Value="0x02"/>
+      <Register Name="ConfigurationPortRegister" Value="0x06"/>
+      <Register Name="PullupEnableRegister" Value="0x46"/>
+      <Register Name="PullupSelectionRegister" Value="0x48"/>
+      <Register Name="InterruptMaskRegister" Value="0x4A"/>
+      <Register Name="InterruptStatusRegister" Value="0x4C"/>
+      <PinMask Name="E1_AllZeroUndefined" Value="0x000"/>
+      <PinMask Name="E1_P00_MUX_SEL2" Value="0x0001"/>
+      <PinMask Name="E1_P01_MUX_SEL1" Value="0x0002"/>
+      <PinMask Name="E1_P02_MUX_SEL0" Value="0x0004"/>
+      <PinMask Name="E1_P03_MUX_SET_EN1" Value="0x0008"/>
+      <PinMask Name="E1_P04_SLP_A" Value="0x0010"/>
+      <PinMask Name="E1_P05_PCH_SYS_RST" Value="0x0020"/>
+      <PinMask Name="E1_P06_SLP_S3" Value="0x0040"/>
+      <PinMask Name="E1_P07_PWRBTN_N" Value="0x0080"/>
+      <PinMask Name="E1_P10_3P3VSB_STAT" Value="0x0100"/>
+      <PinMask Name="E1_P11_BAT_SHUTDOWN" Value="0x0200"/>
+      <PinMask Name="E1_P12_VOL_UP" Value="0x0400"/>
+      <PinMask Name="E1_P13_VOL_DOWN" Value="0x0800"/>
+      <PinMask Name="E1_P14_WLAN_KILL" Value="0x1000"/>
+      <PinMask Name="E1_P15_3P3VA_STAT" Value="0x2000"/>
+      <PinMask Name="E1_P16_SLP_S4_N" Value="0x4000"/>
+      <PinMask Name="E1_P17_BT_KILL" Value="0x8000"/>
+    </IOExpander>
+
+    <EventTypes>
+      <SessionEvent Name="Disconnected" BitMask="0" SetMask="0"/>
+      <SessionEvent Name="MotherboardAttach" BitMask="0x0040" SetMask="0x0040"/>
+      <DebugModeEvent Name="S0iX" BitMask="0x0020" SetMask="0x0020"/>
+    </EventTypes>
+
+  </Properties>
+</DebugModule>

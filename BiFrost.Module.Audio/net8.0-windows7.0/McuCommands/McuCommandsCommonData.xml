@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+McuCommandsCommonData.xml
+-->
+<TargetCategoryType>
+  <!-- Obsolete: Use SurfaceCommonHeaders.StandardTypes.TargetCategory -->
+  <TargetCategory Name="SSH_TC_INVALID">0</TargetCategory>
+  <TargetCategory Name="SSH_TC_SAM">1</TargetCategory>
+  <TargetCategory Name="SSH_TC_BATTERY">2</TargetCategory>
+  <TargetCategory Name="SSH_TC_THERMAL">3</TargetCategory>
+  <TargetCategory Name="SSH_TC_POWER">4</TargetCategory>
+  <TargetCategory Name="SSH_TC_FAN">5</TargetCategory>
+  <TargetCategory Name="SSH_TC_POWER_MONITORS">6</TargetCategory>
+  <TargetCategory Name="SSH_TC_DEBUG">7</TargetCategory>
+  <TargetCategory Name="SSH_TC_KEYBOARD">8</TargetCategory>
+  <TargetCategory Name="SSH_TC_FW_UPDATE">9</TargetCategory>
+  <TargetCategory Name="SSH_TC_UNIT_TEST">10</TargetCategory>
+  <TargetCategory Name="SSH_TC_AUTH">11</TargetCategory>
+  <TargetCategory Name="SSH_TC_LOGS">12</TargetCategory>
+  <TargetCategory Name="SSH_TC_SURFLINK">13</TargetCategory>
+  <TargetCategory Name="SSH_TC_KIP">14</TargetCategory>
+  <TargetCategory Name="SSH_TC_EXTENSION">15</TargetCategory>
+  <TargetCategory Name="SSH_TC_BLADE">16</TargetCategory>
+  <TargetCategory Name="SSH_TC_BASE">17</TargetCategory>
+  <TargetCategory Name="SSH_TC_SENSOR">18</TargetCategory>
+  <TargetCategory Name="SSH_TC_SECURITY_REQUEST">19</TargetCategory>
+  <TargetCategory Name="SSH_TC_MCU">20</TargetCategory>
+  <TargetCategory Name="SSH_TC_HID">21</TargetCategory>
+  <TargetCategory Name="SSH_TC_TOUCHPAD">22</TargetCategory>
+  <TargetCategory Name="SSH_TC_BACKLIGHT">23</TargetCategory>
+  <TargetCategory Name="SSH_TC_TAM">24</TargetCategory>
+  <TargetCategory Name="SSH_TC_ACCESSORY_HOME">25</TargetCategory>
+  <TargetCategory Name="SSH_TC_DEPRECATED_UNUSED26">26</TargetCategory>
+  <TargetCategory Name="SSH_TC_USBC">27</TargetCategory>
+  <TargetCategory Name="SSH_TC_PEN">28</TargetCategory>
+  <TargetCategory Name="SSH_TC_VIDEO">29</TargetCategory>
+  <TargetCategory Name="SSH_TC_AUDIO">30</TargetCategory>
+  <TargetCategory Name="SSH_TC_SMC">31</TargetCategory>
+  <TargetCategory Name="SSH_TC_KEYPAD">32</TargetCategory>
+  <TargetCategory Name="SSH_TC_HOST_REGISTER">33</TargetCategory>
+  <TargetCategory Name="SSH_TC_SPT">34</TargetCategory>
+  <TargetCategory Name="SSH_TC_SYSTEM">35</TargetCategory>
+  <TargetCategory Name="SSH_TC_ACC_SEC">36</TargetCategory>
+  <TargetCategory Name="SSH_TC_SENSOR_HUB">37</TargetCategory>
+  <TargetCategory Name="SSH_TC_POSTURE">38</TargetCategory>
+  <TargetCategory Name="SSH_TC_FPR">39</TargetCategory>
+  <TargetCategory Name="SSH_TC_CRADLE_CHARGER">40</TargetCategory>
+  <TargetCategory Name="SSH_TC_PLC">41</TargetCategory>
+  <TargetCategory Name="SSH_TC_ANC">42</TargetCategory>
+  <TargetCategory Name="SSH_TC_LED">43</TargetCategory>
+  <TargetCategory Name="SSH_TC_DIGITAL_SIGNAL_PROCESSOR">44</TargetCategory>
+  <TargetCategory Name="SSH_TC_AUTH_CO_PROCESSOR">45</TargetCategory>
+  <TargetCategory Name="SSH_TC_PROXIMITY">46</TargetCategory>
+  <TargetCategory Name="SSH_TC_STB">47</TargetCategory>
+</TargetCategoryType>

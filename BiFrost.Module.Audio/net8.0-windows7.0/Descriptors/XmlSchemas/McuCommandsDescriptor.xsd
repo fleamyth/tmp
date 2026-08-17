@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="McuCommandsDescriptor"
+    targetNamespace="McuCommandsSchemaNs"
+    elementFormDefault="qualified"
+    xmlns="McuCommandsSchemaNs"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:annotation>
+    <xs:documentation>
+      Defines XML Schema for McuCommands Descriptor
+    </xs:documentation>
+  </xs:annotation>
+
+  <!--
+  Root element in a descriptor for McuCommands
+  -->
+  <xs:element name="McuCommandRoot" nillable="false">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="TargetCategoryType" type="TargetCategoryTypes" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="McuCommandCollection" type="McuCommandType" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+      <xs:attribute name="Name" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <!-- End of Root element -->
+
+  <xs:complexType name="TargetCategoryTypes">
+    <xs:sequence>
+      <xs:element name="TargetCategory" minOccurs="1" maxOccurs="unbounded" type="TargetCategoryList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TargetCategoryList">
+    <xs:simpleContent>
+      <xs:extension base="xs:integer">
+        <xs:attribute name="Name" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="McuCommandType">
+    <xs:sequence>
+      <xs:element name="McuCommand" minOccurs="1" maxOccurs="unbounded" type="McuCommandList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="McuCommandList">
+    <xs:sequence>
+      <xs:element name="SshHeader" minOccurs="1" maxOccurs="1" type="SshHeaderType"/>
+      <xs:element name="CommandParameters" minOccurs="0" maxOccurs="1" type="CommandParamtersType"/>
+      <xs:element name="ResponseParameters" minOccurs="0" maxOccurs="1" type="ResponseParamtersType"/>
+      <xs:element name="FormattedResponse" minOccurs="0" maxOccurs="1" type="FormattedResponseType"/>
+    </xs:sequence>
+    <xs:attribute name="CmdName" type="xs:string" use="required"/>
+    <xs:attribute name="Alias" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="required"/>
+    <xs:attribute name="InstanceIdUsed" type="xs:boolean" use="optional" />
+    <xs:attribute name="MultiPacketResponse" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="SshHeaderType">
+    <xs:sequence>
+      <xs:element name="ProtocolVersion" type="xs:unsignedByte"/>
+      <xs:element name="TargetCategory" type="xs:unsignedByte"/>
+      <xs:element name="TargetId" type="xs:unsignedByte"/>
+      <xs:element name="SourceId" type="xs:unsignedByte"/>
+      <xs:element name="InstanceId" type="xs:unsignedByte"/>
+      <xs:element name="CommandId" type="xs:unsignedByte"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommandParamtersType">
+    <xs:sequence>
+      <xs:element name="CommandParameter" minOccurs="0" maxOccurs="unbounded" type="CommandParameterType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommandParameterType">
+    <xs:attribute name="Position" type="xs:integer" use="required"/>
+    <xs:attribute name="DataType" type="xs:string" use="required"/>
+    <xs:attribute name="Count" type="xs:integer" use="required"/>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Increment" type="xs:integer" use="optional"/>
+    <xs:attribute name="ParameterType" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="ResponseParamtersType">
+    <xs:sequence>
+      <xs:element name="ResponseParameter" minOccurs="0" maxOccurs="unbounded" type="ResponseParameterType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseParameterType">
+    <xs:attribute name="Position" type="xs:integer" use="required"/>
+    <xs:attribute name="DataType" type="xs:string" use="required"/>
+    <xs:attribute name="Count" type="xs:integer" use="required"/>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="ParameterType" type="xs:string" use="optional"/>
+    <xs:attribute name="Function" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="FormattedResponseType">
+    <xs:attribute name="StringFormat" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType  name="HexByteValue">
+    <xs:restriction base ="xs:string">
+      <xs:pattern value="0x[0-9A-Fa-f]{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

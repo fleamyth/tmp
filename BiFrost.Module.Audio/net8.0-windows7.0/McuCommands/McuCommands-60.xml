@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+McuCommands-60.xml
+  This document defines the set of McuCommand (i.e. SAM and KIP commands) that are supported
+  by a *specific* Surface device.  It includes the commonly supported McuCommand's from
+  McuCommands-main.xml so that this file only defines McuCommand's that are unique to this
+  product.
+  Similarly, some data types that are used across products are included from 
+  McuCommandsCommonData.xml.
+-->
+<!DOCTYPE McuCommandRoot [
+  <!ENTITY McuCommandsCommonData SYSTEM "McuCommandsCommonData.xml">
+  <!ENTITY McuCommands-main SYSTEM "McuCommands-main.xml">
+]
+>
+<McuCommandRoot Name ="MCUCommand" xmlns="McuCommandsSchemaNs">
+  &McuCommandsCommonData;
+  <McuCommandCollection>
+    &McuCommands-main;
+    <McuCommand CmdName="DebugGetTdmPostBuffer" Alias="DebugGetTdmPostBuffer" Description="gets the result of the Power-on Self-test performed by the Touch-Display Module">
+      <SshHeader>
+        <ProtocolVersion>128</ProtocolVersion>
+        <TargetCategory>7</TargetCategory>
+        <TargetId>1</TargetId>
+        <SourceId>3</SourceId>
+        <InstanceId>0</InstanceId>
+        <CommandId>101</CommandId>
+      </SshHeader>
+      <ResponseParameters>
+        <ResponseParameter Position="1" DataType="UINT8" Count="1" Name="bufferSizeBytes" />
+        <ResponseParameter Position="2" DataType="UINT8" Count="64" Name="tdmRxBuffer" />
+      </ResponseParameters>
+    </McuCommand>
+</McuCommandCollection>
+</McuCommandRoot>
+

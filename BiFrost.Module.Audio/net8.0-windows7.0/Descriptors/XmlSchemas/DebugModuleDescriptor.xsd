@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DebugModule"
+    targetNamespace="DebugModuleSchemaNs"
+    elementFormDefault="qualified"
+    xmlns="DebugModuleSchemaNs"
+    xmlns:mstns="DebugModuleSchemaNs"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:annotation>
+    <xs:documentation>
+      Defines XML Schema for DebugModule descriptors.
+    </xs:documentation>
+  </xs:annotation>
+
+  <!--
+  Root element in a descriptor for DebugModule
+  -->
+  <xs:element name="DebugModule" nillable="false">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="DebugModes" type="DebugModesType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="Configurations" type="ConfigurationsType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="Properties" type="PropertiesType" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+      <xs:attribute name="Name" type="xs:string" use="required" />
+      <xs:attribute name="Class" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:unique name="uniqueDebugMode">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugMode"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <!-- Prohibit ambiguity - no 2 DebugModes shall have the same {Type, DipSwitch} -->
+    <xs:unique name="uniqueDebugModeTypePerProduct">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugMode"/>
+      <xs:field xpath="@Type"/>
+      <xs:field xpath="@DipSwitch"/>
+    </xs:unique>
+    <xs:unique name="uniqueCrossbar">
+      <xs:selector xpath="./mstns:Properties/mstns:Crossbar"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueIOExpander">
+      <xs:selector xpath="./mstns:Properties/mstns:IOExpander"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueFilter">
+      <xs:selector xpath="./mstns:Properties/mstns:Filter"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueCrossbarConfig">
+      <xs:selector xpath="./mstns:Configurations/mstns:CrossbarConfig"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueIOExpanderConfig">
+      <xs:selector xpath="./mstns:Configurations/mstns:IOExpanderConfig"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueCrossbarPins">
+      <xs:selector xpath="./mstns:Properties/mstns:Crossbar/mstns:Pins/mstns:Pin"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueIOExpanderPinMasks">
+      <xs:selector xpath="./mstns:Properties/mstns:IOExpander/mstns:PinMask"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+    <xs:unique name="uniqueDebugModeTypes">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugModeTypes/mstns:Type"/>
+      <xs:field xpath="@Name"/>
+    </xs:unique>
+
+    <!-- Debug Mode IO Expander names must match an existing IO Expander Configuration name -->
+    <xs:key name="expanderConfigKeys">
+      <xs:selector xpath="./mstns:Configurations/mstns:IOExpanderConfig"/>
+      <xs:field xpath="@Name"/>
+    </xs:key>
+    <xs:keyref name="expanderConfigKeyRef" refer="expanderConfigKeys">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugMode/mstns:IOExpander"/>
+      <xs:field xpath="@Config"/>
+    </xs:keyref>
+    <xs:keyref name="expanderMotherboardConfigKeyRef" refer="expanderConfigKeys">
+      <xs:selector xpath="./mstns:DebugModes/mstns:MotherboardGroup/mstns:DebugMode/mstns:IOExpander"/>
+      <xs:field xpath="@Config"/>
+    </xs:keyref>
+
+    <!-- Debug Mode Crossbar names must match an existing Crossbar Configuration name -->
+    <xs:key name="crossbarKeys">
+      <xs:selector xpath="./mstns:Configurations/mstns:CrossbarConfig"/>
+      <xs:field xpath="@Name"/>
+    </xs:key>
+    <xs:keyref name="crossbarKeyRef" refer="crossbarKeys">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugMode/mstns:Crossbar"/>
+      <xs:field xpath="@Config"/>
+    </xs:keyref>
+
+    <!-- IO Expander PinMaks in Configuration must match an existing IO Expander PinMask names in the Properties -->
+    <xs:key name="expanderPinMaskKeys">
+      <xs:selector xpath="./mstns:Properties/mstns:IOExpander/mstns:PinMask"/>
+      <xs:field xpath="@Name"/>
+    </xs:key>
+    <xs:keyref name="expanderPinMaskKeyRef" refer="expanderPinMaskKeys">
+      <xs:selector xpath="./mstns:Configurations/mstns:IOExpanderConfig/mstns:Mask"/>
+      <xs:field xpath="@Name"/>
+    </xs:keyref>
+
+    <!-- Crossbar Pins in Configuration must match an existing Crossbar Pin name in the Properties -->
+    <xs:key name="crossbarPinKeys">
+      <xs:selector xpath="./mstns:Properties/mstns:Crossbar/mstns:Pins/mstns:Pin"/>
+      <xs:field xpath="@Name"/>
+    </xs:key>
+    <xs:keyref name="crossbarInputPinKeyRef" refer="crossbarPinKeys">
+      <xs:selector xpath="./mstns:Configurations/mstns:CrossbarConfig/mstns:PinMap"/>
+      <xs:field xpath="@Input"/>
+    </xs:keyref>
+    <xs:keyref name="crossbarOutputPinKeyRef" refer="crossbarPinKeys">
+      <xs:selector xpath="./mstns:Configurations/mstns:CrossbarConfig/mstns:PinMap"/>
+      <xs:field xpath="@Output"/>
+    </xs:keyref>
+
+    <!-- Debug Mode types must match the allowlist of Debug Modes -->
+    <xs:key name="debugModeTypeKeys">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugModeTypes/mstns:Type"/>
+      <xs:field xpath="@Name"/>
+    </xs:key>
+    <xs:keyref name="debugModeTypeKeyRef" refer="debugModeTypeKeys">
+      <xs:selector xpath="./mstns:DebugModes/mstns:DebugMode"/>
+      <xs:field xpath="@Type"/>
+    </xs:keyref>
+
+  </xs:element>
+
+  <!-- End of Root element -->
+
+  <!--
+  Defines a type for a DebugMode element
+  -->
+  <xs:complexType name="DebugModesType">
+    <xs:sequence>
+      <xs:element name="DebugModeTypes" minOccurs="1" maxOccurs="1" type="DebugModeTypeList"/>
+      <xs:element name="DebugMode" minOccurs="1" maxOccurs="unbounded" type="DebugModeType"/>
+      <xs:element name="MotherboardGroup" minOccurs="0" maxOccurs="unbounded" type="MotherboardGroupType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MotherboardGroupType">
+    <xs:sequence>
+      <xs:element name="DebugMode" minOccurs="0" maxOccurs="unbounded" type="DebugModeType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="DipSwitch" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:int">
+          <xs:minInclusive value="-1"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="DebugModeType">
+    <xs:sequence>
+      <xs:element name="Version" minOccurs="0" maxOccurs="1" type="xs:string"/>
+      <xs:element name="Motherboard" minOccurs="0" maxOccurs="1" type="DefaultFieldType"/>
+      <xs:element name="Filter" minOccurs="0" maxOccurs="1" type="FilterType"/>
+      <xs:element name="Crossbar" minOccurs="0" maxOccurs="1" type="ConfigFieldType"/>
+      <xs:element name="IOExpander" minOccurs="0" maxOccurs="unbounded" type="ConfigFieldType"/>
+      <xs:element name="Events" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DebugModeEvent" minOccurs="1" maxOccurs="unbounded" type="EventType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Type" type="xs:string" use="required"/>
+    <xs:attribute name="ProductId" type="xs:unsignedShort" use="required"/>
+    <xs:attribute name="HardwareRevisionId" type="xs:unsignedShort" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+    <xs:attribute name="McuCommands" use="required">
+      <xs:simpleType>
+        <xs:restriction base ="xs:string">
+          <xs:pattern value="(([A-Za-z])*(\s)*([0-9])*(#)*)*"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!--
+  Defines a type for a Property for a Debug Interface
+  -->
+  <xs:complexType name="PropertiesType">
+    <xs:sequence>
+      <xs:element name="Crossbar" minOccurs="0" maxOccurs="unbounded" type="CrossbarType"/>
+      <xs:element name="IOExpander" minOccurs="0" maxOccurs="unbounded" type="IOExpanderType"/>
+      <xs:element name="PowerDelivery" minOccurs="0" maxOccurs="unbounded" type="PowerDeliveryType"/>
+      <xs:element name="EventTypes" type="EventTypes" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!--
+  Defines a type for the list of Configuration elements
+  -->
+  <xs:complexType name="ConfigurationsType">
+    <xs:sequence>
+      <xs:element name="IOExpanderConfig" minOccurs="0" maxOccurs="unbounded" type="IOExpanderConfigurationType"/>
+      <xs:element name="CrossbarConfig" minOccurs="0" maxOccurs="unbounded" type="CrossbarConfigurationType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EventTypes">
+    <xs:sequence>
+      <xs:element name="SessionEvent" minOccurs="0" maxOccurs="unbounded" type="EventType"/>
+      <xs:element name="DebugModeEvent" minOccurs="0" maxOccurs="unbounded" type="EventType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name ="PropertyType">
+    <xs:sequence>
+      <xs:element name="Field" nillable="false" minOccurs="0" maxOccurs="unbounded" type="DefaultFieldType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="required"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name ="RoutingInfoType">
+    <xs:sequence>
+      <xs:element name="Target" nillable="false" minOccurs="0" maxOccurs="1" type="HexStringBase"/>
+      <xs:element name="Source" nillable="false" minOccurs="0" maxOccurs="1" type="HexStringBase"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="optional"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name ="CrossbarType">
+    <xs:sequence>
+      <xs:element name="Field" nillable="false" minOccurs="0" maxOccurs="unbounded" type="DefaultFieldType"/>
+      <xs:element name="Pins" minOccurs="2" maxOccurs="2" type="PinsType" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="optional"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name ="IOExpanderType">
+    <xs:sequence>
+      <xs:element name="Field" nillable="false" minOccurs="0" maxOccurs="unbounded" type="DefaultFieldType"/>
+      <xs:element name="Register" minOccurs="1" maxOccurs="unbounded" type="RegisterFieldType"/>
+      <xs:element name="PinMask" minOccurs="1" maxOccurs="unbounded" type="PinMaskType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="optional"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name ="PowerDeliveryType">
+    <xs:sequence>
+      <xs:element name="Field" nillable="false" minOccurs="0" maxOccurs="unbounded" type="DefaultFieldType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+    <xs:attribute name="DebugModuleRevision" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <!--
+    <Property name="Filter" Class="IOFilter.SomeFilter" Description="Sample property node">
+      <Field name="Baudrate" Default="4000000" Descriptions="bus speed"/>
+    </Property>
+  -->
+  <xs:complexType name ="FilterType">
+    <xs:sequence>
+      <xs:element name="Components" type="ComponentsListType" minOccurs="0" maxOccurs="1"/>
+      <xs:choice>
+        <xs:element name="Protocol" minOccurs="0" maxOccurs="1" type="PropertyType"/>
+        <xs:element name="Filter" minOccurs="0" maxOccurs="1" type="PropertyType"/>
+      </xs:choice>
+      <xs:element name="Field" nillable="false" minOccurs="0" maxOccurs="unbounded" type="DefaultFieldType"/>
+      <xs:element name="RoutingInfo" minOccurs="0" maxOccurs="1" type="RoutingInfoType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="optional"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="DefaultFieldType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Default" type="xs:string" use="required"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="ComponentsListType">
+    <xs:sequence>
+      <xs:element name="Component" type="ComponentType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ComponentType">
+    <xs:sequence>
+      <xs:element name="Subcomponent" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="Name" type="xs:string" use="required"/>
+          <xs:anyAttribute processContents="skip"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Class" type="xs:string" use="required"/>
+    <xs:anyAttribute processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="NamedFieldType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="ConfigFieldType">
+    <xs:attribute name="Config" type="xs:string" use="required"/>
+    <xs:attribute name="Version" type="xs:string" use="optional"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="PinsType">
+    <xs:sequence>
+      <xs:element name="Pin" minOccurs="0" maxOccurs="unbounded" type="NumericByteType"/>
+    </xs:sequence>
+    <xs:attribute name="Name"  use="required">
+      <xs:simpleType>
+        <xs:restriction base ="xs:string">
+          <xs:enumeration value="InputPins"/>
+          <xs:enumeration value="OutputPins"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="HexStringBase">
+    <xs:attribute name="Default" type="HexByteValue" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="HexStringType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Default" type="HexByteValue" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="NumericByteType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Value" type="xs:unsignedByte" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:simpleType  name="HexByteValue">
+    <xs:restriction base ="xs:string">
+      <xs:pattern value="0x[0-9A-Fa-f]{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="RegisterFieldType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Value" type="HexByteValue" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="PinMaskType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="Value" type="HexIntValue" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:simpleType  name="HexIntValue">
+    <xs:restriction base ="xs:string">
+      <xs:pattern value="0x[0-9A-Fa-f]{2,8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="EventType">
+    <xs:attribute name="Name" type="xs:string" use="required"/>
+    <xs:attribute name="BitMask" type="xs:string" use="required"/>
+    <xs:attribute name="SetMask" type="xs:string" use="required"/>
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="CrossbarConfigurationType">
+    <xs:sequence>
+      <xs:element name="PinMap" minOccurs="0" maxOccurs="unbounded" id="PinMapNode">
+        <xs:complexType>
+          <xs:attribute name="Input" type="xs:string" use="required"/>
+          <xs:attribute name="Output" type="xs:string" use="required"/>
+          <xs:attribute name="Description" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Type" type="xs:string" use="required" />
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="DebugModeTypeList">
+    <xs:sequence>
+      <xs:element name="Type" minOccurs="1" maxOccurs="unbounded" type="NamedFieldType"/>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="IOExpanderConfigurationType">
+    <xs:sequence>
+      <xs:element name="Mask" minOccurs="1" maxOccurs="unbounded" id="MaskType">
+        <xs:complexType>
+          <xs:attribute name="Name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <!--The Target IO Expander name -->
+    <xs:attribute name="Target" type="xs:string" use="required" />
+    <!--The IO Expander Register name to Read/Write to -->
+    <xs:attribute name="Register" type="xs:string" use="required" />
+    <!-- Invert or bitwise ~NOT the mask value before writing -->
+    <xs:attribute name="Invert" type="xs:boolean" use="optional" default="false" />
+    <!-- Reverse value after reading for proper interpretation (e.g. U302-DIP switch on DragonFly) -->
+    <xs:attribute name="Reverse" type="xs:boolean" use="optional" default="false" />
+    <xs:attribute name="Description" type="xs:string" use="optional"/>
+    <!--Action to perform on the configuration: read or write.
+    For true, a Read is performed and the Mask is not used.
+    For false, a Write is performed and the Mask value is written to the register -->
+    <xs:attribute name="IsRead" type="xs:boolean" use="optional" default="false" />
+    <!--Number of bytes to read or write -->
+    <xs:attribute name="Bytes" use="optional" default="2">
+      <xs:simpleType>
+        <xs:restriction base="xs:byte">
+          <xs:enumeration value="1"/>
+          <xs:enumeration value="2"/>
+          <xs:enumeration value="3"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+</xs:schema>

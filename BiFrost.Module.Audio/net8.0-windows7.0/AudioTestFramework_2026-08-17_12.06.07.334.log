@@ -1,0 +1,5 @@
+2026-08-17 12:06:07.335::34228::0::Debug::logfile = AudioTestFramework_2026-08-17_12.06.07.334.log
+2026-08-17 12:06:07.335::34228::0::Info::C:\Users\v-fleawu\source\repos\BF-Modules\publish\bin\Release\BiFrost.Module.Audio\net8.0-windows7.0\AudioTestFramework.dll Version: 1.87.177.0
+2026-08-17 12:06:07.501::34228::0::Info::Printing Render Devices:
+2026-08-17 12:06:07.504::34228::0::Info::Device 0: Headphones (AirPods Pro)
+2026-08-17 12:06:07.505::34228::0::Info::Device 1: Speakers (2- Realtek High Definition Audio(SST))

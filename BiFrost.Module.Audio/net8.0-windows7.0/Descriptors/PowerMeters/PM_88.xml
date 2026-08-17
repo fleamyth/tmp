@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor OEMEL -->
+  <Components>
+    <!--U2813 Part A-->
+    <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_+1P8V_TS_IN" Friendlyname="+1P8V_TS"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="3P3V_PANEL"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3VSB_TOP-IN" Friendlyname="3VSB_TOP"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_VSYS_TOP_IN" Friendlyname="VSYS_TOP"/>
+    </Component>
+    <!--U2802 Part B-->
+    <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5VSB"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_BATT" Friendlyname="BATTERY"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="200" ID="PM_+1P8V_SAM" Friendlyname="1P8V_SAM"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_3P3VSB_IN" Friendlyname="3P3VSB"/>
+    </Component>
+    <!--U2803 Part C-->
+    <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN" Friendlyname="1P8VSUS_ORG"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_1P05V_DDR_VDD2_IN" Friendlyname="1P05V_DDR_VDD2"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_SSD" Friendlyname="3P3V_SSD"/>
+    </Component>
+    <!--U2804 Part D-->
+    <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_FBVDDQ_IN" Friendlyname="FBVDDQ"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5" ID="PM_TGP_IN" Friendlyname="TGP_IN"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="25" ID="PM_VCCIN_AUX_IN" Friendlyname="VCCIN_AUX"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCIA_IN" Friendlyname="VCCIN"/>
+    </Component>
+    <!--U2801 Part E-->
+    <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VSYS_IN" Friendlyname="VSYS"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_+5V_TS_IN" Friendlyname="5V_TS"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3VSUS_ORG_IN" Friendlyname="3VSUS_ORG"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_VCCGT_IN" Friendlyname="VCCGT"/>
+    </Component>
+    <!--U2805 Part F-->
+    <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_3P3V_KMB_IN" Friendlyname="3P3V_KMB"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_KMB_SYS_IN" Friendlyname="KMB_SYS"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_KMB_SYS_0P8V_IN" Friendlyname="KMB_0P8V"/>
+    </Component>
+  </Components>

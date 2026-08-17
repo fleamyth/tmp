@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor OEMGR -->
+  <Components>
+    <!-- OEMBE schematic BAG_O_EV2B_202004161040.pdf -->
+    <!-- p28 shows the 4 MAX34417 power meters: -->
+    <!--A - U2813-->
+    <!--B - U2802-->
+    <!--C - U2803-->
+    <!--D - U2804-->
+    <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VDDSOC_IN" Friendlyname="SOC"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P8VSB_IN" Friendlyname="1P8VSB_TOUCH_AUDO_TPM"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="1" ID="PM_VSYS" Friendlyname="SYSTEM"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5" ID="PM_5VSB_IN" Friendlyname="5P0_TOUCH_KIP_AUDIO_BLADE_USBVBUS_VDDP"/>
+    </Component>
+    <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_VDDP_IN" Friendlyname="SOC_CTLR"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3VSB" Friendlyname="3P3_CAMERA_PANEL_WIFI_2P5MEM"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P3V_SSD" Friendlyname="STORAGE"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_3P3V_WWAN" Friendlyname="WIFI_BLUETOOTH"/>
+    </Component>
+    <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5" ID="PM_VDDCORE_IN" Friendlyname="CPU_CORES"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_1P1V_DDR_VDD2_IN" Friendlyname="MAINMEM"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_PANEL_IN" Friendlyname="DISPLAY_CTRL"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_BKLT_IN" Friendlyname="DISPLAY_BACKLIGHT"/>
+    </Component>
+  </Components>

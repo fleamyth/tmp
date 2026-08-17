@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor 952_TIA -->
+  <Components>
+    <Component Name="PowerMeter1" Class="TiInaPowerMeter" ChipType="4230" Address="40">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_1P1V_DDR_VDD2H_IN"    Friendlyname="DDR_VDD2H"         MaxCurrent="1125"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="PM_BKLT_IN"              Friendlyname="DISPLAY_BKLT"      MaxCurrent="300"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"  ID="PM_3P3V_PANEL_IN"        Friendlyname="DISPLAY_CTRL"      MaxCurrent="850"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"  ID="PM_VSYS_IN"              Friendlyname="SYSTEM"            MaxCurrent="4000"/>
+    </Component>                                                                                 
+    <Component Name="PowerMeter2" Class="TiInaPowerMeter" ChipType="4230" Address="41">          
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_1P8V_DDR_VDD1_IN"     Friendlyname="1P8V_DDR_VDD1"     MaxCurrent="300"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="25"  ID="PM_ECMX1_IN"             Friendlyname="ECMX1"             MaxCurrent="1700"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_DDR_VDDQ_VDD2L_IN"    Friendlyname="DDR_VDDQ_VDD2L"    MaxCurrent="320"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="25"  ID="PM_ECMX0_IN"             Friendlyname="ECMX0"             MaxCurrent="1500"/>
+    </Component>
+    <Component Name="PowerMeter3" Class="TiInaPowerMeter" ChipType="4230" Address="42">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_CAMERA_VSYS_IN"       Friendlyname="CAMERA_VSYS"       MaxCurrent="80"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="PM_CAMERA_1P8VSB_IN"     Friendlyname="CAMERA_1P8VSB"     MaxCurrent="6"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_CAMERA_3P3VSB_TOP_IN" Friendlyname="CAMERA_3P3V_TOP"   MaxCurrent="50"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_1P8V_CAM_F_IN"        Friendlyname="CAMERA_FRONT_1P8V" MaxCurrent="2.6"/>
+    </Component>
+    <Component Name="PowerMeter4" Class="TiInaPowerMeter" ChipType="4230" Address="44">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_SOC_VDPHY_IN"         Friendlyname="CPU_VDPHY"         MaxCurrent="278"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="25"  ID="PM_VSOC_IN"              Friendlyname="CPU_VSOC"          MaxCurrent="1500"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="25"  ID="PM_VNPU_IN"              Friendlyname="CPU_VNPU"          MaxCurrent="2000"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="25"  ID="PM_VGPU_IN"              Friendlyname="CPU_VGPU"          MaxCurrent="2000"/>
+    </Component>
+    <Component Name="PowerMeter5" Class="TiInaPowerMeter" ChipType="4230" Address="45">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_AUDIO_SPEAKER_IN"     Friendlyname="AUDIO_SPKR"        MaxCurrent="125"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="PM_1P8V_AUDIO_IN"        Friendlyname="AUDIO_1P8V"        MaxCurrent="207.5"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_VBUS_USBC_IN"         Friendlyname="USB_TYPEC"         MaxCurrent="3000"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_5P0V_AUDIO_IN"        Friendlyname="AUDIO_5P0V"        MaxCurrent="330"/>
+    </Component>
+    <Component Name="PowerMeter6" Class="TiInaPowerMeter" ChipType="4230" Address="46">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_3P3V_WIFI_IN"         Friendlyname="WIFI_3P3V"         MaxCurrent="2100"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_3P3VSB_IN"            Friendlyname="3P3VSB"            MaxCurrent="1600"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="100" ID="PM_1P2VSB_IN"            Friendlyname="1P2VSB"            MaxCurrent="150"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"  ID="PM_5VSB_IN"              Friendlyname="5VSB"              MaxCurrent="3000"/>
+    </Component>
+    <Component Name="PowerMeter7" Class="TiInaPowerMeter" ChipType="4230" Address="48">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="100" ID="PM_SOC_0P75VSB_IN"       Friendlyname="CPU_0P75VSB"       MaxCurrent="600"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="25"  ID="PM_PCMX0_IN"             Friendlyname="PCMX0"             MaxCurrent="2000"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="100" ID="PM_1P8VSB_IN"            Friendlyname="1P8VSB"            MaxCurrent="250"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100" ID="PM_UFS_IN"               Friendlyname="UFS"               MaxCurrent="420"/>
+    </Component>
+  </Components>

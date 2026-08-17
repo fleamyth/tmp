@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---
+     This DebugModule Descriptor is used when SDF accesses the a DUT through the HID stack.
+     We can send GetFeature requests through HID that will result in McuCommands/SshMessages
+     being sent to MCU.
+-->
+<DebugModule Name="HID" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.HidDebugModule"
+  xmlns="http://tempuri.org/XMLSchemaDm.xsd">
+  <DebugModes>
+
+    <DebugModeTypes Name="DebugModeTypes" Description="List of acceptable Debug Mode types. Case Sensitive.">
+      <Type Name="Default"/>
+      <Type Name="None"/>
+    </DebugModeTypes>
+
+    <DebugMode Name="PID09AC" Type="Default" ProductId="2476" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate to MCU through SSH">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.HidProtocol" Description="IOProtocol to communicate to MCU through SSH">
+          <Field Name="Usage" Default="258" Description="The HID usage for Dock 2 AMC SCP over HID."></Field>
+          <Field Name="UsagePage" Default="65291" Description="The HID usage page for Dock 2 AMC SCP over HID."></Field>
+          <Field Name="ReportId" Default="23" Description="The HID ReportId for Dock 2 using SSH over HID."></Field>
+        </Protocol>
+        <Field Name="PayloadFormat" Default="SurfaceSerialHubDriver" Description="This tells command filter the kind of format we need to send to MCU"/>
+      </Filter>
+    </DebugMode>
+
+    <DebugMode Name="PID0855" Type="Default" ProductId="2133" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate to MCU through SSH">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.HidProtocol" Description="IOProtocol to communicate to MCU through SSH">
+          <Field Name="Usage" Default="258" Description="The HID usage for Dock 3 AMC SCP over HID."></Field>
+          <Field Name="UsagePage" Default="65291" Description="The HID usage page for Dock 3 AMC SCP over HID."></Field>
+          <Field Name="ReportId" Default="23" Description="The HID ReportId for Dock 3 using SSH over HID."></Field>
+        </Protocol>
+        <Field Name="PayloadFormat" Default="SurfaceSerialHubDriver" Description="This tells command filter the kind of format we need to send to MCU"/>
+      </Filter>
+    </DebugMode>
+
+    <DebugMode Name="PID0877" Type="Default" ProductId="2167" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate to MCU through SSH">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.HidProtocol" Description="IOProtocol to communicate to MCU through SSH">
+          <Field Name="Usage" Default="258" Description="The HID usage for Dock 4 AMC SCP over HID."></Field>
+          <Field Name="UsagePage" Default="65291" Description="The HID usage page for Dock 4 AMC SCP over HID."></Field>
+          <Field Name="ReportId" Default="23" Description="The HID ReportId for Dock 4 using SSH over HID."></Field>
+        </Protocol>
+        <Field Name="PayloadFormat" Default="SurfaceSerialHubDriver" Description="This tells command filter the kind of format we need to send to MCU"/>
+      </Filter>
+    </DebugMode>
+  </DebugModes>
+</DebugModule>

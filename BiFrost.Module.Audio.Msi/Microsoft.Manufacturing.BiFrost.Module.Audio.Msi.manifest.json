@@ -1,0 +1,734 @@
+{
+  "name": "Microsoft.Manufacturing.BiFrost.Module.Audio",
+  "description": "Microsoft.Manufacturing.BiFrost.Module.Audio installer",
+  "type": "TestPackage",
+  "filename": "Microsoft.Manufacturing.BiFrost.Module.Audio.Msi.zip",
+  "mtpVersion": "3.195.38",
+  "downloadOnly": false,
+  "checksum": "84e2edaaf7be23370358f5f53322111c",
+  "version": "1.87.177.718",
+  "extractToPath": "C:\\Program Files\\Microsoft Manufacturing\\BiFrostPackages\\1.87.177.718",
+  "hashValue": "1fba589968fc7016f23d915b4717d4fae1921dabb318a23d6fe49c86d0f4b1d1",
+  "files": [
+    {
+      "path": "appsettings.1064_baa.json",
+      "sha256": "d5542a4c176ee4102a2fb967721af1f58b6ecc9633dc3b9d3d4ed0d3de14cbb1",
+      "size": 1273
+    },
+    {
+      "path": "appsettings.3467_pue.json",
+      "sha256": "d5542a4c176ee4102a2fb967721af1f58b6ecc9633dc3b9d3d4ed0d3de14cbb1",
+      "size": 1273
+    },
+    {
+      "path": "appsettings.3562_win.json",
+      "sha256": "79f28d9a53aea0ca9ec79cc72c2e632aa45b2e754258979b27af49a4562133f3",
+      "size": 1423
+    },
+    {
+      "path": "appsettings.766_mis.json",
+      "sha256": "f742789f833ee7cfd258719c53d79cdb12f7a7847a8f05eb544b01de85a04f54",
+      "size": 1380
+    },
+    {
+      "path": "appsettings.768_vea.json",
+      "sha256": "2b57989772b51bc111db8da4936e1b95bb005fe779f3137f9ed0842a89765f7d",
+      "size": 1235
+    },
+    {
+      "path": "appsettings.774_lan.json",
+      "sha256": "fa05d694466b00852f14e7fdc98ffa8b3dd9eaf62c8d82355cb44645ce1b0f71",
+      "size": 1421
+    },
+    {
+      "path": "appsettings.830_qun.json",
+      "sha256": "f004ef7b736f0acd9dcaa9ea8dc8c4efaf563b65e33d133275b76b6493f0feaa",
+      "size": 1660
+    },
+    {
+      "path": "appsettings.831_wid.json",
+      "sha256": "512c36dd03b75a5870decf5f5593e0951b25bae827386020c47822e503b08a7a",
+      "size": 1661
+    },
+    {
+      "path": "appsettings.867_sae.json",
+      "sha256": "455a24838de8bf7e2a5a6d2bfaa05323753bfba9cc4e9a337aedae1799dad613",
+      "size": 1017
+    },
+    {
+      "path": "appsettings.879_mia.json",
+      "sha256": "0125a7c55f0ff6063a025529f5ed7f913a04d4f6a90dcfd59f2dc49e23e06245",
+      "size": 1429
+    },
+    {
+      "path": "appsettings.883_rot.json",
+      "sha256": "4b97a67fe2102edf7ec1d5df8d5060de51475b9465fb7afd4a3b0d3259b53bac",
+      "size": 1020
+    },
+    {
+      "path": "appsettings.899_fee.json",
+      "sha256": "e336020728b172fb165303138bdf691aa1554624d0daa61bc3010202d4784ca8",
+      "size": 1438
+    },
+    {
+      "path": "appsettings.900_maa.json",
+      "sha256": "d5542a4c176ee4102a2fb967721af1f58b6ecc9633dc3b9d3d4ed0d3de14cbb1",
+      "size": 1273
+    },
+    {
+      "path": "appsettings.912_qul.json",
+      "sha256": "f004ef7b736f0acd9dcaa9ea8dc8c4efaf563b65e33d133275b76b6493f0feaa",
+      "size": 1660
+    },
+    {
+      "path": "appsettings.931_won.json",
+      "sha256": "63f88b059194351d4d62805909facc406a4d2de6f789e8d7eda5c68336de63da",
+      "size": 1249
+    },
+    {
+      "path": "appsettings.json",
+      "sha256": "43103bb0bd8ddcd3a4f271c13fd991148398a2885b2bcf1d94cda156a1f91e3a",
+      "size": 592
+    },
+    {
+      "path": "appsettings.oemml.json",
+      "sha256": "411efcf08669e9baa49bf75650b1075088122fda0f10c12fc627f4154b3c92e1",
+      "size": 835
+    },
+    {
+      "path": "appsettings.oemmn.json",
+      "sha256": "6cf19308658502113607a9ab6d4b0af9586bf0fd939af5306fcb04e9dfd01175",
+      "size": 823
+    },
+    {
+      "path": "archive.tar.gz",
+      "sha256": "82b7e212d90cdaf27775e2c47e8631ff157631980ecfbdbc796289e9d47591cb",
+      "size": 10667014
+    },
+    {
+      "path": "asyncio.dll",
+      "sha256": "f6aab182c43bc837eac83b10cc46fd5b895b039cdce99a3cabcebbb2b57dc01e",
+      "size": 30720
+    },
+    {
+      "path": "audiotestframework_2026-08-17_12.06.07.334.log",
+      "sha256": "d2f2e383f7b2233d8b0ea847b34ea3ddca878d626338782eb710122a8f7a8679",
+      "size": 531
+    },
+    {
+      "path": "audiotestframework_2026-08-17_12.11.24.228.log",
+      "sha256": "f8167b62f28e78ccd645737ce35fd3ae15959afed9379f4f6d5116d11e4d01a6",
+      "size": 531
+    },
+    {
+      "path": "audiotestframework.dll",
+      "sha256": "488dceef0f9dacb472199d0bc2677250a696df2ec35f4fde141e435ad17d88f2",
+      "size": 1412472
+    },
+    {
+      "path": "cs/system.servicemodel.primitives.resources.dll",
+      "sha256": "fefc46ca75e30fa41f6f6cdb5b26ac8575746607c217bbe188101a76b5942389",
+      "size": 208936
+    },
+    {
+      "path": "de/system.servicemodel.primitives.resources.dll",
+      "sha256": "2416155129e2b34f79e25065213bef1fa1faa41d9f341636bfe50ab9d20905e4",
+      "size": 223264
+    },
+    {
+      "path": "descriptors/debugmodule-dragonfly-v5.0.xml",
+      "sha256": "2768337b78950291a3cc15d4bceae8306ee203e43cc158fdfe7b7a84e91d70c2",
+      "size": 108224
+    },
+    {
+      "path": "descriptors/debugmodule-dragonfly-v6.0.xml",
+      "sha256": "a42a35395761821da1c742a2a1616c3b4cba4803cab421de29370806a74e02ea",
+      "size": 1033
+    },
+    {
+      "path": "descriptors/debugmodule-dragonfly-v6.1.xml",
+      "sha256": "6a9389ecb2b2dfbab900ef01b3c338d6c4716785d6f6509c7455d45f36b404df",
+      "size": 1005
+    },
+    {
+      "path": "descriptors/debugmodule-dragonfly.xml",
+      "sha256": "e0fad959afffa48587c209c3c11c0e1fecd8a41a06c4e875ce3fc2edc4ae9111",
+      "size": 162274
+    },
+    {
+      "path": "descriptors/debugmodule-driver.xml",
+      "sha256": "531d66ccfe97a7011c94200c021eb9fc99823f4c03610ce22b670891bfd473f8",
+      "size": 1294
+    },
+    {
+      "path": "descriptors/debugmodule-firefly.xml",
+      "sha256": "af6af193bffa8cf60690c53d2707f82c8d3ca98f06aaff46051220eed42812dc",
+      "size": 192880
+    },
+    {
+      "path": "descriptors/debugmodule-ft230x basic uart.xml",
+      "sha256": "9234147f29f1f77f4ba66fd5c2f1d78f8cdf5abc4174b76ffb169ac8de9d134f",
+      "size": 1028
+    },
+    {
+      "path": "descriptors/debugmodule-ft232r usb uart.xml",
+      "sha256": "53aac33c6c61ed002eb0a1984761010e762f487a34723f716da10ac3e47b97f9",
+      "size": 1027
+    },
+    {
+      "path": "descriptors/debugmodule-grasshopper.xml",
+      "sha256": "d0625bdfeeb53b9996a09ee83f18ee90d6fd1ce7b1a1879b83e98ed5f6d02bcf",
+      "size": 8399
+    },
+    {
+      "path": "descriptors/debugmodule-hid.xml",
+      "sha256": "f0053cab1b91340cc7a0d75fa1ff1d8763509efb604989025666d6c9b055708f",
+      "size": 3618
+    },
+    {
+      "path": "descriptors/debugmodule-musl v3.xml",
+      "sha256": "c3dd09d0373b88fc26722fb2e4975eaa85628480af440f3f0f95c8a44adb1f47",
+      "size": 1019
+    },
+    {
+      "path": "descriptors/debugmodule-musl.xml",
+      "sha256": "a117c1c14b144713573847af9909aa0a63e11506a3fb583b747d5a87b2549980",
+      "size": 2505
+    },
+    {
+      "path": "descriptors/debugmodule-porg.xml",
+      "sha256": "5cd5b003bdf5d1e4d3715262abfba44dd634e45a3768ff46b68ea2850a463ec3",
+      "size": 1321
+    },
+    {
+      "path": "descriptors/debugmodule-ttl232rg-sct.xml",
+      "sha256": "1098a9238b1b3b5353ee76a53757481be2d47dc47f11beaf04b84b82ddf0f647",
+      "size": 1020
+    },
+    {
+      "path": "descriptors/dragonfly-v6_configurations.xml",
+      "sha256": "276fed2f68ab7744304edc42dc7723ccf2663d8be44c3d34866c555a29b3fa01",
+      "size": 5276
+    },
+    {
+      "path": "descriptors/dragonfly-v6_debugmodes.xml",
+      "sha256": "114a8ea14cbe2a45ffb675a6fbe9f568d7c72c07b8aaf96f80f4a3c48df1ce82",
+      "size": 109232
+    },
+    {
+      "path": "descriptors/dragonfly-v6_properties.xml",
+      "sha256": "f388a962b8e3dbd89d66da8e50e5b8f52e5129fcbc4e9ac8666c7684ef39ecb4",
+      "size": 3868
+    },
+    {
+      "path": "descriptors/powermeters/pm_3467_pue.xml",
+      "sha256": "c53ed5fb2bfd856da5d173d12c8c87e2f73741af4fad7539531084a1f0ab95a6",
+      "size": 4432
+    },
+    {
+      "path": "descriptors/powermeters/pm_55.xml",
+      "sha256": "3eca80be403e8b528f3039342066544da4c6300247917331e3e884bdcc87ddef",
+      "size": 2035
+    },
+    {
+      "path": "descriptors/powermeters/pm_766_mis.xml",
+      "sha256": "e7bd4f7aa15f34f9b95cd20ab96040e2372aa42eabe9e6aee76d0938d596bfa9",
+      "size": 6083
+    },
+    {
+      "path": "descriptors/powermeters/pm_807_mac.xml",
+      "sha256": "2c02e230c08c8945b759d01463e4ea03335d9b936ccf26c5bb30811a95868de8",
+      "size": 4312
+    },
+    {
+      "path": "descriptors/powermeters/pm_88.xml",
+      "sha256": "47a41717d57d7b1aea60ea4885bec44bc60f9013d00936eaff8e658c72aaab4f",
+      "size": 3479
+    },
+    {
+      "path": "descriptors/powermeters/pm_885_mis.xml",
+      "sha256": "44ff5c5040d893cd781c623b50a8d0810706847cc71c7514c6965c7033708db2",
+      "size": 5223
+    },
+    {
+      "path": "descriptors/powermeters/pm_900_maa.xml",
+      "sha256": "88a1b077c366b8133e30550a67f148c02e0348d7dbc5e8fa8498cd6c514442a4",
+      "size": 3682
+    },
+    {
+      "path": "descriptors/powermeters/pm_931_won.xml",
+      "sha256": "d963d4562f01f9cb24c1f67da952b41ea4a3376800a8a220f9aa967865dc2bb6",
+      "size": 3622
+    },
+    {
+      "path": "descriptors/powermeters/pm_952_tia.xml",
+      "sha256": "fedcdabf9125952bac286975c60b86377cbcbd57ad19862a9a3a01cd1b3d3c4f",
+      "size": 5153
+    },
+    {
+      "path": "descriptors/xmlschemas/debugmoduledescriptor.xsd",
+      "sha256": "3c0d506d013109efe3f143cd2931229f7bb1535fa1a8155936c5a5f8a3817019",
+      "size": 20139
+    },
+    {
+      "path": "descriptors/xmlschemas/mcucommandsdescriptor.xsd",
+      "sha256": "b5672fd3bdc61391fc9cdad620e4a5a0ce557d33584e6b5e63b384e9d5c28bf8",
+      "size": 4806
+    },
+    {
+      "path": "es/system.servicemodel.primitives.resources.dll",
+      "sha256": "0578488ac8f0f5f7f8cdca680554f817c7f79c1cf1eaa2e2e529da59072140fb",
+      "size": 215088
+    },
+    {
+      "path": "fr/system.servicemodel.primitives.resources.dll",
+      "sha256": "deb8f4b0506b721ffa95664e2e92b3d821dacef47f75a881fc107de8e681d704",
+      "size": 222752
+    },
+    {
+      "path": "google.api.commonprotos.dll",
+      "sha256": "9c09ebca25532418cb19f5b717e98370705306e86a06e0f7801dd9108b4b0a80",
+      "size": 417280
+    },
+    {
+      "path": "google.protobuf.dll",
+      "sha256": "71788f1969821ee294a9d9a5dbf0c64305e90e240ac9a662c9cc87b127018b78",
+      "size": 472864
+    },
+    {
+      "path": "grpc_csharp_ext.x64.dll",
+      "sha256": "4151229b6e31dae91d459be70655417dd18e6b0869c9a72fef08a5bb28d980b8",
+      "size": 12684056
+    },
+    {
+      "path": "grpc.aspnetcore.healthchecks.dll",
+      "sha256": "f5c9008ba0bf4e2414158b4e0a564a75bb7776d4e617a0777b5197055b3f5927",
+      "size": 32032
+    },
+    {
+      "path": "grpc.aspnetcore.server.clientfactory.dll",
+      "sha256": "4243b6eb81ffee46301659bfa747cb24722ed15aee5cec8c40b8f248bbe06cd0",
+      "size": 28448
+    },
+    {
+      "path": "grpc.aspnetcore.server.dll",
+      "sha256": "615e1badae1ceb71bb9024682abe91c080a718d706c1a4b1d17c3eac9f604340",
+      "size": 147232
+    },
+    {
+      "path": "grpc.aspnetcore.server.reflection.dll",
+      "sha256": "4a4a8021a30f23aaaa216be26dc6f2ff257d070121565515d6a0fb405d1f2269",
+      "size": 22304
+    },
+    {
+      "path": "grpc.core.api.dll",
+      "sha256": "052b414199fd3aa145f013b3442148fe1760893a3e242fbf764bc208a379d8de",
+      "size": 70432
+    },
+    {
+      "path": "grpc.core.dll",
+      "sha256": "801311a9bee0f8332bfe306b696f0a2dd800f3fd474d3a8415da6db5610e5189",
+      "size": 484632
+    },
+    {
+      "path": "grpc.healthcheck.dll",
+      "sha256": "b52948ea6c574b072183402b4d71d446cbeb433e13a4bcb7cd9ea01797e7b31b",
+      "size": 33568
+    },
+    {
+      "path": "grpc.net.client.dll",
+      "sha256": "b04cd4e8f94aa2ac177792def106cabf40e1671f1821ffae2ac99caaaaf38dbd",
+      "size": 295200
+    },
+    {
+      "path": "grpc.net.clientfactory.dll",
+      "sha256": "799a573879b9c36595d3d64180a9561d5d639b58a559d082a0f651e2eeb940f1",
+      "size": 50464
+    },
+    {
+      "path": "grpc.net.common.dll",
+      "sha256": "3bcc48022f4f836f5ad2b9094af4c0b9b2326309d0bbe33e1b0b94e63fb59224",
+      "size": 22304
+    },
+    {
+      "path": "grpc.reflection.dll",
+      "sha256": "52364856e48216277650afe904c432db4a33705dccc6b55108b136749e08858c",
+      "size": 52000
+    },
+    {
+      "path": "grpcricherror.dll",
+      "sha256": "6dc2c9ebb8b1fd26d3194a933afc72a4c4356a449428c60fa090c9c5f59dddf9",
+      "size": 8192
+    },
+    {
+      "path": "ijwhost.dll",
+      "sha256": "d9e64f2470f88d58891c2e2c60b790e47589a601e889fa6a4ce6fbd7903f5e99",
+      "size": 129832
+    },
+    {
+      "path": "it/system.servicemodel.primitives.resources.dll",
+      "sha256": "47d32f965a59de3f9242874d559feabe382b3cd4d335bfccf0b2f168f9b69b5c",
+      "size": 217136
+    },
+    {
+      "path": "ja/system.servicemodel.primitives.resources.dll",
+      "sha256": "b997f86bc9015c0081ba70105572c99f5c171b4f752980c8bb755d13f6348fb9",
+      "size": 251928
+    },
+    {
+      "path": "ko/system.servicemodel.primitives.resources.dll",
+      "sha256": "3a966f10481b68238f95a4ef58367fd6f87c182baf32bb8711e5ad88a126a1ba",
+      "size": 222256
+    },
+    {
+      "path": "mcucommands/mcucommands-60.xml",
+      "sha256": "7bb9e51f273767bd06a65dac7a9926299ad6f94386cfe0c8ebe321fec5fa3501",
+      "size": 1524
+    },
+    {
+      "path": "mcucommands/mcucommands-default.xml",
+      "sha256": "6a710da506717cd355a7f67537ea23aef17b8f789f0522a5b8461ad7e74191f8",
+      "size": 794
+    },
+    {
+      "path": "mcucommands/mcucommands-main.xml",
+      "sha256": "33fee8861f0b2ed9e9bdd169b83866acba031dce8a14506554b6795405e8d8a3",
+      "size": 752958
+    },
+    {
+      "path": "mcucommands/mcucommandscommondata.xml",
+      "sha256": "054e25b845585ec5a3bb033159c72562def49c43464b9599b0746d975554e594",
+      "size": 3128
+    },
+    {
+      "path": "microsoft.bcl.cryptography.dll",
+      "sha256": "1f71c5c63af08464593d53326184fd1ff4671a4305bfc2a1295d3b3f39ad5104",
+      "size": 296232
+    },
+    {
+      "path": "microsoft.bcl.memory.dll",
+      "sha256": "4997699447ec2f43e628c4944aabc63c45bf477f9c9acd2f8b5842d2174b8f93",
+      "size": 58680
+    },
+    {
+      "path": "microsoft.extensions.dependencyinjection.abstractions.dll",
+      "sha256": "afdcd6be4baf7c48e67b469d77560203e6660cff0e18f290da36c949d3a47acb",
+      "size": 65296
+    },
+    {
+      "path": "microsoft.extensions.dependencyinjection.dll",
+      "sha256": "158761ce778e799949f3a3060c461b1055bb35f1f5a65eff0e42397849f09ecd",
+      "size": 92952
+    },
+    {
+      "path": "microsoft.extensions.dependencymodel.dll",
+      "sha256": "5a859201d6102c62fbc50250b1b73173624b1f3d1abaa1b516f66bbc375aebd9",
+      "size": 67960
+    },
+    {
+      "path": "microsoft.extensions.hosting.windowsservices.dll",
+      "sha256": "1da1ea43a9aaa98657649306cb319a1568cad0fddbfbf62f70870dda712cc043",
+      "size": 29968
+    },
+    {
+      "path": "microsoft.extensions.logging.abstractions.dll",
+      "sha256": "4900c6d466b3ff93a806413f663e96fdc5e90acfd26b9913a7ca1b1086ee6b71",
+      "size": 66312
+    },
+    {
+      "path": "microsoft.extensions.logging.dll",
+      "sha256": "b2cfba2e05ee89a91e9bc9cf112468a5f4fa05d1a77ea81c131ea656f3d133c2",
+      "size": 50976
+    },
+    {
+      "path": "microsoft.extensions.options.dll",
+      "sha256": "8f6b8c90f07740afc148dca8b188189d1722a789a1d0897131e8efdfa76acfc1",
+      "size": 64776
+    },
+    {
+      "path": "microsoft.extensions.primitives.dll",
+      "sha256": "5001242693e4822e014412c88788aaf2c1741cf4f40043ff6a9b3dcd033b8d16",
+      "size": 44304
+    },
+    {
+      "path": "microsoft.manufacturing.atfwrapper.dll",
+      "sha256": "b8bf77461f18a0c96b186c2c2931f2f0205f9e514bf9a781834fce81ed83d4d3",
+      "size": 691712
+    },
+    {
+      "path": "microsoft.manufacturing.atfwrapper.pdb",
+      "sha256": "9448753d0f61911d0a3a24802bc204d5019f82d222f68be7178d0442316258f5",
+      "size": 5148672
+    },
+    {
+      "path": "microsoft.manufacturing.audio.data.dll",
+      "sha256": "ebafda3294ed88c0f626abc5d4cc239e3c0b16529c9f6851c70fb5af39f36441",
+      "size": 54824
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.contract.audio.dll",
+      "sha256": "259ad28f130e90a3278091502e18f2a5fe2ef265f740c51dbc1b0337711e6e1c",
+      "size": 86016
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.contract.common.dll",
+      "sha256": "dd54369599eac40bb467f45fb3cadc9df2c848fddd4b1dac8bca73d7345e6622",
+      "size": 17408
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.deps.json",
+      "sha256": "2855c6d3ac4a2041865f3f3dc74d1a74c0b6ed94382c1014f444de7785e50398",
+      "size": 75786
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.dll",
+      "sha256": "7e5988a9f30288f2f9c44f1739e696994c19f4281cbb616d658aed68b0175b67",
+      "size": 51712
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.exe",
+      "sha256": "56c1675b1aed5d3c31397757b85fa9cb63e6dde611b6d6d855631fb2987bcb88",
+      "size": 152064
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.pdb",
+      "sha256": "3d6f4e0ec91008f5e127fee217fa752f78effe2ad21fb1378bbe104abc41edb9",
+      "size": 34900
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.runtimeconfig.json",
+      "sha256": "79113f63d16752e585a6938d936f927faf417998e74d36de3807048f5aa4da99",
+      "size": 545
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.staticwebassets.endpoints.json",
+      "sha256": "eb6525c892afda953a2560f151f9c5e5bc6e79ef6741d886488ac450262c91e3",
+      "size": 51
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.module.audio.xml",
+      "sha256": "34f3015c6b2e0792a70c04022cde97d08e45cc21623ea69c04f140903862045c",
+      "size": 30015
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.serviceattributes.dll",
+      "sha256": "bbe61f96c81d65b32860e9c768c41c7cce2fe5d2513464b597755c954e76d18d",
+      "size": 6144
+    },
+    {
+      "path": "microsoft.manufacturing.bifrost.servicecore.dll",
+      "sha256": "95c63e9614de49d2a5d905910581e319b58afa06c780ff101bac81a142e9f818",
+      "size": 49976
+    },
+    {
+      "path": "microsoft.manufacturing.data.dll",
+      "sha256": "6a843ced2df57252b17072242c959befc2505857482bc027c7766d25a05372ab",
+      "size": 111688
+    },
+    {
+      "path": "microsoft.manufacturing.data.grpcapitrace.dll",
+      "sha256": "0fdcd24ec7b7ddfba7dfd14512156e31e9a0fb8fc768ef253138db4c4b61eba4",
+      "size": 17992
+    },
+    {
+      "path": "microsoft.manufacturing.extensions.cryptography.dll",
+      "sha256": "6228cb69c156a8777270670a42a08f39ed4df883a1f23d2fb0c00bc1dc4557d2",
+      "size": 24608
+    },
+    {
+      "path": "microsoft.manufacturing.extensions.diagnostics.http.dll",
+      "sha256": "25f7df7d3643ec92975e42f77e7842c1184dca4c5a82f5e7b8905189b9c45e4b",
+      "size": 26144
+    },
+    {
+      "path": "microsoft.manufacturing.extensions.dll",
+      "sha256": "fe581a8a963e73faed15019005878608f7130c90d4278efd8c4355336c035028",
+      "size": 87352
+    },
+    {
+      "path": "microsoft.manufacturing.extensions.newtonsoftjson.dll",
+      "sha256": "9b8d68bc15d6486273ada673754ad0c936325b557e899dc22f1e5052875bfa02",
+      "size": 20000
+    },
+    {
+      "path": "microsoft.manufacturing.telemetry.abstractions.dll",
+      "sha256": "813dde47d24a52925ef26126fd2b8263c7bfbf55e475fc365eb611da8a706317",
+      "size": 24608
+    },
+    {
+      "path": "microsoft.manufacturing.telemetry.dll",
+      "sha256": "5bc0be45a756393421b1fba5067a69a1bba7e789bba43968a0debbda3b6aaa4c",
+      "size": 35360
+    },
+    {
+      "path": "microsoft.manufacturing.telemetry.remotelogging.dll",
+      "sha256": "2c4d078780af22f016a6f43b004e7976c9e43b85daed6f8a7fe05a7e42952dc6",
+      "size": 25120
+    },
+    {
+      "path": "moduleplatform.txt",
+      "sha256": "039a52737ae4610f2fd391aeee98aba55e4df77dc8f7819045cf6e1d66b99def",
+      "size": 5
+    },
+    {
+      "path": "nacl.dll",
+      "sha256": "d4a491bcdfcf92bc438ec29ed88cc5a52a81d14592bbb2897aeaf53826093935",
+      "size": 30208
+    },
+    {
+      "path": "netmq.dll",
+      "sha256": "d40ab864b35a43b3274a061d89dc91165a7d5e090317f9fd12111c1349db4a9d",
+      "size": 277504
+    },
+    {
+      "path": "newtonsoft.json.bson.dll",
+      "sha256": "f3c56166d7f90296bbe6b03f64335623c3165ed25948288f1f316fa74dd8327f",
+      "size": 97720
+    },
+    {
+      "path": "newtonsoft.json.dll",
+      "sha256": "22c649f75fce5be7c7ccda8880473b634ef69ecf33f5d1ab8ad892caf47d5a07",
+      "size": 712464
+    },
+    {
+      "path": "opentelemetry.api.dll",
+      "sha256": "347909becd78f4c38dd8d745b18c264f80c6738e462583677fff2a578a346b3e",
+      "size": 79096
+    },
+    {
+      "path": "opentelemetry.api.providerbuilderextensions.dll",
+      "sha256": "24bb40418a5ada62d28c3ab3dedaa20a9383d9c22982b455df3758d5b05f7f01",
+      "size": 34784
+    },
+    {
+      "path": "opentelemetry.dll",
+      "sha256": "7e2cf2ff49464296e5d9ec73de85e8d3c50395e466fa9482448ee6a71e0f1cc9",
+      "size": 241160
+    },
+    {
+      "path": "opentelemetry.exporter.geneva.dll",
+      "sha256": "c2bc723de1a99ef9fb576e42e7ce42c5539776f49f20fd935dce528a18d73587",
+      "size": 181760
+    },
+    {
+      "path": "pl/system.servicemodel.primitives.resources.dll",
+      "sha256": "c41f26a75f4f662577aeb67ef8c5475dd2616c55c83c4594d3a5ecfac06bddc5",
+      "size": 222240
+    },
+    {
+      "path": "pt-br/system.servicemodel.primitives.resources.dll",
+      "sha256": "a5503b7db3aa253136ea60492111afb2750f6cf9503d00f30cfff0a5d893fb1f",
+      "size": 213040
+    },
+    {
+      "path": "ru/system.servicemodel.primitives.resources.dll",
+      "sha256": "a37e8d18694d39cb796cb79cfca84f23043bbcbe07033fd2fab023832ba63545",
+      "size": 292912
+    },
+    {
+      "path": "serilog.aspnetcore.dll",
+      "sha256": "3c958b5aafa69cfaa7d878a3f30925510126bd095631908581e871229d8760d8",
+      "size": 15872
+    },
+    {
+      "path": "serilog.dll",
+      "sha256": "6b67fb3f104513036a7446ce4da3b49449ec9cea00437c38333910e47bfa41cb",
+      "size": 140800
+    },
+    {
+      "path": "serilog.extensions.hosting.dll",
+      "sha256": "0253020154a86fc3b9a1cf71932594d14118726eb3b8a4f07ec04e84fe5c7622",
+      "size": 28672
+    },
+    {
+      "path": "serilog.extensions.logging.dll",
+      "sha256": "71770e0be96a94f3c36a7f68b4f629cba2a498ad66e8b55508596b9f250fcfff",
+      "size": 17408
+    },
+    {
+      "path": "serilog.formatting.compact.dll",
+      "sha256": "355e3be9137603e9406af1b3997df90c37792223758a0296e3e1d445eee50130",
+      "size": 8704
+    },
+    {
+      "path": "serilog.settings.configuration.dll",
+      "sha256": "e3c950092f766a680c42fedf935f167077aa38a8a8f4296537a95af623f0ecef",
+      "size": 64512
+    },
+    {
+      "path": "serilog.sinks.async.dll",
+      "sha256": "f0b3d9b22a74d84b36f424884fa337e0e281a8731d6ac176831348776a5cb083",
+      "size": 9216
+    },
+    {
+      "path": "serilog.sinks.console.dll",
+      "sha256": "4ac59fdee4dd5f083a560ae4686293bbd9550ec94e644f8ff713baeea5e5a3d2",
+      "size": 34304
+    },
+    {
+      "path": "serilog.sinks.debug.dll",
+      "sha256": "db14786e73bc0ee8455dca51b61a6ccd8871c06886334a30c9a83d3b5716635e",
+      "size": 7168
+    },
+    {
+      "path": "serilog.sinks.file.dll",
+      "sha256": "192a97f6a2e408c36d9ec8a0eee6bba33a516ddedf3662c031d88e744629f991",
+      "size": 31232
+    },
+    {
+      "path": "system.diagnostics.diagnosticsource.dll",
+      "sha256": "27da0b8683f7539c4b57ce08000dec4242b0e3be23bf4822836080da0ebda971",
+      "size": 192272
+    },
+    {
+      "path": "system.formats.asn1.dll",
+      "sha256": "0ee3d913f947048a501ecf3548174761b732f19a7c904e72982c73542b9a07ec",
+      "size": 95568
+    },
+    {
+      "path": "system.security.cryptography.pkcs.dll",
+      "sha256": "f577bf71d3def374779c5c0053d2ed12e723c5c7be5facc7435689ed23843ca1",
+      "size": 339752
+    },
+    {
+      "path": "system.security.cryptography.protecteddata.dll",
+      "sha256": "a2c267a61ee145d69128220c10b3ddd451a137273126ef7b4bd306059e1727af",
+      "size": 25464
+    },
+    {
+      "path": "system.security.cryptography.xml.dll",
+      "sha256": "bc916460b59cbf04c96a8e4d140b1e8e54154664a0248ab844312de3b50b71d4",
+      "size": 207144
+    },
+    {
+      "path": "system.servicemodel.primitives.dll",
+      "sha256": "63c701108c72da1353e3b34407391e10ac5e6c5c89145768035ac2bf12f2fd9a",
+      "size": 2398752
+    },
+    {
+      "path": "system.serviceprocess.servicecontroller.dll",
+      "sha256": "087ffd8ea723d88ab278d68a1e20b1cb513fe3c2a53356308e58e3b91601a283",
+      "size": 87728
+    },
+    {
+      "path": "tr/system.servicemodel.primitives.resources.dll",
+      "sha256": "f15688ec76ba161f468d77bf8fca4d368ab87f2677ae7ec33e8bff9ef2828843",
+      "size": 208416
+    },
+    {
+      "path": "unzip_archive.ps1",
+      "sha256": "775207084402f4a494a1cac2bd42ff4c8f7dec7da107fc1e4a855d19fc3bdd92",
+      "size": 724
+    },
+    {
+      "path": "zh-hans/system.servicemodel.primitives.resources.dll",
+      "sha256": "f46341061677d80230d2ed3dce2e1f31910a985923ac34945feb2cd6ff6ca77e",
+      "size": 185376
+    },
+    {
+      "path": "zh-hant/system.servicemodel.primitives.resources.dll",
+      "sha256": "b1bc0f540fb47bb3ec8f8d1f0588d1ee244334ac2a469a65696209c1475170f7",
+      "size": 186400
+    }
+  ]
+}

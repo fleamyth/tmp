@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor 807_MAC -->
+  <Components>
+    <Component Name="PowerMeter1" Class="TiInaPowerMeter" ChipType="4230" Address="40">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_TS_IN"       Friendlyname="TOUCH_3P3V"           MaxCurrent="110"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_VNNAON_IN"        Friendlyname="CPU_VNNAON"           MaxCurrent="1007"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="2.5"  ID="PM_VCC_LP_ECORE_IN"  Friendlyname="CPU_VCC_LP_ECORE"     MaxCurrent="3000"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="2.5"  ID="PM_VCCCORE_IN"       Friendlyname="CPU_VCCCORE"          MaxCurrent="6000"/>
+    </Component>
+    <Component Name="PowerMeter2" Class="TiInaPowerMeter" ChipType="4230" Address="41">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_3P3V_WLAN_IN"     Friendlyname="WLAN_3P3V"            MaxCurrent="1000"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_AUDIO_CODEC_IN"   Friendlyname="AUDIO_CODEC"          MaxCurrent="80"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20" ID="PM_3P3V_TBT0_IN"     Friendlyname="TBT0_3P3V"            MaxCurrent="150"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_VBUS_USBC_IN"     Friendlyname="USB_TYPEC"            MaxCurrent="4500"/>
+    </Component>
+    <Component Name="PowerMeter3" Class="TiInaPowerMeter" ChipType="4230" Address="42">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"  ID="PM_VSYS_IN"          Friendlyname="SYSTEM"               MaxCurrent="10000"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_BKLT_IN"          Friendlyname="DISPLAY_BKLT"         MaxCurrent="300"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_1P8V_CAM_F_IN"    Friendlyname="CAMERA_FRONT_1P8V"    MaxCurrent="65"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_PANEL_IN"    Friendlyname="DISPLAY_CTRL"         MaxCurrent="850"/>
+    </Component>
+    <Component Name="PowerMeter4" Class="TiInaPowerMeter" ChipType="4230" Address="43">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VCCIO_IN"         Friendlyname="CPU_VCCIO"            MaxCurrent="245"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"  ID="PM_VCCGT_IN"         Friendlyname="CPU_VCCGT"            MaxCurrent="6000"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"  ID="PM_VCCSA_IN"         Friendlyname="CPU_VCSA"             MaxCurrent="6000"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_3P3V_TP_IN"       Friendlyname="TP_3P3V"              MaxCurrent="50"/>
+    </Component>
+    <Component Name="PowerMeter5" Class="TiInaPowerMeter" ChipType="4230" Address="44">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10" ID="PM_AUDIO_SPEAKER_IN" Friendlyname="AUDIO_SPKR"           MaxCurrent="125"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10" ID="PM_3P3V_SSD_IN"      Friendlyname="SSD_3P3V"             MaxCurrent="500"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_3P86V_WWAN_IN"    Friendlyname="WWAN_3P86V"           MaxCurrent="100"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10" ID="PM_1P8VSUS_ORG_IN"   Friendlyname="CPU_1P8V_VSUS"        MaxCurrent="1075"/>
+    </Component>
+    <Component Name="PowerMeter6" Class="TiInaPowerMeter" ChipType="4230" Address="45">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20" ID="PM_VDD2H_IN"         Friendlyname="VDD2H"                MaxCurrent="1000"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20" ID="PM_5V_TP_IN"         Friendlyname="TP_5V"                MaxCurrent="1500"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10" ID="PM_BAT_IN"           Friendlyname="IBATT"                MaxCurrent="10000"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20" ID="PM_5V_FAN_IN"        Friendlyname="FAN_5V"               MaxCurrent="250"/>
+    </Component>
+  </Components>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor 766_MIS -->
+  <Components>
+    <!-- U2801 -->
+    <Component Name="PowerMeter1" Class="TiInaPowerMeter" ChipType="4230" Address="40">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"    ID="PM_VSYS"                 Friendlyname="VSYS"                 MaxCurrent="16000"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"   ID="PM_VDD_DIP"              Friendlyname="VDD_DIP"              MaxCurrent="1815"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="1"    ID="PM_1P8V_SAM"             Friendlyname="1P8V_SAM"             MaxCurrent="50"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_5V_FAN"               Friendlyname="5V_FAN"               MaxCurrent="250"/>
+    </Component>
+    <!-- U2802 -->
+    <Component Name="PowerMeter2" Class="TiInaPowerMeter" ChipType="4230" Address="41">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_5V_KB_BACKLIGHT"      Friendlyname="5V_KB_BACKLIGHT"      MaxCurrent="50"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_5V_TP"                Friendlyname="5V_TP"                MaxCurrent="1500"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TP"              Friendlyname="3P3V_TP"              MaxCurrent="50"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_VDDIO_1V8_AO"         Friendlyname="VDDIO_1V8_AO"         MaxCurrent="75"/>
+    </Component>
+    <!-- U2803 -->
+    <Component Name="PowerMeter3" Class="TiInaPowerMeter" ChipType="4230" Address="42">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"   ID="PM_5V_AUDIO"             Friendlyname="5V_AUDIO"              MaxCurrent="330"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"   ID="PM_VSYS_AUDIO"           Friendlyname="VSYS_AUDIO"            MaxCurrent="125"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_SSD"             Friendlyname="3P3V_SSD"              MaxCurrent="1750"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_VDDIO_3V3_AO_IN"      Friendlyname="VDDIO_3V3_AO_IN"       MaxCurrent="1250"/>
+    </Component>
+    <!-- U2804 -->
+    <Component Name="PowerMeter4" Class="TiInaPowerMeter" ChipType="4230" Address="43">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="1"   ID="PM_VSYS_GPC_IN"           Friendlyname="VSYS_GPC_IN"           MaxCurrent="8600"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_3P3V_TS"               Friendlyname="3P3V_TS"               MaxCurrent="300"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"  ID="PM_3P3V_PANEL"            Friendlyname="3P3V_PANEL"            MaxCurrent="850"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="1"   ID="PM_VSYS_GPM_IN"           Friendlyname="VSYS_GPM_IN"           MaxCurrent="4000"/>
+    </Component>
+    <!-- U2805 -->
+    <Component Name="PowerMeter5" Class="TiInaPowerMeter" ChipType="4230" Address="44">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="1"   ID="PM_PMIC_MT6373_IN"        Friendlyname="PMIC_MT6373_IN"        MaxCurrent="3800"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_VDD_VDDQ_IN"           Friendlyname="VDD_VDDQ_IN"           MaxCurrent="795"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PM_VDD_DDR_VDD2L_IN"      Friendlyname="VDD_DDR_VDD2L_IN"      MaxCurrent="310"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PM_VDD_DDR_VDD1_IN"       Friendlyname="VDD_DDR_VDD1_IN"       MaxCurrent="85"/>
+    </Component>
+    <!-- U2806 -->
+    <Component Name="PowerMeter6" Class="TiInaPowerMeter" ChipType="4230" Address="45">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"  ID="PM_VSYS_IR"               Friendlyname="VSYS_IR"               MaxCurrent="160"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"  ID="PM_VPR_3V3_CAM"           Friendlyname="VPR_3V3_CAM"           MaxCurrent="539"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"  ID="PM_1V8_RGB"               Friendlyname="1V8_RGB"               MaxCurrent="12"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PM_VDD_DDR_VDD2H_LP5X_IN" Friendlyname="VDD_DDR_VDD2H_LP5X_IN" MaxCurrent="1300"/>
+    </Component>
+    <!-- U2807 -->
+    <Component Name="PowerMeter7" Class="TiInaPowerMeter" ChipType="4230" Address="46">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"  ID="PM_VCC_EDP_BKLT_IN"       Friendlyname="VCC_EDP_BKLT_IN"       MaxCurrent="3000"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"  ID="PM_3P3V_WLAN"             Friendlyname="3P3V_WLAN"             MaxCurrent="750"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="1"   ID="PM_PMIC_MT6363_IN"        Friendlyname="PMIC_MT6363_IN"        MaxCurrent="4450"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="3"   ID="PM_VPR_3V3_IN"            Friendlyname="VPR_3V3_IN"            MaxCurrent="2200"/>
+    </Component>
+    <!-- U2808 -->
+    <Component Name="PowerMeter8" Class="TiInaPowerMeter" ChipType="4230" Address="47">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="1"   ID="PM_VDD_CPU_P_IN"          Friendlyname="VDD_CPU_P_IN"          MaxCurrent="10428"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"   ID="PM_VDD_CORE_IN"           Friendlyname="VDD_CORE_IN"           MaxCurrent="1500"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"   ID="PM_VDD_CPU_E_IN"          Friendlyname="VDD_CPU_E_IN"          MaxCurrent="1925"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"   ID="PM_VDD_DLA_IN"            Friendlyname="VDD_DLA_IN"            MaxCurrent="1500"/>
+    </Component>
+  </Components>

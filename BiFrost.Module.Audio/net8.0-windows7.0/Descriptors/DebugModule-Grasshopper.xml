@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DebugModule Name="Grasshopper" Class="Microsoft.Devices.SurfaceDebugFramework.DebugModule.StandardDebugModule"
+  xmlns="DebugModuleSchemaNs">
+
+  <DebugModes>
+
+    <DebugModeTypes Name="DebugModeTypes" Description="List of acceptable Debug Mode types. Case Sensitive.">
+      <Type Name="Default"/>
+      <Type Name="None"/>
+    </DebugModeTypes>
+
+    <DebugMode Name="Default" Type="Default" ProductId="65535" McuCommands="">
+      <Filter Name="CommandFilter" Class="Microsoft.Devices.SurfaceDebugFramework.IOFilter.CommandFilter" Description="Filter identifier to communicate MCU">
+        <Protocol Name="CommandProtocol" Class="Microsoft.Devices.SurfaceDebugFramework.IOProtocol.UartProtocol" Description="IOProtocol to communicate MCU">
+          <Field Name="FTDI.Uart" Default="D" Description="Port for MCU commands"/>
+          <Field Name="Baudrate" Default="3000000" Description="Connection Baud Rate."/>
+        </Protocol>
+        <Field Name="PayloadFormat" Default="UspPacket" Description="This tells command filter the kind of format we need to send to SAM"/>
+        <RoutingInfo Name="SshRoutingInformation" Description="Device specific routing information">
+          <Source Default="0x04" Description="Sets the default SSH Source ID to SURFLINK"/>
+        </RoutingInfo>
+      </Filter>
+      <Crossbar Config="Crossbar_Default"/>
+      <IOExpander Config="DefaultInterruptMaskRegister"/>
+      <IOExpander Config="DefaultOutputPortRegister"/>
+      <IOExpander Config="DefaultConfigurationPortRegister"/>
+      <IOExpander Config="DefaultPullupSelectionRegister"/>
+      <IOExpander Config="DefaultPullupEnableRegister"/>
+    </DebugMode>
+
+  </DebugModes>
+
+  <Configurations>
+    <!--
+      IOExpander Configurations
+    -->
+
+    <!-- DipSwitch_InputPortRegister is used to read the DIP switch -->
+    <IOExpanderConfig Name="DipSwitch_InputPortRegister" Target="IOExpander0" Register="InputPortRegister" IsRead="true" Description="DipSwitch Mask registers to read.">
+      <Mask Name="P10_SWITCH_4"/>
+      <Mask Name="P11_SWITCH_3"/>
+      <Mask Name="P12_SWITCH_2"/>
+      <Mask Name="P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <!--
+        Initialization configurations
+    -->
+
+    <IOExpanderConfig Name="DefaultInterruptStatusRegister" Target="IOExpander0" Register="InterruptStatusRegister" IsRead="true" Description="Clear previous interrupt status">
+      <Mask Name="AllZeroUndefined"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="DefaultInterruptMaskRegister" Target="IOExpander0" Register="InterruptMaskRegister" Invert="true" Description="Contains bit mask of interrupts to enable on the IO Expander.">
+      <Mask Name="P06_STATUS_HPD2"/>
+      <Mask Name="P05_IO_EXPAND_DATA"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="DefaultConfigurationPortRegister" Target="IOExpander0" Register="ConfigurationPortRegister" Invert="true">
+      <Mask Name="P17_VBUS_EN"/>
+      <Mask Name="P00_SAM_BYPASS_SEL"/>
+      <Mask Name="P01_AUX_BYPASS_SEL"/>
+      <Mask Name="P02_USB2_BYPASS_SEL1"/>
+      <Mask Name="P03_USB2_BYPASS_SEL0"/>
+      <Mask Name="P07_SAM_REVERSE_SEL"/>
+      <Mask Name="P04_HPD_BYPASS_SEL"/>
+      <Mask Name="P14_JTAG_OE_N"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="DefaultPullupSelectionRegister" Target="IOExpander0" Register="PullupSelectionRegister">
+      <Mask Name="P10_SWITCH_4"/>
+      <Mask Name="P11_SWITCH_3"/>
+      <Mask Name="P12_SWITCH_2"/>
+      <Mask Name="P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <IOExpanderConfig Name="DefaultPullupEnableRegister" Target="IOExpander0" Register="PullupEnableRegister">
+      <Mask Name="P10_SWITCH_4"/>
+      <Mask Name="P11_SWITCH_3"/>
+      <Mask Name="P12_SWITCH_2"/>
+      <Mask Name="P13_SWITCH_1"/>
+    </IOExpanderConfig>
+
+    <!--
+      OutputPortRegister Configurations
+    -->
+
+    <IOExpanderConfig Name="DefaultOutputPortRegister" Target="IOExpander0" Register="OutputPortRegister">
+      <Mask Name="P17_VBUS_EN"/>
+      <Mask Name="P00_SAM_BYPASS_SEL"/>
+      <Mask Name="P01_AUX_BYPASS_SEL"/>
+      <Mask Name="P02_USB2_BYPASS_SEL1"/>
+      <Mask Name="P04_HPD_BYPASS_SEL"/>
+    </IOExpanderConfig>
+
+    <!--
+        Crossbar Configurations
+    -->
+
+    <CrossbarConfig Name="Crossbar_Default" Type="Crossbar" Description="">
+      <PinMap Input="X0_PORTA_CLOCK" Output="Y1_HPD_DEBUGA"/>
+      <PinMap Input="X1_PORTA_DI" Output="Y0_HPD_DEBUGB"/>
+      <PinMap Input="X2_PORTA_DO" Output="Y6_SD_DEBUG2_DP_HPD"/>
+      <PinMap Input="X5_PORTD_UART_TXD" Output="Y7_SD_DEBUG1_AUX_DP"/>
+      <PinMap Input="X6_PORTD_UART_RXD" Output="Y5_SD_DEBUG3_AUX_DN"/>
+    </CrossbarConfig>
+
+  </Configurations>
+
+  <Properties>
+
+    <Crossbar Name="Crossbar" Description="Information about controller debug mux">
+      <Field Name="Address" Default="0x70" Description="Device Address of crossbar"/>
+      <Field Name="Baudrate" Default="400000" Description="i2c baudrate of crossbar"/>
+      <Field Name="FTDI.I2C" Default="B" Description="Port for crossbar"/>
+      <Pins Name="InputPins" Description="Matrix X Pins">
+        <Pin Name="X0_PORTA_CLOCK" Value="0"/>
+        <Pin Name="X1_PORTA_DI" Value="1"/>
+        <Pin Name="X2_PORTA_DO" Value="2"/>
+        <Pin Name="X3_PORTA_TMS" Value="3"/>
+        <Pin Name="X4_PORTA_OTHER" Value="4"/>
+        <Pin Name="X5_PORTD_UART_TXD" Value="5"/>
+        <Pin Name="X6_PORTD_UART_RXD" Value="8"/>
+        <Pin Name="X7_IO_EXPAND_DATA" Value="9"/>
+        <Pin Name="X8_CONN_CLOCK_SWDIO" Value="10"/>
+        <Pin Name="X9_CONN_DI_SWO" Value="11"/>
+        <Pin Name="X10_CONN_DO_SWDCLK" Value="12"/>
+        <Pin Name="X11_CONN_TMS_SWDRST" Value="13"/>
+      </Pins>
+      <Pins Name="OutputPins" Description="Matrix Y Pins">
+        <Pin Name="Y0_HPD_DEBUGB" Value="0"/>
+        <Pin Name="Y1_HPD_DEBUGA" Value="1"/>
+        <Pin Name="Y2_SD_DEBUG6_USB2_DM" Value="2"/>
+        <Pin Name="Y3_SD_DEBUG5_USB2_DP" Value="3"/>
+        <Pin Name="Y4_SD_DEBUG4_CONFIG" Value="4"/>
+        <Pin Name="Y5_SD_DEBUG3_AUX_DN" Value="5"/>
+        <Pin Name="Y6_SD_DEBUG2_DP_HPD" Value="6"/>
+        <Pin Name="Y7_SD_DEBUG1_AUX_DP" Value="7"/>
+      </Pins>
+    </Crossbar>
+
+    <IOExpander Name="IOExpander0" Description="Configuration information for IO Expander">
+      <Field Name="Address" Default="0x21" Description="Device Address of io expander"/>
+      <Field Name="Baudrate" Default="400000" Description="i2c baudrate of io expander"/>
+      <Field Name="FTDI.I2C" Default="B" Description="Port for io expander"/>
+      <Register Name="InputPortRegister" Value="0x00"/>
+      <Register Name="OutputPortRegister" Value="0x02"/>
+      <Register Name="ConfigurationPortRegister" Value="0x06"/>
+      <Register Name="PullupEnableRegister" Value="0x46"/>
+      <Register Name="PullupSelectionRegister" Value="0x48"/>
+      <Register Name="InterruptMaskRegister" Value="0x4A"/>
+      <Register Name="InterruptStatusRegister" Value="0x4C"/>
+      <PinMask Name="AllZeroUndefined" Value="0x0000"/>
+      <PinMask Name="P00_SAM_BYPASS_SEL" Value="0x0001"/>
+      <PinMask Name="P01_AUX_BYPASS_SEL" Value="0x0002"/>
+      <PinMask Name="P02_USB2_BYPASS_SEL1" Value="0x0004"/>
+      <PinMask Name="P03_USB2_BYPASS_SEL0" Value="0x0008"/>
+      <PinMask Name="P04_HPD_BYPASS_SEL" Value="0x0010"/>
+      <PinMask Name="P05_IO_EXPAND_DATA" Value="0x0020"/>
+      <PinMask Name="P06_STATUS_HPD2" Value="0x0040"/>
+      <PinMask Name="P07_SAM_REVERSE_SEL" Value="0x0080"/>
+      <PinMask Name="P10_SWITCH_4" Value="0x0100"/>
+      <PinMask Name="P11_SWITCH_3" Value="0x0200"/>
+      <PinMask Name="P12_SWITCH_2" Value="0x0400"/>
+      <PinMask Name="P13_SWITCH_1" Value="0x0800"/>
+      <PinMask Name="P14_JTAG_OE_N" Value="0x1000"/>
+      <PinMask Name="P15_STATUS_JTAGNOPWR" Value="0x2000"/>
+      <PinMask Name="P16_STATUS_JTAG1P8" Value="0x4000"/>
+      <PinMask Name="P17_VBUS_EN" Value="0x8000"/>
+    </IOExpander>
+
+    <EventTypes>
+      <SessionEvent Name="Disconnected" BitMask="0" SetMask="0"/>
+      <SessionEvent Name="MotherboardAttach" BitMask="0x0040" SetMask="0x0040"/>
+      <DebugModeEvent Name="S0iX" BitMask="0x0020" SetMask="0x0020"/>
+    </EventTypes>
+
+  </Properties>
+
+</DebugModule>

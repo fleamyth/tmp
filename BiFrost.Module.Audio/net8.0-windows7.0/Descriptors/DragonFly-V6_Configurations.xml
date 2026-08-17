@@ -1,0 +1,130 @@
+<Configurations>
+
+  <!--
+      IOExpander Configurations
+  -->
+
+  <!-- DipSwitch_InputPortRegister is used to read the DIP switch -->
+  <IOExpanderConfig Name="DipSwitch_InputPortRegister" Target="IOExpander_U302" Register="InputPortRegister" IsRead="true" Reverse="true" Description="DipSwitch Mask registers to read.">
+    <Mask Name="E0_P10_SWITCH_4"/>
+    <Mask Name="E0_P11_SWITCH_3"/>
+    <Mask Name="E0_P12_SWITCH_2"/>
+    <Mask Name="E0_P13_SWITCH_1"/>
+  </IOExpanderConfig>
+
+  <!--
+      Initialization configurations
+  -->
+
+  <IOExpanderConfig Name="Expander1_ConfigurationPortRegister_Init" Target="IOExpander_U301" Register="ConfigurationPortRegister" Invert="true">
+    <Mask Name="E1_P00_MUX_SEL2"/>
+    <Mask Name="E1_P01_MUX_SEL1"/>
+    <Mask Name="E1_P02_MUX_SEL0"/>
+    <Mask Name="E1_P03_MUX_SET_EN1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_ConfigurationPortRegister_Init" Target="IOExpander_U302" Register="ConfigurationPortRegister" Invert="true">
+    <Mask Name="E0_P03_FTDI_ADBUS2_MISO_SEL"/>
+    <Mask Name="E0_P07_SAM_RESET"/>
+    <Mask Name="E0_P16_LS_PWR_EN_1V8_3V3"/>
+    <Mask Name="E0_P17_LS_PWR_SEL_1V8_N_3V3"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_PullupSelectionRegister_Init" Target="IOExpander_U302" Register="PullupSelectionRegister">
+    <Mask Name="E0_P10_SWITCH_4"/>
+    <Mask Name="E0_P11_SWITCH_3"/>
+    <Mask Name="E0_P12_SWITCH_2"/>
+    <Mask Name="E0_P13_SWITCH_1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_PullupEnableRegister_Init" Target="IOExpander_U302" Register="PullupEnableRegister">
+    <Mask Name="E0_P10_SWITCH_4"/>
+    <Mask Name="E0_P11_SWITCH_3"/>
+    <Mask Name="E0_P12_SWITCH_2"/>
+    <Mask Name="E0_P13_SWITCH_1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_InterruptMaskRegister_Init" Target="IOExpander_U301" Register="InterruptMaskRegister" Invert="true">
+    <Mask Name="E1_P06_SLP_S3"/>
+    <Mask Name="E1_P10_3P3VSB_STAT"/>
+    <Mask Name="E1_P16_SLP_S4_N"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_InterruptMaskRegister_Init" Target="IOExpander_U302" Register="InterruptMaskRegister" Invert="true">
+    <Mask Name="E0_P04_H_PROCHOT_1P8V"/>
+    <Mask Name="E0_P06_PLT_RST_BUF"/>
+    <Mask Name="E0_P15_CATERR_1V8"/>
+  </IOExpanderConfig>
+
+  <!--
+      OutputPortRegister Configurations
+  -->
+
+  <IOExpanderConfig Name="Expander0" Target="IOExpander_U302" Register="OutputPortRegister">
+    <Mask Name="E0_P07_SAM_RESET"/>
+    <Mask Name="E0_P16_LS_PWR_EN_1V8_3V3"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_PMI" Target="IOExpander_U302" Register="OutputPortRegister">
+    <Mask Name="E0_P07_SAM_RESET"/>
+    <Mask Name="E0_P16_LS_PWR_EN_1V8_3V3"/>
+    <Mask Name="E0_P17_LS_PWR_SEL_1V8_N_3V3"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_HID" Target="IOExpander_U302" Register="OutputPortRegister">
+    <Mask Name="E0_P03_FTDI_ADBUS2_MISO_SEL"/>
+    <Mask Name="E0_P07_SAM_RESET"/>
+    <Mask Name="E0_P16_LS_PWR_EN_1V8_3V3"/>
+    <Mask Name="E0_P17_LS_PWR_SEL_1V8_N_3V3"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander0_ArduinoSPI" Target="IOExpander_U302" Register="OutputPortRegister">
+    <Mask Name="E0_P03_FTDI_ADBUS2_MISO_SEL"/>
+    <Mask Name="E0_P16_LS_PWR_EN_1V8_3V3"/>
+    <Mask Name="E0_P17_LS_PWR_SEL_1V8_N_3V3"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_SWD" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_AllZeroUndefined"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_P03_MUX_SET" Bytes="1" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P03_MUX_SET_EN1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_HID" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P00_MUX_SEL2"/>
+    <Mask Name="E1_P01_MUX_SEL1"/>
+    <Mask Name="E1_P02_MUX_SEL0"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_PMI" Target="IOExpander_U301" Register="OutputPortRegister" Description="Standard Mux config for Power Measurements">
+    <Mask Name="E1_P01_MUX_SEL1"/>
+    <Mask Name="E1_P02_MUX_SEL0"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_SOSAK" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P00_MUX_SEL2"/>
+    <Mask Name="E1_P01_MUX_SEL1"/>
+    <Mask Name="E1_P02_MUX_SEL0"/>
+    <Mask Name="E1_P03_MUX_SET_EN1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_ArduinoSPI" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P00_MUX_SEL2"/>
+    <Mask Name="E1_P01_MUX_SEL1"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_SoCLog_IMVP_I2C" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P02_MUX_SEL0"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_DreLog_IMVP_I2C" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P02_MUX_SEL0"/>
+  </IOExpanderConfig>
+
+  <IOExpanderConfig Name="Expander1_SsfhLog_LTE_UART" Target="IOExpander_U301" Register="OutputPortRegister">
+    <Mask Name="E1_P00_MUX_SEL2"/>
+  </IOExpanderConfig>
+
+</Configurations>

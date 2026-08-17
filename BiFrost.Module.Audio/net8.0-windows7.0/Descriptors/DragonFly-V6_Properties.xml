@@ -1,0 +1,71 @@
+<Properties>
+  <!-- Dragonfly v6 schematic dragonfly_rev-5.pdf -->
+
+  <!-- U302 bottom of p3 of 8 in schematic-->
+  <IOExpander Name="IOExpander_U302" Description="Configuration information for IO Expander U302">
+    <Field Name="Address" Default="0x20" Description="Device Address of io expander"/>
+    <Field Name="Baudrate" Default="400000" Description="i2c baudrate of io expander"/>
+    <Field Name="FTDI.I2C" Default="B" Description="Port for io expander"/>
+    <Register Name="InputPortRegister" Value="0x00"/>
+    <Register Name="OutputPortRegister" Value="0x02"/>
+    <Register Name="ConfigurationPortRegister" Value="0x06"/>
+    <Register Name="PullupEnableRegister" Value="0x46"/>
+    <Register Name="PullupSelectionRegister" Value="0x48"/>
+    <Register Name="InterruptMaskRegister" Value="0x4A"/>
+    <Register Name="InterruptStatusRegister" Value="0x4C"/>
+    <PinMask Name="E0_AllZeroUndefined" Value="0x000"/>
+    <PinMask Name="E0_P00_SAM_DEBUG_GPIO" Value="0x0001"/>
+    <PinMask Name="E0_P01_SOC_SYS_RST_N" Value="0x0002"/>
+    <PinMask Name="E0_P02_PCH_DEBUG_GPP_H23" Value="0x0004"/>
+    <PinMask Name="E0_P03_FTDI_ADBUS2_MISO_SEL" Value="0x0008"/>
+    <PinMask Name="E0_P04_H_PROCHOT_1P8V" Value="0x0010"/>
+    <PinMask Name="E0_P05_USBC_DUT_CC1_DISABLE_N" Value="0x0020"/>
+    <PinMask Name="E0_P06_PLT_RST_BUF" Value="0x0040"/>
+    <PinMask Name="E0_P07_SAM_RESET" Value="0x0080"/>
+    <PinMask Name="E0_P10_SWITCH_4" Value="0x0100"/>
+    <PinMask Name="E0_P11_SWITCH_3" Value="0x0200"/>
+    <PinMask Name="E0_P12_SWITCH_2" Value="0x0400"/>
+    <PinMask Name="E0_P13_SWITCH_1" Value="0x0800"/>
+    <PinMask Name="E0_P14_TP301" Value="0x1000"/>
+    <PinMask Name="E0_P15_CATERR_1V8" Value="0x2000"/>
+    <PinMask Name="E0_P16_LS_PWR_EN_1V8_3V3" Value="0x4000"/>
+    <PinMask Name="E0_P17_LS_PWR_SEL_1V8_N_3V3" Value="0x8000"/>
+  </IOExpander>
+
+  <!-- U301 top of p3 of 8 in schematic -->
+  <IOExpander Name="IOExpander_U301" Description="Configuration information for IO Expander U301">
+    <Field Name="Address" Default="0x21" Description="Device Address of io expander"/>
+    <Field Name="Baudrate" Default="400000" Description="i2c baudrate of io expander"/>
+    <Field Name="FTDI.I2C" Default="B" Description="Port for io expander"/>
+    <Register Name="InputPortRegister" Value="0x00"/>
+    <Register Name="OutputPortRegister" Value="0x02"/>
+    <Register Name="ConfigurationPortRegister" Value="0x06"/>
+    <Register Name="PullupEnableRegister" Value="0x46"/>
+    <Register Name="PullupSelectionRegister" Value="0x48"/>
+    <Register Name="InterruptMaskRegister" Value="0x4A"/>
+    <Register Name="InterruptStatusRegister" Value="0x4C"/>
+    <PinMask Name="E1_AllZeroUndefined" Value="0x000"/>
+    <PinMask Name="E1_P00_MUX_SEL2" Value="0x0001"/>
+    <PinMask Name="E1_P01_MUX_SEL1" Value="0x0002"/>
+    <PinMask Name="E1_P02_MUX_SEL0" Value="0x0004"/>
+    <PinMask Name="E1_P03_MUX_SET_EN1" Value="0x0008"/>
+    <PinMask Name="E1_P04_USB2_MUX_SEL2" Value="0x0010"/>
+    <PinMask Name="E1_P05_USB3_PWR_EN" Value="0x0020"/>
+    <PinMask Name="E1_P06_SLP_S3" Value="0x0040"/>
+    <PinMask Name="E1_P07_PWRBTN_N" Value="0x0080"/>
+    <PinMask Name="E1_P10_3P3VSB_STAT" Value="0x0100"/>
+    <PinMask Name="E1_P11_BAT_SHUTDOWN" Value="0x0200"/>
+    <PinMask Name="E1_P12_VOL_UP" Value="0x0400"/>
+    <PinMask Name="E1_P13_VOL_DOWN" Value="0x0800"/>
+    <PinMask Name="E1_P14_USB3_MUX_SEL1" Value="0x1000"/>
+    <PinMask Name="E1_P15_ATMEGA_RESET_N" Value="0x2000"/>
+    <PinMask Name="E1_P16_SLP_S4_N" Value="0x4000"/>
+    <PinMask Name="E1_P17_USB23_MUX_EN_N" Value="0x8000"/>
+  </IOExpander>
+
+  <EventTypes>
+    <SessionEvent Name="Disconnected" BitMask="0" SetMask="0"/>
+    <DebugModeEvent Name="S0iX" BitMask="0x0020" SetMask="0x0020"/>
+  </EventTypes>
+
+</Properties>

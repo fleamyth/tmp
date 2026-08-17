@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+McuCommands-default.xml
+  This document imports the common set of McuCommand (i.e. SAM and KIP commands) that are supported
+  universally by Surface devices.  
+  It imports those McuCommand defintions from McuCommands-main.xml via an ENTITY statement.
+  
+  This McuCommands-default.xml descriptor can be used
+  when a product specific descriptor isn't needed or isn't yet defined.
+-->
+<!DOCTYPE McuCommandRoot [
+  <!ENTITY McuCommandsCommonData SYSTEM "McuCommandsCommonData.xml">
+  <!ENTITY McuCommands-main SYSTEM "McuCommands-main.xml">
+]
+>
+<McuCommandRoot Name="MCUCommand" xmlns="McuCommandsSchemaNs">
+  &McuCommandsCommonData;
+  <McuCommandCollection>
+    &McuCommands-main;
+  </McuCommandCollection>
+</McuCommandRoot>

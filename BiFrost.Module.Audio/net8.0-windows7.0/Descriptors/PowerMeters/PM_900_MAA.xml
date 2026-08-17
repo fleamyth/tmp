@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Power Monitor 900_MAA -->
+  <Components>
+    <Component Name="PowerMeter1" Class="MaximPowerMeter" ChipType="34417" Address="10">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_3P3V_TS_IN"       Friendlyname="TOUCHSCREEN"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_VNNAON_IN"        Friendlyname="CPU_VNNAON"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"    ID="PM_VCC_LP_ECORE_IN"  Friendlyname="CPU_VCC_LP_ECORE"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="5"    ID="PM_VCCCORE_IN"       Friendlyname="CPU_VCCCORE"/>
+    </Component>
+    <Component Name="PowerMeter2" Class="MaximPowerMeter" ChipType="34417" Address="12">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_3P3V_WLAN"        Friendlyname="WIFI"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_AUDIO_CODEC_IN"   Friendlyname="AUDIO_CODEC"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_3P3V_TBT0_IN"     Friendlyname="TBT0"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"   ID="PM_VBUS_USBC_IN"     Friendlyname="USBC(SOURCE)"/>
+    </Component>
+    <Component Name="PowerMeter3" Class="MaximPowerMeter" ChipType="34417" Address="14">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="5"    ID="PM_VSYS"             Friendlyname="SYSTEM"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_BKLT_IN"          Friendlyname="DISPLAY_BKLT"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="10"   ID="PM_1P8V_CAM_F_IN"    Friendlyname="1P8V_CAM_F"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_3P3V_PANEL_IN"    Friendlyname="DISPLAY_PANEL"/>
+    </Component>
+    <Component Name="PowerMeter4" Class="MaximPowerMeter" ChipType="34417" Address="16">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_VCCIO_IN"         Friendlyname="CPU_VCCIO"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="5"    ID="PM_VCCGT_IN"         Friendlyname="CPU_VCCGT"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="5"    ID="PM_VCCSA_IN"         Friendlyname="CPU_VCCSA"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="20"   ID="PM_3P3V_TP"          Friendlyname="3P3V_TRACKPAD"/>
+    </Component>
+    <Component Name="PowerMeter5" Class="MaximPowerMeter" ChipType="34417" Address="18">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="10"   ID="PM_AUDIO_SPEAKER_IN" Friendlyname="AUDIO_SPEAKER"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="10"   ID="PM_3P3V_SSD"         Friendlyname="SSD"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="0"    ID="NA"                  Friendlyname="NA"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="10"   ID="PM_1P8VSUS_ORG_IN"   Friendlyname="1P8V_VSUS"/>
+    </Component>
+    <Component Name="PowerMeter6" Class="MaximPowerMeter" ChipType="34417" Address="1A">
+      <Subcomponent Name="PowerRail" RailNo="0" ResistorValue="20"   ID="PM_VDD2H_IN"         Friendlyname="CPU_VDDH2"/>
+      <Subcomponent Name="PowerRail" RailNo="1" ResistorValue="20"   ID="PM_5V_TP_IN"         Friendlyname="5V_TRACKPAD"/>
+      <Subcomponent Name="PowerRail" RailNo="2" ResistorValue="20"   ID="PM_BAT_IN"           Friendlyname="BATT"/>
+      <Subcomponent Name="PowerRail" RailNo="3" ResistorValue="100"  ID="PM_1P8V_SAM_IN"      Friendlyname="1P8V_SAM"/>
+    </Component>
+  </Components>

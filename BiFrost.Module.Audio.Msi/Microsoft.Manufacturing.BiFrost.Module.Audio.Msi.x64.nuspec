@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+	<id>Microsoft.Manufacturing.BiFrost.Module.Audio.Msi.x64</id>
+	<version>1.87.177.718</version>
+	<authors>BiFrost Module Msi.</authors>
+	<description>Microsoft.Manufacturing.BiFrost.Module.Audio.Msi.x64</description>
+	<copyright>(C) 2024 Microsoft. All rights reserved.</copyright>
+  </metadata>
+  <files>
+		<file src="Microsoft.Manufacturing.BiFrost.Module.Audio.Msi" target="content" />
+	</files>
+</package>

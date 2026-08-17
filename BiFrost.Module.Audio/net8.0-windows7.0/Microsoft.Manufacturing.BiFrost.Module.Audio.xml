@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Manufacturing.BiFrost.Module.Audio</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration">
+            <summary>
+            ATF resource configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration.Endpoints">
+            <summary>
+            Gets or sets ATF endpoints.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration.AudioDevices">
+            <summary>
+            Gets or sets a collection of audio devices.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration.UseAmpChannelEnable">
+            <summary>
+            Gets or sets a value indicating whether to use the AMP channel enable API to select only one playback speaker in cases where audio aggregation is used (such as 766_MIS).
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration.UseMteMode">
+            <summary>
+            Gets or sets a value indicating whether to enable MTE mode in ATF.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfAlc1320AmpCalibrationResource">
+            <summary>
+            An implementation of <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource"/> that runs calibrations for the ALC1320 audio amplifier.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfAlc1320AmpCalibrationResource.ChannelsToCalibrate">
+            <summary>
+            The number of channels to calibrate when running calibration for the ALC1320 audio amplifier.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfAlc1320AmpCalibrationResource.AmpType">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfAlc1320AmpCalibrationResource.RunCalibration(AtfWrapper,System.Double[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice">
+            <summary>
+            Represents ATF device instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice.Endpoint">
+            <summary>
+            Gets or sets audio endpoint name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice.Channel">
+            <summary>
+            Gets or sets audio channel.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice.IsSignalPreCheckEnabled">
+            <summary>
+            Gets or sets a value indicating whether PreSignal Check is enabled.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice.SignalPreCheckConfigurations">
+            <summary>
+            Gets or sets configuration of Signal PreCheck.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDualAlc1320AmpCalibrationResource">
+            <summary>
+            An implementation of <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource"/> that runs calibrations for dual ALC1320 audio amplifiers.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDualAlc1320AmpCalibrationResource.ChannelsToCalibrate">
+            <summary>
+            The number of channels to calibrate when running calibration for the ALC1320 audio amplifier.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDualAlc1320AmpCalibrationResource.AmpType">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDualAlc1320AmpCalibrationResource.RunCalibration(AtfWrapper,System.Double[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource">
+            <summary>
+            AudioTestFramework (ATF) resource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.#ctor(Microsoft.Extensions.Logging.ILogger{Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource},Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource,Microsoft.Extensions.Options.IOptions{Microsoft.Manufacturing.BiFrost.Module.Audio.Configuration.AtfResourceConfiguration})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource"/> class.
+            </summary>
+            <param name="logger">The logger to use when logging events generated by this instance of <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource"/>.</param>
+            <param name="atfAmpCalibrationResource">The resource to use for audio amplifier calibration.</param>
+            <param name="resourceConfig">The configuration to use for this instance of <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource"/>.</param>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.IsPlaybackDeviceConnectedAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.IsCaptureDeviceConnectedAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.IsPlaybackMutedAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.TogglePlaybackMuteAsync(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.IsCaptureMutedAsync(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.ToggleCaptureMuteAsync(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.PlayChirpAsync(System.String,System.Double,System.Double,System.Int32,System.Int32,System.Int32,System.Double,System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.PlayToneAsync(System.String,System.Double[],System.Double,System.Int32,System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.PlayFileAsync(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.PlayWaveAsync(System.String,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.CaptureAsync(System.String,System.Int32,System.Int32,System.Int32,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.CaptureChannelsAsync(System.String,System.Int32,System.Int32,System.Int32,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.RunAmpCalibration(System.Double[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.SetPlaybackVolumeAsync(System.String,System.Double)">
+            <summary>
+            Set Playback Volume.
+            </summary>
+            <param name="deviceName">device name.</param>
+            <param name="volumeScalar">set volume level (0.0 ~ 1.0).</param>
+            <returns>Completed Task.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.SetMteModeStateAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.EuclideanDistance(System.Double[],System.Double[])">
+            <summary>
+            EuclideanDistance.
+            </summary>
+            <param name="array1">data 1.</param>
+            <param name="array2">data 2.</param>
+            <returns>Euclidean Distance.</returns>
+            <exception cref="T:System.ArgumentException">The array lengths differ.</exception>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.ExtendToMultiChannelWave(Microsoft.Manufacturing.Audio.Data.Wave,System.Int32,System.Int32,Microsoft.Manufacturing.Audio.Data.WaveFormat)">
+            <summary>
+            Extend mono wave to multi-channel wave.
+            </summary>
+            <param name="wave">The Wave to extend.</param>
+            <param name="targetChannel">The wave channel to use.</param>
+            <param name="totalChannels">The number of channels in the extended wave.</param>
+            <param name="format">Wave format.</param>
+            <returns>Extended multi-channel wave.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.EndpointNameFromAtfDevice(Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfDevice)">
+            <summary>
+            Converts ATF device to the configured friendly name of the system audio device.
+            </summary>
+            <param name="atfDevice">Device name.</param>
+            <returns>Friendly name of the configured system audio device.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.AtfDeviceFromDeviceName(System.String)">
+            <summary>
+            Converts device name (e.g. [Left]Speaker) to AtfDevice instance..
+            </summary>
+            <param name="deviceName">Device name.</param>
+            <returns>AtfDevice instance.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.EndpointNameFromDeviceName(System.String)">
+            <summary>
+            Converts device name (e.g. [Left]Speaker) to the configured friendly name of the system audio device.
+            </summary>
+            <param name="deviceName">Device name.</param>
+            <returns>Friendly name of the configured system audio device.</returns>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfUnsupportedAmpCalibrationResource">
+            <summary>
+            An implementation of <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource"/> that throws an exception when calibration is attempted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfUnsupportedAmpCalibrationResource.AmpType">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfUnsupportedAmpCalibrationResource.RunCalibration(AtfWrapper,System.Double[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource">
+            <summary>
+            An interface for running audio amplifiers using ATF.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource.AmpType">
+            <summary>
+            Gets the type of amplifier to calibrate.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfAmpCalibrationResource.RunCalibration(AtfWrapper,System.Double[])">
+            <summary>
+            Runs calibrations for the audio playback channels.
+            </summary>
+            <param name="atfWrapper">The ATF wrapper to use for running calibration.</param>
+            <param name="channelTemperaturesCelsius">The temperatures near each of the audio channels amplifiers (in Celsius).</param>
+            <returns>The calibrated loads for each of the audio channels (both in Ohms and raw).</returns>
+            <remarks>
+            To prevent deadlocks, implementations must not depend on <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource"/>. <see cref="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.AtfResource.RunAmpCalibration(System.Double[])"/>
+            invokes this method while holding both the capture and playback locks, so any re-entrant call back into <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource"/>
+            would deadlock.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource">
+            <summary>
+            AudioTestFramework (ATF) resource interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.TogglePlaybackMuteAsync(System.String,System.Boolean)">
+            <summary>
+            Toggle playback muted state.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="isMuted">Set muted if TRUE, not muted otherwise.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.IsPlaybackMutedAsync(System.String)">
+            <summary>
+            Checks whether the device is muted.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and
+            containing True if muted, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.ToggleCaptureMuteAsync(System.String,System.Boolean)">
+            <summary>
+            Toggle capture muted state.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="isMuted">Set muted if TRUE, not muted otherwise.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.IsCaptureMutedAsync(System.String)">
+            <summary>
+            Checks whether the device is muted.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and
+            containing True if muted, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.IsPlaybackDeviceConnectedAsync(System.String)">
+            <summary>
+            Checks whether a playback device is present or connected.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and
+            containing True if connected, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.IsCaptureDeviceConnectedAsync(System.String)">
+            <summary>
+            Checks whether a capture device is present or connected.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and
+            containing True if connected, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.PlayWaveAsync(System.String,System.Byte[])">
+            <summary>
+            Play a wave represented as byte array.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="waveAsArray">Wave as byte array.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.PlayToneAsync(System.String,System.Double[],System.Double,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Plays a tone.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="frequencies">Frequencies to use.</param>
+            <param name="amplitude">Tone amplitude.</param>
+            <param name="durationSec">Tone duration in seconds.</param>
+            <param name="sampleRate">Sampling rate.</param>
+            <param name="bitsPerSample">Sample resolution.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.PlayChirpAsync(System.String,System.Double,System.Double,System.Int32,System.Int32,System.Int32,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Plays a chirp.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="frequencyStart">Starting chirp frequency.</param>
+            <param name="frequencyEnd">Ending chirp frequency.</param>
+            <param name="durationSilenceBeforeSec">Silence duration before chirp in seconds.</param>
+            <param name="durationSec">Chirp duration in seconds.</param>
+            <param name="durationSilenceAfterSec">Silence duration after chirp in seconds.</param>
+            <param name="amplitude">Chirp amplitude.</param>
+            <param name="sampleRate">Sampling rate.</param>
+            <param name="bitsPerSample">Sample resolution.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.PlayFileAsync(System.String,System.String)">
+            <summary>
+            Plays wave file.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="filePath">Wave file path.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.CaptureAsync(System.String,System.Int32,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Captures a wave.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="sampleRate">Sampling rate.</param>
+            <param name="bitsPerSample">Sample resolution.</param>
+            <param name="durationMs">Capture duration in milliseconds.</param>
+            <param name="volumeScalar">Capture volume scalar in 0-1.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and 
+            containing captured wave a byte array.</returns> 
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.CaptureChannelsAsync(System.String,System.Int32,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Captures multiple waves for a device endpoint.
+            </summary>
+            <param name="deviceName">Audio device name.</param>
+            <param name="sampleRate">Sampling rate.</param>
+            <param name="bitsPerSample">Sample resolution.</param>
+            <param name="durationMs">Capture duration in milliseconds.</param>
+            <param name="volumeScalar">Capture volume scalar in 0-1.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation and 
+            containing a <see cref="T:Microsoft.Manufacturing.BiFrost.Contract.Audio.CaptureChannelsResponse"/> with the captured wave data.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.RunAmpCalibration(System.Double[])">
+            <summary>
+            Runs calibrations for the audio playback channels.
+            </summary>
+            <param name="channelTemperaturesCelsius">The temperatures near each of the audio channels amplifiers (in Celsius).</param>
+            <returns>The calibrated loads for each of the audio channels (both in Ohms and raw).</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.SetPlaybackVolumeAsync(System.String,System.Double)">
+            <summary>
+            Set Playback Volume.
+            </summary>
+            <param name="deviceName">device name.</param>
+            <param name="volumeScalar">set volume level (0.0 ~ 1.0).</param>
+            <returns>Completed Task.</returns>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource.SetMteModeStateAsync(System.Boolean)">
+            <summary>
+            Sets the MTE mode state.
+            </summary>
+            <param name="isEnabled">A value indicating whether MTE mode should be enabled.</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.SignalPreCheckConfiguration">
+            <summary>
+            Configuration of Signal PreCheck.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.SignalPreCheckConfiguration.ChannelToCompare">
+            <summary>
+            Gets or sets audio channel to compare.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.SignalPreCheckConfiguration.EuclideanDistanceThreshold">
+            <summary>
+            Gets or sets Euclidean distance threshold.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.AudioCommonService">
+            <summary>
+            IAudioCommonService implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.AudioCommonService.#ctor(Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.AudioCommonService"/> class.
+            </summary>
+            <param name="atfResource">ATF resource.</param>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.AudioCommonService.SetMteModeState(Microsoft.Manufacturing.BiFrost.Contract.Audio.SetMteModeStateRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService">
+            <summary>
+            IAudioCaptureService implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.#ctor(Microsoft.Extensions.Logging.ILogger{Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService},Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService"/> class.
+            </summary>
+            <param name="logger">Logger.</param>
+            <param name="atfResource">ATF resource.</param>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.Capture(Microsoft.Manufacturing.BiFrost.Contract.Audio.CaptureRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.CaptureChannels(Microsoft.Manufacturing.BiFrost.Contract.Audio.CaptureRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.IsDeviceConnected(Microsoft.Manufacturing.BiFrost.Contract.Audio.IsDeviceConnectedRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.IsMuted(Microsoft.Manufacturing.BiFrost.Contract.Audio.IsMutedRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.CaptureService.ToggleMute(Microsoft.Manufacturing.BiFrost.Contract.Audio.ToggleMuteRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService">
+            <summary>
+            IAudioPlaybackService implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.#ctor(Microsoft.Extensions.Logging.ILogger{Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService},Microsoft.Manufacturing.BiFrost.Module.Audio.Resources.IAtfResource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService"/> class.
+            </summary>
+            <param name="logger">Logger.</param>
+            <param name="atfResource">ATF resource.</param>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.IsDeviceConnected(Microsoft.Manufacturing.BiFrost.Contract.Audio.IsDeviceConnectedRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.IsMuted(Microsoft.Manufacturing.BiFrost.Contract.Audio.IsMutedRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.ToggleMute(Microsoft.Manufacturing.BiFrost.Contract.Audio.ToggleMuteRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.PlayChirp(Microsoft.Manufacturing.BiFrost.Contract.Audio.PlayChirpRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.PlayFile(Microsoft.Manufacturing.BiFrost.Contract.Audio.PlayFileRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.PlayTone(Microsoft.Manufacturing.BiFrost.Contract.Audio.PlayToneRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.PlayWave(Microsoft.Manufacturing.BiFrost.Contract.Audio.PlayWaveRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.Manufacturing.BiFrost.Module.Audio.Services.PlaybackService.RunAmpCalibration(Microsoft.Manufacturing.BiFrost.Contract.Audio.RunAmpCalibrationRequest,Grpc.Core.ServerCallContext)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
