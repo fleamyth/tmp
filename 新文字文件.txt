@@ -1,0 +1,4 @@
+DGC 改善：兩項 KPI 從 Marginal 變成 Pass。
+部分失敗項改善：IMU-to-IMU extrinsics、DCC white residual，但仍是 Fail。
+部分項目變差：IMU integration error、Audio speaker differences。
+Audio 有明確異常：本次一筆 microphone imbalance 為 81.71 dB，原始測試也標記 FAIL。
