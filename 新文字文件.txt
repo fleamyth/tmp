@@ -1,4 +1,11 @@
-DGC 改善：兩項 KPI 從 Marginal 變成 Pass。
-部分失敗項改善：IMU-to-IMU extrinsics、DCC white residual，但仍是 Fail。
-部分項目變差：IMU integration error、Audio speaker differences。
-Audio 有明確異常：本次一筆 microphone imbalance 為 81.71 dB，原始測試也標記 FAIL。
+拍攝校正板影像 + 同步記錄加速度／角速度
+                  ↓
+讀入既有的 device profile，作為起始參數
+                  ↓
+利用影像與校正板幾何，建立裝置運動的約束
+                  ↓
+執行 camera／IMU 校正，處理時間對齊與 IMU 誤差
+                  ↓
+輸出 accel_misalignment 等參數
+                  ↓
+取主 IMU（100）的 accel_misalignment.y 到 report
