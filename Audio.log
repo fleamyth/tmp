@@ -1,0 +1,420 @@
+[2026-11-23 13:36:51,795 - root - INFO]  Agent logging output routed to C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\Audio.jsonl
+[2026-11-23 13:36:51,796 - AudioStation - INFO]  Initializing Audio...
+[2026-11-23 13:36:51,796 - main - INFO]  Running Audio data collection
+[2026-11-23 13:36:51,797 - AudioStation - DEBUG]  Current step: CHECK_SMOKE_TEST
+[2026-11-23 13:36:51,797 - AudioStation - DEBUG]  Current step: INITIALIZE
+[2026-11-23 13:36:51,798 - AudioStation - DEBUG]  Copied C:\Users\User\Barney_exp\robocal\v5\stations\audio\capturing\apropos\dut_playback.bat to C:\Users\Public\Google\Robocal\Audio
+[2026-11-23 13:36:51,799 - AudioStation - DEBUG]  Copied C:\Users\User\Barney_exp\robocal\v5\stations\audio\capturing\apropos\get_baseline.bat to C:\Users\Public\Google\Robocal\Audio
+[2026-11-23 13:36:51,799 - AudioStation - DEBUG]  Copied C:\Users\User\Barney_exp\robocal\v5\stations\audio\capturing\apropos\start_recording.bat to C:\Users\Public\Google\Robocal\Audio
+[2026-11-23 13:36:51,800 - AudioStation - DEBUG]  Copied C:\Users\User\Barney_exp\robocal\v5\stations\audio\capturing\apropos\wait_stop.bat to C:\Users\Public\Google\Robocal\Audio
+[2026-11-23 13:36:51,805 - AudioStation - DEBUG]  Copied C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robocal\v5\src\assets\audio\audio_files\16bit\gain_chirp.wav to C:\Users\Public\Google\Robocal\Audio\dut_spk_ace
+[2026-11-23 13:36:51,809 - AudioStation - DEBUG]  Copied C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robocal\v5\src\assets\audio\audio_files\16bit\left_only.wav to C:\Users\Public\Google\Robocal\Audio\dut_spk_ace
+[2026-11-23 13:36:51,814 - AudioStation - DEBUG]  Copied C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robocal\v5\src\assets\audio\audio_files\16bit\right_only.wav to C:\Users\Public\Google\Robocal\Audio\dut_spk_ace
+[2026-11-23 13:36:51,928 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" wait-for-device devices
+[2026-11-23 13:36:51,947 - AudioProcess - DEBUG]  Initializing AudioProcess...
+[2026-11-23 13:36:51,958 - AudioProcess - INFO]  Successfully loaded FATP granular golden curves from robocal\v5\stations\audio\recipes\barney\specs.yaml
+[2026-11-23 13:36:51,958 - AudioProcess - INFO]  Loading audio plugin: 'audio_cal_engine'
+[2026-11-23 13:37:04,536 - root - INFO]  Loaded AudioCalEngine config from C:\Users\User\Barney_exp\robocal\v5\stations\audio\recipes\barney\audio_cal_engine\audio_cal_engine.yaml
+[2026-11-23 13:37:04,537 - root - INFO]  AudioCalEngine initialized successfully:
+  - Sample rate: 48000
+  - Input device: 18 (Configured: 'ASIO Fireface USB, ASIO')
+  - Output device: 18 (Configured: 'ASIO Fireface USB, ASIO')
+  - DUT audio dir: C:\dut_audio_files
+  - SC output dir: C:\sc_data_ace
+  - Assets dir: C:\Users\User\Barney_exp\robocal\v5\src\assets\audio_cal_engine
+  - Config dir: C:\Users\User\Barney_exp\robocal\v5\stations\audio\recipes\barney\audio_cal_engine
+[2026-11-23 13:37:04,539 - AudioProcess - INFO]  Successfully loaded audio plugin: AudioCalEngine
+[2026-11-23 13:37:04,541 - AudioStation - DEBUG]  Current step: CONNECT
+[2026-11-23 13:37:04,542 - AudioDUT - DEBUG]  Connecting to 192.168.0.134:5555
+[2026-11-23 13:37:04,542 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+> STDOUT: SBA671G0002K
+[2026-11-23 13:37:04,760 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+[2026-11-23 13:37:04,761 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+> STDOUT: SBA671G0002K
+[2026-11-23 13:37:04,852 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+[2026-11-23 13:37:04,852 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+> STDOUT: google/barney_dvt1_factory/barney_dvt1:16/BGQ4.260901.003/16376441:userdebug/test-keys
+[2026-11-23 13:37:05,002 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+[2026-11-23 13:37:05,003 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.product.name
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.product.name
+> STDOUT: barney_dvt1_factory
+[2026-11-23 13:37:05,123 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.product.name
+[2026-11-23 13:37:05,124 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat /proc/device-tree/model
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat /proc/device-tree/model
+> STDOUT: Google Barney DVT1 Vangelis v2 B1 ST60
+[2026-11-23 13:37:05,290 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat /proc/device-tree/model
+[2026-11-23 13:37:05,290 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device shell "[ -e /mnt/vendor/persist//device_record.json ]; echo $?"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device shell "[ -e /mnt/vendor/persist//device_record.json ]; echo $?"
+> STDOUT: 1
+[2026-11-23 13:37:05,418 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device shell "[ -e /mnt/vendor/persist//device_record.json ]; echo $?"
+[2026-11-23 13:37:05,418 - DeviceRecord - DEBUG]  no device record found on device at: /mnt/vendor/persist//device_record.json
+[2026-11-23 13:37:05,419 - DeviceRecord - DEBUG]  Creating new device record for unique_hw_id: SBA671G0002K
+[2026-11-23 13:37:05,422 - AudioStation - DEBUG]  Current step: CHECK_DEVICE
+[2026-11-23 13:37:05,422 - AudioProcess - INFO]  >>> Starting Task: Clean up old log
+[2026-11-23 13:37:05,423 - AudioProcess - INFO]  Executing action: Clean up old log
+[2026-11-23 13:37:05,423 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 logcat -c
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 logcat -c
+[2026-11-23 13:37:05,663 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 logcat -c
+[2026-11-23 13:37:05,664 - AudioProcess - INFO]  No required verification. Sleeping for 0.5s safety delay...
+[2026-11-23 13:37:06,164 - AudioProcess - INFO]  Task 'Clean up old log' finished.
+[2026-11-23 13:37:06,165 - AudioProcess - INFO]  >>> Starting Task: Clean up local WAV files
+[2026-11-23 13:37:06,165 - root - INFO]  Running for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+Command: for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+> STDOUT: COUNT=4
+[2026-11-23 13:37:06,212 - root - INFO]  Command succeeded: for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+[2026-11-23 13:37:06,212 - AudioProcess - INFO]  Executing action: Clean up local WAV files
+[2026-11-23 13:37:06,212 - root - INFO]  Running cmd /c "del /q /f C:\dut_audio_files\*.wav"
+Command: cmd /c "del /q /f C:\dut_audio_files\*.wav"
+[2026-11-23 13:37:06,245 - root - INFO]  Command succeeded: cmd /c "del /q /f C:\dut_audio_files\*.wav"
+[2026-11-23 13:37:06,245 - AudioProcess - INFO]  Polling 'Clean up local WAV files' status (Timeout: 3.0s)...
+[2026-11-23 13:37:06,245 - root - INFO]  Running for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+Command: for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+> STDOUT: COUNT=0
+[2026-11-23 13:37:06,285 - root - INFO]  Command succeeded: for /f %A in ('dir /a-d /b C:\dut_audio_files\*.wav 2^>nul ^| find /c /v ""') do @echo COUNT=%A
+[2026-11-23 13:37:06,285 - AudioProcess - INFO]  'Clean up local WAV files' stabilized in 0.04s.
+[2026-11-23 13:37:06,285 - AudioProcess - INFO]  Task 'Clean up local WAV files' verified successfully.
+[2026-11-23 13:37:06,285 - AudioProcess - INFO]  >>> Starting Task: Clean up device WAV files
+[2026-11-23 13:37:06,285 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /data/local/*.wav && echo existing || echo OK
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /data/local/*.wav && echo existing || echo OK
+> STDOUT: OK
+> STDERR: /system/bin/sh: test: /data/local/right_only.wav: unexpected operator/operand
+[2026-11-23 13:37:06,492 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /data/local/*.wav && echo existing || echo OK
+[2026-11-23 13:37:06,492 - AudioProcess - INFO]  Task 'Clean up device WAV files' already in desired state. Skipping.
+[2026-11-23 13:37:06,493 - AudioProcess - INFO]  >>> Starting Task: Create directory for audio compensation config if not exist
+[2026-11-23 13:37:06,493 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell [ -d /mnt/vendor/persist/audio ] && echo 1 || echo 0
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell [ -d /mnt/vendor/persist/audio ] && echo 1 || echo 0
+> STDOUT: 1
+[2026-11-23 13:37:06,705 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell [ -d /mnt/vendor/persist/audio ] && echo 1 || echo 0
+[2026-11-23 13:37:06,705 - AudioProcess - INFO]  Task 'Create directory for audio compensation config if not exist' already in desired state. Skipping.
+[2026-11-23 13:37:06,705 - AudioProcess - INFO]  >>> Starting Task: Clean up old audio compensation config xml on device
+[2026-11-23 13:37:06,706 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /mnt/vendor/persist/audio/audio_params.xml && echo existing || echo OK
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /mnt/vendor/persist/audio/audio_params.xml && echo existing || echo OK
+> STDOUT: OK
+[2026-11-23 13:37:06,834 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell test -f /mnt/vendor/persist/audio/audio_params.xml && echo existing || echo OK
+[2026-11-23 13:37:06,834 - AudioProcess - INFO]  Task 'Clean up old audio compensation config xml on device' already in desired state. Skipping.
+[2026-11-23 13:37:06,834 - AudioProcess - INFO]  >>> Starting Task: Clean up old audio compensation config json on device
+[2026-11-23 13:37:06,834 - AudioProcess - INFO]  Executing action: Clean up old audio compensation config json on device
+[2026-11-23 13:37:06,835 - root - INFO]  Running echo rm -rf /mnt/vendor/persist/audio/*.json | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+Command: echo rm -rf /mnt/vendor/persist/audio/*.json | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+[2026-11-23 13:37:06,995 - root - INFO]  Command succeeded: echo rm -rf /mnt/vendor/persist/audio/*.json | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+[2026-11-23 13:37:06,995 - AudioProcess - INFO]  No required verification. Sleeping for 0.5s safety delay...
+[2026-11-23 13:37:07,495 - AudioProcess - INFO]  Task 'Clean up old audio compensation config json on device' finished.
+[2026-11-23 13:37:07,495 - AudioProcess - INFO]  >>> Starting Task: Set screen off timeout to 10 minutes
+[2026-11-23 13:37:07,496 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell settings get system screen_off_timeout
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell settings get system screen_off_timeout
+> STDOUT: 600000
+[2026-11-23 13:37:07,728 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell settings get system screen_off_timeout
+[2026-11-23 13:37:07,729 - AudioProcess - INFO]  Task 'Set screen off timeout to 10 minutes' already in desired state. Skipping.
+[2026-11-23 13:37:07,729 - AudioProcess - INFO]  >>> Starting Task: Wake up the device
+[2026-11-23 13:37:07,729 - AudioProcess - INFO]  Executing action: Wake up the device
+[2026-11-23 13:37:07,729 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell input keyevent KEYCODE_WAKEUP
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell input keyevent KEYCODE_WAKEUP
+[2026-11-23 13:37:07,914 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell input keyevent KEYCODE_WAKEUP
+[2026-11-23 13:37:07,915 - AudioProcess - INFO]  No required verification. Sleeping for 0.5s safety delay...
+[2026-11-23 13:37:08,415 - AudioProcess - INFO]  Task 'Wake up the device' finished.
+[2026-11-23 13:37:08,416 - AudioProcess - INFO]  >>> Starting Task: Enable interacting with the projection client on the DUT
+[2026-11-23 13:37:08,416 - AudioProcess - INFO]  Executing action: Enable interacting with the projection client on the DUT
+[2026-11-23 13:37:08,417 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 forward tcp:8888 tcp:8892
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 forward tcp:8888 tcp:8892
+> STDOUT: 8888
+[2026-11-23 13:37:08,464 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 forward tcp:8888 tcp:8892
+[2026-11-23 13:37:08,465 - AudioProcess - INFO]  No required verification. Sleeping for 0.5s safety delay...
+[2026-11-23 13:37:08,965 - AudioProcess - INFO]  Task 'Enable interacting with the projection client on the DUT' finished.
+[2026-11-23 13:37:08,967 - AudioProcess - INFO]  All pre-condition commands completed.
+[2026-11-23 13:37:08,967 - AudioDUT - DEBUG]  Checking prerequisite stations...
+[2026-11-23 13:37:08,967 - AudioStation - DEBUG]  Current step: OK_2_CAL
+[2026-11-23 13:37:08,967 - AudioProcess - INFO]  Getting device serial number and build...
+[2026-11-23 13:37:08,967 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+> STDOUT: google/barney_dvt1_factory/barney_dvt1:16/BGQ4.260901.003/16376441:userdebug/test-keys
+[2026-11-23 13:37:09,368 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.build.fingerprint
+[2026-11-23 13:37:09,369 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+> STDOUT: SBA671G0002K
+[2026-11-23 13:37:09,459 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+[2026-11-23 13:37:09,459 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+> STDOUT: SBA671G0002K
+[2026-11-23 13:37:09,554 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+[2026-11-23 13:37:09,554 - root - INFO]  Running hostname
+Command: hostname
+> STDOUT: DESKTOP-ITU8ATO
+[2026-11-23 13:37:09,579 - root - INFO]  Command succeeded: hostname
+[2026-11-23 13:37:09,580 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat efs/imei/prodcode.dat
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat efs/imei/prodcode.dat
+> STDERR: cat: efs/imei/prodcode.dat: No such file or directory
+[2026-11-23 13:37:09,713 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cat efs/imei/prodcode.dat
+[2026-11-23 13:37:09,714 - AudioProcess - INFO]  Device ID: SBA671G0002K
+[2026-11-23 13:37:09,714 - AudioProcess - INFO]  Build: google/barney_dvt1_factory/barney_dvt1:16/BGQ4.260901.003/16376441:userdebug/test-keys
+[2026-11-23 13:37:09,714 - AudioProcess - INFO]  Station ID: DESKTOP-ITU8ATO
+[2026-11-23 13:37:09,714 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "cat /sys/class/power_supply/max1720x_battery/capacity"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "cat /sys/class/power_supply/max1720x_battery/capacity"
+> STDOUT: 63
+[2026-11-23 13:37:09,821 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "cat /sys/class/power_supply/max1720x_battery/capacity"
+[2026-11-23 13:37:09,821 - AudioProcess - INFO]  >>> Starting Task: Clean up temp files on the devices
+[2026-11-23 13:37:09,821 - AudioProcess - INFO]  Executing action: Clean up temp files on the devices
+[2026-11-23 13:37:09,821 - root - INFO]  Running echo rm -f /data/local/tmp/mcu_* | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+Command: echo rm -f /data/local/tmp/mcu_* | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+[2026-11-23 13:37:09,942 - root - INFO]  Command succeeded: echo rm -f /data/local/tmp/mcu_* | "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell
+[2026-11-23 13:37:09,942 - AudioProcess - INFO]  No required verification. Sleeping for 0.5s safety delay...
+[2026-11-23 13:37:10,443 - AudioProcess - INFO]  Task 'Clean up temp files on the devices' finished.
+[2026-11-23 13:37:10,443 - AudioProcess - INFO]  >>> Starting Task: Soft-stop the device
+[2026-11-23 13:37:10,443 - AudioProcess - INFO]  Executing action: Soft-stop the device
+[2026-11-23 13:37:10,444 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell stop microxr-mcu-manager
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell stop microxr-mcu-manager
+[2026-11-23 13:37:10,596 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell stop microxr-mcu-manager
+[2026-11-23 13:37:10,596 - AudioProcess - INFO]  No required verification. Sleeping for 1.0s safety delay...
+[2026-11-23 13:37:11,596 - AudioProcess - INFO]  Task 'Soft-stop the device' finished.
+[2026-11-23 13:37:11,597 - AudioProcess - INFO]  >>> Starting Task: Soft-start the device
+[2026-11-23 13:37:11,597 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:12,979 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:12,980 - AudioProcess - INFO]  Executing action: Soft-start the device
+[2026-11-23 13:37:12,980 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell start microxr-mcu-manager
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell start microxr-mcu-manager
+[2026-11-23 13:37:13,089 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell start microxr-mcu-manager
+[2026-11-23 13:37:13,089 - AudioProcess - INFO]  Polling 'Soft-start the device' status (Timeout: 20.0s)...
+[2026-11-23 13:37:13,089 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:14,266 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:14,767 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:16,024 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:16,524 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:17,758 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:18,259 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:19,505 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:20,005 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+> STDERR: No endpoints found
+[2026-11-23 13:37:21,348 - root - WARNING]  Non-critical command failed: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:21,849 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:22,914 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl ping-async
+[2026-11-23 13:37:22,914 - AudioProcess - INFO]  'Soft-start the device' stabilized in 9.82s.
+[2026-11-23 13:37:22,914 - AudioProcess - INFO]  Task 'Soft-start the device' verified successfully.
+[2026-11-23 13:37:22,915 - AudioProcess - INFO]  >>> Starting Task: Disable EQ filter
+[2026-11-23 13:37:22,915 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+> STDOUT: 0x00000000
+[2026-11-23 13:37:23,020 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+[2026-11-23 13:37:23,020 - AudioProcess - INFO]  Executing action: Disable EQ filter
+[2026-11-23 13:37:23,020 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0xFFF
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0xFFF
+[2026-11-23 13:37:23,134 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0xFFF
+[2026-11-23 13:37:23,134 - AudioProcess - INFO]  Polling 'Disable EQ filter' status (Timeout: 10.0s)...
+[2026-11-23 13:37:23,135 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+> STDOUT: 0x00000001
+[2026-11-23 13:37:23,248 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+[2026-11-23 13:37:23,248 - AudioProcess - INFO]  'Disable EQ filter' stabilized in 0.11s.
+[2026-11-23 13:37:23,248 - AudioProcess - INFO]  Task 'Disable EQ filter' verified successfully.
+[2026-11-23 13:37:23,248 - AudioProcess - INFO]  >>> Starting Task: Disable SystemUI to prevent volume overwrites
+[2026-11-23 13:37:23,248 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+> STDOUT: User 0: ceDataInode=1460 deDataInode=724 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+[2026-11-23 13:37:23,544 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+[2026-11-23 13:37:23,545 - AudioProcess - INFO]  Executing action: Disable SystemUI to prevent volume overwrites
+[2026-11-23 13:37:23,545 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm disable com.android.microxr.systemui
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm disable com.android.microxr.systemui
+> STDOUT: Package com.android.microxr.systemui new state: disabled
+[2026-11-23 13:37:23,685 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm disable com.android.microxr.systemui
+[2026-11-23 13:37:23,685 - AudioProcess - INFO]  Polling 'Disable SystemUI to prevent volume overwrites' status (Timeout: 10.0s)...
+[2026-11-23 13:37:23,685 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+> STDOUT: User 0: ceDataInode=1460 deDataInode=724 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=2 instant=false virtual=false quarantined=false
+[2026-11-23 13:37:23,798 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+[2026-11-23 13:37:23,798 - AudioProcess - INFO]  'Disable SystemUI to prevent volume overwrites' stabilized in 0.11s.
+[2026-11-23 13:37:23,799 - AudioProcess - INFO]  Task 'Disable SystemUI to prevent volume overwrites' verified successfully.
+[2026-11-23 13:37:23,799 - AudioProcess - INFO]  >>> Starting Task: Set speaker output volume
+[2026-11-23 13:37:23,799 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+> STDOUT: [V] will get volume
+[V] Connecting to AudioService
+[V] volume is 47 in range [0..100]
+[2026-11-23 13:37:23,890 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+[2026-11-23 13:37:23,891 - AudioProcess - INFO]  Executing action: Set speaker output volume
+[2026-11-23 13:37:23,891 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --stream 3 --set 100
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --stream 3 --set 100
+> STDOUT: [V] will control stream=3 (STREAM_MUSIC)
+[V] will set volume to index=100
+[V] Connecting to AudioService
+[2026-11-23 13:37:23,981 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --stream 3 --set 100
+[2026-11-23 13:37:23,982 - AudioProcess - INFO]  Polling 'Set speaker output volume' status (Timeout: 3.0s)...
+[2026-11-23 13:37:23,982 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+> STDOUT: [V] will get volume
+[V] Connecting to AudioService
+[V] volume is 100 in range [0..100]
+[2026-11-23 13:37:24,073 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell cmd media_session volume --get
+[2026-11-23 13:37:24,073 - AudioProcess - INFO]  'Set speaker output volume' stabilized in 0.09s.
+[2026-11-23 13:37:24,074 - AudioProcess - INFO]  Task 'Set speaker output volume' verified successfully.
+[2026-11-23 13:37:24,074 - AudioProcess - INFO]  All pre-condition commands completed.
+[2026-11-23 13:37:24,074 - root - INFO]  ============================================================
+[2026-11-23 13:37:24,074 - root - INFO]  [AudioCalEngine DUT Test] >>> run_audio_test() STARTED <<<
+[2026-11-23 13:37:24,074 - root - INFO]    - SN: SBA671G0002K | HW ID: SBA671G0002K | SKU ID: default | Station: DESKTOP-ITU8ATO | Build: google/barney_dvt1_factory/barney_dvt1:16/BGQ4.260901.003/16376441:userdebug/test-keys | TS: 20261123_133724 | Retest: False
+[2026-11-23 13:37:24,074 - root - INFO]  ============================================================
+[2026-11-23 13:37:24,159 - root - INFO]  Wrote timestamp marker: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\last_timestamp.txt
+[2026-11-23 13:37:24,159 - root - INFO]  Output directory: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724 | Device path: /sdcard/adc_result_ace/robocal_SBA671G0002K_20261123_133724
+[2026-11-23 13:37:24,160 - root - INFO]  Loaded microphone calibration data from C:\Users\User\Barney_exp\robocal\v5\stations\audio\recipes\barney\audio_cal_engine\mic_cal_data.json
+[2026-11-23 13:37:24,160 - root - INFO]  Loaded speaker calibration data from C:\Users\User\Barney_exp\robocal\v5\stations\audio\recipes\barney\audio_cal_engine\spk_cal_data.json
+[2026-11-23 13:37:24,160 - root - INFO]  Calibration data loaded: Mic channels: ['ch0', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5'] | Spk channels: ['spk0', 'spk1', 'spk2', 'spk3']
+[2026-11-23 13:37:24,161 - root - INFO]  Triggering dummy 2s DUT recording for warmup/initialization...
+[2026-11-23 13:37:27,680 - root - INFO]  --- [DUT Test Phase 1/2] Testing 4 DUT Microphones ---
+[2026-11-23 13:37:27,681 - root - INFO]    [DUT Mic 1/4 - front_left] Triggering recording (6s, DUT mic ch 0) & playing ref sweep on Ref Spk/Mic 0...
+[2026-11-23 13:37:33,428 - root - INFO]  Playrec completed via ASIO (Input dev 18, Channel 0, Output dev 18)
+[2026-11-23 13:37:35,224 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\ref_mic_0.wav
+[2026-11-23 13:37:35,230 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_mic_0.wav
+[2026-11-23 13:37:35,759 - root - INFO]    [DUT Mic 1/4 - front_left] Finished: 1kHz Sensitivity = -18.06 dBFS
+[2026-11-23 13:37:35,760 - root - INFO]    [DUT Mic 2/4 - front_right] Triggering recording (6s, DUT mic ch 1) & playing ref sweep on Ref Spk/Mic 1...
+[2026-11-23 13:37:41,503 - root - INFO]  Playrec completed via ASIO (Input dev 18, Channel 1, Output dev 18)
+[2026-11-23 13:37:43,414 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\ref_mic_1.wav
+[2026-11-23 13:37:43,422 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_mic_1.wav
+[2026-11-23 13:37:43,798 - root - INFO]    [DUT Mic 2/4 - front_right] Finished: 1kHz Sensitivity = -18.16 dBFS
+[2026-11-23 13:37:43,798 - root - INFO]    [DUT Mic 3/4 - rear_left] Triggering recording (6s, DUT mic ch 2) & playing ref sweep on Ref Spk/Mic 2...
+[2026-11-23 13:37:49,520 - root - INFO]  Playrec completed via ASIO (Input dev 18, Channel 2, Output dev 18)
+[2026-11-23 13:37:51,223 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\ref_mic_2.wav
+[2026-11-23 13:37:51,235 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_mic_2.wav
+[2026-11-23 13:37:51,594 - root - INFO]    [DUT Mic 3/4 - rear_left] Finished: 1kHz Sensitivity = -17.94 dBFS
+[2026-11-23 13:37:51,594 - root - INFO]    [DUT Mic 4/4 - rear_right] Triggering recording (6s, DUT mic ch 3) & playing ref sweep on Ref Spk/Mic 3...
+[2026-11-23 13:37:57,339 - root - INFO]  Playrec completed via ASIO (Input dev 18, Channel 3, Output dev 18)
+[2026-11-23 13:37:59,118 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\ref_mic_3.wav
+[2026-11-23 13:37:59,126 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_mic_3.wav
+[2026-11-23 13:37:59,529 - root - INFO]    [DUT Mic 4/4 - rear_right] Finished: 1kHz Sensitivity = -17.65 dBFS
+[2026-11-23 13:37:59,529 - root - INFO]  --- [DUT Test Phase 2/2] Testing 2 DUT Speakers ---
+[2026-11-23 13:37:59,530 - root - INFO]    [DUT Speaker - left] Triggering playback & recording on Ref Mic 5...
+[2026-11-23 13:38:08,331 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_spk_left.wav
+[2026-11-23 13:38:09,216 - root - INFO]    [DUT Speaker - left] Finished: 1kHz SPL = 96.31 dB, 2kHz SPL = 99.06 dB, Avg(1k,2k) = 97.69 dB
+[2026-11-23 13:38:09,217 - root - INFO]    [DUT Speaker - right] Triggering playback & recording on Ref Mic 6...
+[2026-11-23 13:38:18,171 - root - DEBUG]  Audio saved to C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\dut_spk_right.wav
+[2026-11-23 13:38:19,067 - root - INFO]    [DUT Speaker - right] Finished: 1kHz SPL = 94.17 dB, 2kHz SPL = 96.96 dB, Avg(1k,2k) = 95.56 dB
+[2026-11-23 13:38:19,067 - root - INFO]  Spec check was disabled. Only NaN validation was performed.
+[2026-11-23 13:38:19,068 - root - INFO]  Audio result: AudioStatus.AUDIOCAL_PASS
+[2026-11-23 13:38:19,737 - root - INFO]  Successfully pushed audio_test_results_20261123_133724.json to Android device
+[2026-11-23 13:38:19,738 - root - INFO]  Pushed audio_test_results_20261123_133724.json to Android at /sdcard/adc_result_ace/robocal_SBA671G0002K_20261123_133724
+[2026-11-23 13:38:20,155 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" shell "[ -f 'mnt/vendor/persist/audio/audio_params.xml' ] && echo '1' || echo '0'"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" shell "[ -f 'mnt/vendor/persist/audio/audio_params.xml' ] && echo '1' || echo '0'"
+> STDOUT: 0
+[2026-11-23 13:38:20,285 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" shell "[ -f 'mnt/vendor/persist/audio/audio_params.xml' ] && echo '1' || echo '0'"
+[2026-11-23 13:38:20,285 - root - INFO]  ============================================================
+[2026-11-23 13:38:20,285 - root - INFO]  [AudioCalEngine DUT Test] >>> run_audio_test() FINISHED (Final Status: AudioStatus.AUDIOCAL_PASS) <<<
+[2026-11-23 13:38:20,285 - root - INFO]    Messages:
+[2026-11-23 13:38:20,286 - root - INFO]      * Pass: NaN check passed (spec check disabled).
+[2026-11-23 13:38:20,286 - root - INFO]    Saved results to: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724
+[2026-11-23 13:38:20,286 - root - INFO]  ============================================================
+[2026-11-23 13:38:20,286 - AudioProcess - INFO]  First audio_status: AudioStatus.AUDIOCAL_PASS
+[2026-11-23 13:38:20,286 - AudioProcess - INFO]  Running post-processing for soundcheck results...
+[2026-11-23 13:38:20,326 - root - INFO]  Using folders:
+Local: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724
+Device: /sdcard/adc_result_ace/
+[2026-11-23 13:38:20,326 - root - INFO]  Reading audio data from: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_test_results_20261123_133724.json
+[2026-11-23 13:38:20,327 - root - INFO]  Saved compensation results ==> C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json
+[2026-11-23 13:38:20,327 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "/sdcard/adc_result_ace//"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "/sdcard/adc_result_ace//"
+> STDERR: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json: 1 file pushed, 0 skipped. 0.1 MB/s (544 bytes in 0.005s)
+[2026-11-23 13:38:20,409 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "/sdcard/adc_result_ace//"
+[2026-11-23 13:38:20,409 - root - INFO]  Compensation results json pushed successfully to /sdcard/adc_result_ace/
+[2026-11-23 13:38:20,410 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "mnt/vendor/persist/audio//"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "mnt/vendor/persist/audio//"
+> STDERR: C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json: 1 file pushed, 0 skipped. 3.1 MB/s (544 bytes in 0.000s)
+[2026-11-23 13:38:20,488 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" push "C:\sc_data_ace\robocal_SBA671G0002K_20261123_133724\audio_compensation_20261123_133724.json" "mnt/vendor/persist/audio//"
+[2026-11-23 13:38:20,488 - root - INFO]  Compensation results json pushed successfully to mnt/vendor/persist/audio/
+[2026-11-23 13:38:20,488 - root - INFO]  Speaker Differences (Reduce first, boost min. if needed):
+[2026-11-23 13:38:20,489 - root - INFO]    left: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]    right: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]  Microphone Differences (Boost first, reduce max. if needed):
+[2026-11-23 13:38:20,489 - root - INFO]    front left: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]    front right: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]    rear left: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]    rear right: 0.00
+[2026-11-23 13:38:20,489 - root - INFO]  Gain Reference Values:
+[2026-11-23 13:38:20,489 - root - INFO]    Speakers:
+[2026-11-23 13:38:20,489 - root - INFO]      left: 97.69
+[2026-11-23 13:38:20,489 - root - INFO]      right: 95.56
+[2026-11-23 13:38:20,489 - root - INFO]    Microphones:
+[2026-11-23 13:38:20,490 - root - INFO]      front left: -18.06
+[2026-11-23 13:38:20,490 - root - INFO]      front right: -18.16
+[2026-11-23 13:38:20,490 - root - INFO]      rear left: -17.94
+[2026-11-23 13:38:20,490 - root - INFO]      rear right: -17.65
+[2026-11-23 13:38:20,490 - root - INFO]  =========================================
+[2026-11-23 13:38:20,490 - AudioProcess - INFO]  Data post-processing completed successfully.
+[2026-11-23 13:38:20,490 - AudioProcess - INFO]  >>> Starting Task: Re-enable EQ filter
+[2026-11-23 13:38:20,490 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+> STDOUT: 0x00000001
+[2026-11-23 13:38:20,605 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+[2026-11-23 13:38:20,606 - AudioProcess - INFO]  Executing action: Re-enable EQ filter
+[2026-11-23 13:38:20,606 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0x000
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0x000
+[2026-11-23 13:38:20,718 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-write -i audio -r 1 -s 32 -v 0x000
+[2026-11-23 13:38:20,719 - AudioProcess - INFO]  Polling 'Re-enable EQ filter' status (Timeout: 10.0s)...
+[2026-11-23 13:38:20,719 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+> STDOUT: 0x00000000
+[2026-11-23 13:38:20,842 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell microxr-mcu-ctl periph-reg-read -i audio -s 32 -r 1
+[2026-11-23 13:38:20,842 - AudioProcess - INFO]  'Re-enable EQ filter' stabilized in 0.12s.
+[2026-11-23 13:38:20,843 - AudioProcess - INFO]  Task 'Re-enable EQ filter' verified successfully.
+[2026-11-23 13:38:20,843 - AudioProcess - INFO]  >>> Starting Task: Re-enable SystemUI
+[2026-11-23 13:38:20,843 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+> STDOUT: User 0: ceDataInode=1460 deDataInode=724 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=2 instant=false virtual=false quarantined=false
+[2026-11-23 13:38:21,044 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+[2026-11-23 13:38:21,044 - AudioProcess - INFO]  Executing action: Re-enable SystemUI
+[2026-11-23 13:38:21,044 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm enable com.android.microxr.systemui
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm enable com.android.microxr.systemui
+> STDOUT: Package com.android.microxr.systemui new state: enabled
+[2026-11-23 13:38:21,170 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell pm enable com.android.microxr.systemui
+[2026-11-23 13:38:21,170 - AudioProcess - INFO]  Polling 'Re-enable SystemUI' status (Timeout: 10.0s)...
+[2026-11-23 13:38:21,171 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+> STDOUT: User 0: ceDataInode=1460 deDataInode=724 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=1 instant=false virtual=false quarantined=false
+[2026-11-23 13:38:21,281 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell dumpsys package com.android.microxr.systemui | findstr enabled
+[2026-11-23 13:38:21,282 - AudioProcess - INFO]  'Re-enable SystemUI' stabilized in 0.11s.
+[2026-11-23 13:38:21,283 - AudioProcess - INFO]  Task 'Re-enable SystemUI' verified successfully.
+[2026-11-23 13:38:21,283 - AudioProcess - INFO]  All pre-condition commands completed.
+[2026-11-23 13:38:21,284 - AudioProcess - INFO]  Finishing Audio Ok2Cal
+[2026-11-23 13:38:21,284 - AudioStation - INFO]  run_ok2cal passed
+[2026-11-23 13:38:21,284 - AudioStation - DEBUG]  Current step: OK_2_CAL_VERIFICATION
+[2026-11-23 13:38:21,285 - AudioProcess - INFO]  Running plugin post-processing...
+[2026-11-23 13:38:21,285 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+> STDOUT: SBA671G0002K
+[2026-11-23 13:38:21,363 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell getprop ro.serialno
+[2026-11-23 13:38:21,364 - root - INFO]  AudioCalEngine: Skipping device profile generation & push.
+[2026-11-23 13:38:21,364 - AudioProcess - INFO]  Audio OK2Cal finished.
+[2026-11-23 13:38:21,365 - AudioStation - DEBUG]  Current step: PULL_RESULTS
+[2026-11-23 13:38:21,365 - AudioProcess - INFO]  Audio - Pulling results from device.
+[2026-11-23 13:38:21,366 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "ls /sdcard/adc_result_ace/"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "ls /sdcard/adc_result_ace/"
+> STDOUT: audio_compensation_20261123_133724.json
+robocal_SBA671G0002K_20261123_133724
+[2026-11-23 13:38:21,501 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell "ls /sdcard/adc_result_ace/"
+[2026-11-23 13:38:21,501 - AudioProcess - INFO]  Pulling results from device: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device pull  /sdcard/adc_result_ace "C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K"
+[2026-11-23 13:38:21,501 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device pull  /sdcard/adc_result_ace "C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K"
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device pull  /sdcard/adc_result_ace "C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K"
+> STDERR: /sdcard/adc_result_ace/: 2 files pulled, 0 skipped. 1.5 MB/s (74709 bytes in 0.046s)
+[2026-11-23 13:38:21,600 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 wait-for-device pull  /sdcard/adc_result_ace "C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K"
+[2026-11-23 13:38:21,601 - AudioProcess - INFO]  Successfully Pulled Audio OK2Cal data from device.
+[2026-11-23 13:38:21,601 - AudioStation - DEBUG]  Current step: END
+[2026-11-23 13:38:21,601 - AudioStation - INFO]  Ending Audio Run
+[2026-11-23 13:38:21,601 - AudioDUT - INFO]  SBA671G0002K PASSED!
+[2026-11-23 13:38:21,603 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell mkdir -p /mnt/vendor/persist
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell mkdir -p /mnt/vendor/persist
+[2026-11-23 13:38:21,694 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 shell mkdir -p /mnt/vendor/persist
+[2026-11-23 13:38:21,695 - root - INFO]  Running "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 push C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K\device_record.json /mnt/vendor/persist/
+Command: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 push C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K\device_record.json /mnt/vendor/persist/
+> STDERR: C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K\device_record.json: 1 file pushed, 0 skipped. 0.2 MB/s (1351 bytes in 0.005s)
+[2026-11-23 13:38:21,763 - root - INFO]  Command succeeded: "C:\Users\User\AppData\Local\Temp\Bazel.runfiles_nm3mcjd0\runfiles\_main\robolibs\third_party\adb_windows\adb.exe" -s 192.168.0.134:5555 push C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio\DUTs\SBA671G0002K\device_record.json /mnt/vendor/persist/
+[2026-11-23 13:38:23,773 - AudioStation - INFO]  Run folder: C:\Users\Public\Google\Robocal\Runs\2026-11-23T13-36-51.754273-Audio
+[2026-11-23 13:38:23,774 - filelock - DEBUG]  Attempting to release lock 2572664899632 on C:\Users\Public\Google\Robocal\robocalv5.lock
+[2026-11-23 13:38:23,774 - filelock - DEBUG]  Lock 2572664899632 released on C:\Users\Public\Google\Robocal\robocalv5.lock
