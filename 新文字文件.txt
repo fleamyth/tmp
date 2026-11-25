@@ -1,6 +1,0 @@
-可以，但 204 不會被 echo 出來。
-
-
-
-EXE 回傳 204 → goto retry，直接重跑，跳過 echo。
-回傳其他值 → echo %errorlevel% 會印出退出碼，包括成功時的 0。
