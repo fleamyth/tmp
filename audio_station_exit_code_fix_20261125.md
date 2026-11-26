@@ -1,10 +1,200 @@
-As an RD engineer on Pega’s DIAG team, I would like to clarify the background and timeline of this issue.
+# Recipe#8 GR&R Review 與生產建議
 
+- 日期：2026-11-26
+- 對象：L89VJIQ、RBCIN14
+- 目的：依既定原則，協助現場確認重複性／再現性風險及後續行動。
+- 性質：工程審查建議，不是新的產品規格、正式生產放行或停線指令。
 
-We identified the exit-code handling issue on November 19 and immediately reported it to Google. At that time, we had already implemented log-based checks as a temporary workaround to detect the issue and prevent affected DUTs from incorrectly passing the test. This explains the high DUT failure rate observed on November 19.
+## 1. 結論
 
+**本次不只是比較 Recipe#5、#6，也檢視 Recipe#8 的 Verification KPI、分布圖、SN×OP×Run 逐次數據，以及 ANOVA 的裝置、OP、交互作用和組內重複性變異。**
 
-Google subsequently committed to providing an updated test script to address the issue, which was delivered on November 24.
+依使用者提供的原則：
 
+1. **不能只因 GRR FAIL，就判定校正功能失效或要求全面停產。** WFSC 功能是否正常應另依 E2E Report。
+2. Recipe#8 有重複性風險，但尚無足夠證據把根因直接歸於某台裝置、某位 OP、治具或硬體。
+3. 優先處理 Audio 特定 Run 的極端值、缺值與聲道完整性；其次是 IMU integration error 的組內重複性與部分 OP 分布差異。
+4. 以 Recipe#5、#6 已允許後續生產為前提，**建議 Recipe#8 沿用相同決策原則，有條件續產並追蹤問題，不因 GRR FAIL 自動全面停產。**
+5. 「有條件續產」不等於「GRR 全部通過」，也不代表可以放行功能不合格或資料不完整的產品。
 
-Therefore, under the same test conditions, we would expect the updated test script to yield a failure rate comparable to that observed on November 19.
+**RBCIN14 建議延續既有流程並追蹤；L89VJIQ 因新增 Speaker 極端量測異常，建議優先確認並採受控續產，而非直接無條件擴大量產。這是風險管理建議，不是新增強制 gate。**
+
+## 2. 四項原則如何落實
+
+| 原則 | 本次實際 review | 判讀邊界 |
+|---|---|---|
+| SOP 說明各項目用途，供現場確認整體狀態 | 區分 Verification、Calibration、Station Health；說明 P/T、產品超規、Tracked／N/A 的差異 | 不把所有紅字當作相同意義，也不另創驗收門檻 |
+| WFSC calibration 功能由 E2E 判斷 | 不以 GRR IMU FAIL 或 Calibration FAIL 推論 WFSC 功能失效；另參考現有 E2E 分析 | 較早的 E2E 不能代表當前批次已獲放行 |
+| Verification FAIL 應先看分布，區分裝置與 OP 等來源 | 檢視 FAIL 參數的 SN 分組箱形／散點圖、直方圖，核對逐次數據並拆解 ANOVA | 統計型態只提供追查方向，不能直接確定物理根因 |
+| 報告不能取代現場對操作及治具條件的了解 | 列出可定位的異常 Run、待查項目及控制重測方式 | 不宣稱已確認裝載、接觸、環境、治具或人員操作有誤 |
+
+Recipe#5、#6 的比較僅用來辨識「既有風險處置方式與新增警訊」，不取代上述原則。
+
+## 3. 證據、方法與限制
+
+### 已完成的檢查
+
+- 使用兩站既有 HTML GRR 報告、同目錄的轉換 CSV、HTML 實際計算界限及原工具計算方式。
+- 每站均有 3 SN × 3 OP × 3 Run × 4 modules，共 108 列；但 Audio 部分欄位缺值。
+- 以工具原有角度處理規則及 HTML 的 USL／LSL，重算本次檢查的可評估 Verification 參數與 Calibration FAIL 參數，確認 P/T 與報告顯示值一致至四捨五入精度。
+- 對完整平衡設計的上述參數，另以 3×3×3 計算核對 GRR 變異。
+- 對 Verification FAIL，檢視分布與逐次資料，區分裝置差異、OP 平均偏移、SN×OP 交互作用及組內試次變異。
+- 比對三版每站 102 個共同報告參數的 USL／LSL，未發現計算界限差異。
+
+### 判讀限制
+
+- 本次未重新存取受組織政策限制的 Recipe#8 網路原始資料，也未修改既有報告。聲道原始訊號、設備與現場執行紀錄仍待確認。
+- 與工具計算一致不代表原始量測、解析結果或公差定義已獲工程確認；本次不是完整解析器／統計假設稽核。
+- 沿用工具門檻：P/T <10% Pass、10–<30% Marginal、≥30% Fail。P/T = 6×GRR 標準差／公差寬度，**不是產品不良率**。
+- 值全在產品界限內仍可能 GRR Fail；裝置彼此不同也不代表量測系統不穩定。
+- Tracked、N/A、no data 不能計作 Pass；worst P/T 只反映有成功評估的子參數。
+- 下文「Repeatability 占 GRR 百分比」以 GRR 變異為分母，不是總變異。
+
+## 4. Recipe#8 依原則進行的實際 review
+
+### 4.1 WFSC Main IMU integration error
+
+| 項目 | L89VJIQ | RBCIN14 |
+|---|---:|---:|
+| P/T | 55.47% Fail | 39.55% Fail |
+| 有效數 | 27 | 27 |
+| 量測範圍，rad | 0.000893681–0.00260537 | 0.00107781–0.00294902 |
+| 超過報告上限 0.003 rad 的筆數 | 0 | 0 |
+| Repeatability 占 GRR 變異 | 82.0% | 94.5% |
+| OP 主效應占 GRR 變異 | 0.0% | 5.5% |
+| SN×OP 交互作用占 GRR 變異 | 18.0% | 0.0% |
+
+**觀察：**兩站均呈現 0007J 較高、0007P 較低、0007R 居中的裝置分布，支持存在裝置間差異。但 GRR 變異主要來自同一裝置／OP 的試次變動，不能只歸因於裝置差異或某位 OP。
+
+**建議：**固定裝置與 OP，比較「不重新裝載的連續量測」與「每次重新裝載的量測」，再由現場確認固定、裝載、執行條件與時間因素。所有值未超過報告上限，不代表沒有重複性問題；GRR Fail 也不等於 WFSC 校正功能失效。
+
+### 4.2 WFSC Sub IMU integration error
+
+| 項目 | L89VJIQ | RBCIN14 |
+|---|---:|---:|
+| P/T | 31.43% Fail | 35.43% Fail |
+| 超過報告上限 0.003 rad 的筆數 | 0 | 0 |
+| Repeatability 占 GRR 變異 | 59.0% | 64.1% |
+| OP 主效應占 GRR 變異 | 25.6% | 14.6% |
+| SN×OP 交互作用占 GRR 變異 | 15.4% | 21.3% |
+
+**觀察：**OP2 在三台裝置的平均值均高於 OP1，兩站皆見，值得核對；但 Repeatability 仍是最大來源，且存在 SN×OP 交互作用。
+
+**建議：**先現場比對操作，再控制條件、交叉更換 OP，記錄順序及時間。不能直接把 OP2 定為根因；OP 標籤未經核對也不足以證明兩站為同一人，OP 效應可能混入時間、順序或環境因素。
+
+### 4.3 Audio：先處理異常 Run 與資料完整性
+
+| 參數 | L89VJIQ P/T／有效數 | RBCIN14 P/T／有效數 |
+|---|---:|---:|
+| Speaker 1 kHz imbalance | 3231.32%／25 of 27 | 68.04%／26 of 27 |
+| Speaker 2 kHz imbalance | 3548.63%／25 of 27 | 49.45%／26 of 27 |
+| Mic 1 kHz imbalance | 3647.68%／26 of 27 | 211.00%／27 of 27 |
+
+| 站別 | SN／OP／Run | 具體異常 |
+|---|---|---|
+| L89VJIQ | SBA671J0007J／OP1／Run2 | Mic 76.87 dB；同組 Run1／Run3 為 0.26／0.25 dB；該 Run Speaker 兩欄缺值 |
+| L89VJIQ | SBA671J0007R／OP1／Run1 | Speaker 1k／2k 為 78.84／86.80 dB；同組 Run2 為 0.85／1.46 dB；Run3 兩欄均為 0 |
+| RBCIN14 | SBA671J0007J／OP1／Run2 | Mic 4.78 dB；同組 Run1／Run3 為 0.25／0.23 dB；Speaker 兩頻點也較相鄰試次偏移 |
+
+**依分布的判讀**
+
+- 特定 Run 突然偏離同一裝置／OP 的其他試次，不是所有裝置或某 OP 的所有結果都持續失常。
+- 兩站 0007J／OP1／Run2 的共同標籤值得追查，但不能證明同一實際事件或共同根因。
+- L89 的 0007P Mic 有效值約在 0.96–0.98 dB、0007R 約在 0.45–0.49 dB，不能以整體極高 P/T 描述所有試次都同樣不穩定。
+- 0 dB 不一定錯誤，但應確認聲道完整。解析器對有效聲道取 max−min，若只剩一個有效聲道也可能形成 0，不能直接視為完美一致。
+- 缺值破壞部分參數的平衡設計；工具使用平均試次數的變異公式，Audio P/T 應以警訊及追查用途為主，不宜精確排名站別。
+- 原箱形圖設定不顯示箱形圖離群標記，因此本次也核對直方圖及逐次數據，不只看箱體。
+
+**現場優先核對：**必要聲道是否齊全且訊號有效、實際測試狀態、連接接觸、治具定位、裝載與聲學環境，以及是否存在未完整執行、重試或資料擷取／解析問題。以上皆為待驗證方向，不是已確認原因。
+
+確認或改善後控制條件重測；保留原始異常及處置紀錄，不應直接刪除極端值或把缺值補成成功數值。
+
+### 4.4 DCC：POST Verification 無 FAIL
+
+- L89：5 項 Marginal；white point error 27.2%、daylight locus 25.9%。
+- RBC：4 項 Marginal；對應兩項為 14.8%、15.8%。
+- 白點相關 GRR 主要來自組內重複性，不能直接推論特定 OP 有誤。
+- white_residual_PRE 為 Calibration KPI，P/T 為 59.4%／56.3%，不能混稱 POST Verification FAIL 或據此判定產品功能失效。
+
+建議次優先觀察，依現場光學量測條件及流程確認；不因 Marginal 自動新增停產要求。
+
+### 4.5 DGC：相對穩定，仍有覆蓋與規格限制
+
+- L89 有評估的 Verification KPI 均 Pass；RBC distortion 13.6% Marginal，其餘有評估項目 Pass。
+- distortion 與 color alignment 各有 6/15 個設定子參數缺資料，不能宣稱完整覆蓋通過。
+- distortion 標籤為 <5 arcmin，但相關 ANOVA 使用 0–2 的界限；須確認單位及規格對應，不宜直接作為產品驗收結論。
+
+## 5. WFSC 功能應另依 E2E 判斷
+
+現有本機 E2E 分析使用 2026-11-19 OP0 資料，於 2026-11-20 產出：
+
+- 兩站各三台已評估的 WFSC 檢查均 13/13 Pass，支持該批資料中已檢查的 WFSC 項目可運作。
+- 每站各有 1/3 台 latest native Audio FAIL：L89 為 0007J，RBC 為 0007P。
+- 另有診斷門檻與 native classifier 判定差異及缺少指標，不能簡化成整份 E2E 全通過。
+
+**較早資料不代表當前狀態。** 本次未確認 Audio FAIL 是否已處置、獲准接受或重測結案；應核對最新紀錄，不能假設已全部通過，也不能假設舊問題目前仍存在。
+
+GRR 追蹤與產品功能放行應分開處理；續產不代表豁免既有 E2E／產品檢驗要求。
+
+## 6. Recipe#5、#6 比較：輔助證據，不是唯一理由
+
+「Recipe#5、#6 已允許後續生產」為使用者提供的前提；本次未獨立查證正式核准紀錄與例外條件。
+
+下表為 L89VJIQ／RBCIN14 的 KPI worst P/T：
+
+| Verification KPI | Recipe#5 | Recipe#6 | Recipe#8 |
+|---|---:|---:|---:|
+| Main/sub IMU integration error | 27.3%／34.7% | 32.2%／38.8% | 55.5%／39.6% |
+| Speaker differences | 78.3%／67.9% | 66.9%／65.5% | 3548.6%／68.0% |
+| Microphone differences | 6542.1%／3868.7% | 3766.1%／3774.5% | 3647.7%／211.0% |
+| DGC distortion | 5.7%／7.9% | 9.3%／9.7% | 9.3%／13.6% |
+
+**支持的判斷**
+
+- IMU、Audio FAIL 不是 Recipe#8 才出現，不應突然成為只針對 Recipe#8 的自動停產理由。
+- RBC Speaker 與 IMU worst P/T 接近 Recipe#6；L89 Speaker 則有新增極端量測，IMU worst P/T 亦升高，應額外追蹤。
+- Recipe#5、#6 Speaker 最大值約 3 dB 以下；Recipe#8 L89 出現 78.84／86.80 dB，不能忽略。
+- 前兩版 Mic 最大值也約有 81.71–83.97 dB；Recipe#8 Mic 極端值不是全新型態，但既有異常被接受不代表已改善。
+- Recipe#8 DCC POST 無 FAIL，並非各模組全面惡化。
+
+**不能支持的推論**
+
+三版使用不同裝置：Recipe#5 為 SBA671F0006R／6S／6T；Recipe#6 為 SAA671G00048／4A／4C；Recipe#8 為 SBA671J0007J／7P／7R。即使計算界限一致，仍不能排除裝置、時間、流程與環境差異，不能把 P/T 增減直接歸因於 Recipe 修改。
+
+## 7. 生產處置建議
+
+**支持有條件續產；不支持只憑 GRR FAIL 全面停產，也不支持直接宣告無條件放量。**
+
+| 對象 | 建議 | 理由及前提 |
+|---|---|---|
+| RBCIN14 | 延續既有生產／追蹤流程 | 大致延續既有問題型態；追蹤 IMU、Audio、DGC，並確認當前 E2E／產品檢驗符合原放行要求 |
+| L89VJIQ | 優先處理 Audio 新增異常；建議受控續產、暫不無條件擴量 | 先確認極端值、聲道及資料有效性，再確認重測；同時追蹤 IMU |
+| 個別不合格／資料不完整產品 | 依既有規則處置 | 不能因整體允許續產而跳過檢驗或逕行放行 |
+
+受控續產的批量、監控頻率及責任人應沿用現場既有機制決定。本文件未設定新數值門檻；若無對應機制，須由製造／品質／工程負責人確認，不能把本文當作已取得量產批准。
+
+### 建議升級處理的情境
+
+以下不是已證實的當前狀態，而是建議現場評估暫停受影響站點／流程的情境：
+
+- 重測確認 Audio 異常持續出現，且無法可靠辨識或攔截受影響結果。
+- 無法確保必要聲道／數據完整，導致產品合格判定不可信。
+- 當前 E2E／產品功能確實不合格，且不符合既有核准處置。
+
+暫停範圍由現場權責決定；單站或單流程異常，不應直接推論整個 Recipe#8 必須停產。
+
+## 8. 現場建議行動
+
+| 優先序 | 行動 | 所需證據 |
+|---|---|---|
+| 1 | 核對 Audio 異常 Run、聲道、缺值及既有 E2E FAIL 處置 | 執行狀態、聲道有效性、異常／重測紀錄及最新放行狀態 |
+| 2 | 同裝置／OP 比較不重新裝載及重新裝載的 IMU 量測 | 區分量測本身與裝載／治具相關變異 |
+| 3 | 控制條件後交叉更換 OP，記錄順序、時間及實際操作者 | 確認 OP／SN×OP 差異是否可重現，避免誤判人員因素 |
+| 4 | 確認規格與覆蓋 | DGC 單位／計算界限、缺少眼位是否符合設計、Calibration 角度基準與公差適用性 |
+| 5 | 改善後重測，必要時完整 GRR | 保留改善前後資料，在已確認條件下驗證效果，不只刪除離群值求 Pass |
+
+SOP 建議說明每項 KPI 的用途、分布圖分組判讀、異常應保留的紀錄、聯絡／升級路徑，以及 GRR 與產品功能放行的區別。
+
+## 10. 最終建議用語
+
+> 依 GRR 的用途及既有處置原則，Recipe#8 尚無理由僅因 GRR FAIL 就全面停止後續生產。建議在符合當前 E2E／產品放行要求下，有條件延續生產；優先由現場確認 L89 Audio 特定 Run 的極端值與資料完整性，並追蹤兩站 IMU 的重複性。報告提供了可定位的追查方向，但不足以認定裝置、OP、治具或站台硬體的單一根因。正式放量及異常產品放行仍依現場既有權責與規範決定。
